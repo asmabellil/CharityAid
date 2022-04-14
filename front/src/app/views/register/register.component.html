@@ -1,0 +1,120 @@
+<div class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card mx-4">
+            <div class="card-body p-4">
+              <form method="post" [formGroup]="registerForm">
+                <h1>Register</h1>
+                <p class="text-muted">Create your account</p>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-user"></i></span>
+                  </div>
+                  <input class="form-control" type="text" name="firstname" placeholder="First Name" [(ngModel)]="memberToUpdate2.FirstName" formControlName="FirstName">
+                </div>
+                <div class="alert alert-danger" *ngIf="FirstName.errors && FirstName.touched">
+                    <div *ngIf="FirstName.errors.required">This field is required</div>
+                    <div *ngIf="FirstName.errors.minlength">Your first name should have at leaset two charcters</div>
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-user"></i></span>
+                  </div>
+                  <input class="form-control" type="text" name="lastname" placeholder="Last Name" [(ngModel)]="memberToUpdate2.LastName" formControlName="LastName">
+                </div>
+                <div class="alert alert-danger" *ngIf="LastName.errors && LastName.touched">
+                  <div *ngIf="LastName.errors.required">This field is required</div>
+                  <div *ngIf="LastName.errors.minlength">Your last name should have at leaset two charcters</div>
+                </div>
+
+                <div class="mb-3 mat-calander" >
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="memberToUpdate2.DOB" formControlName="DOB">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </div>
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="cil-home"></i></span>
+                  </div>
+                  <input class="form-control" type="text" name="address" placeholder="Enter your address" [(ngModel)]="memberToUpdate2.Adress" formControlName="Adress">
+                </div>
+                <div class="alert alert-danger" *ngIf="Adress.errors && Adress.touched">
+                  <div *ngIf="Adress.errors.required">This field is required</div>
+                  <div *ngIf="Adress.errors.minlength">Your adress should have at leaset three charcters</div>
+              </div>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="cil-phone"></i></span>
+                </div>
+                <input class="form-control" type="number" name="phone" placeholder="Enter your phone number" [(ngModel)]="memberToUpdate2.Phone" formControlName="Phone">
+              </div>
+              <div class="alert alert-danger" *ngIf="Phone.errors && Phone.touched">
+                <div *ngIf="Phone.errors.required">This field is required</div>
+                <div *ngIf="Phone.errors.pattern">Your phone number should have exactly 8 numbers</div>
+            </div>
+
+            <div class="input-group ">
+              <div class="form-group role">
+                <tr>
+                  <td><select class="form-control "
+                      name="etat"
+                      [(ngModel)]="memberToUpdate2.Role_Association"
+                      formControlName="Role_Association">
+                      <option selected disabled >Role</option>
+                      <option value="Chair">Chair</option>
+                      <option value="Vice Chair">Vice Chair</option>
+                      <option value="Treasurer">Treasurer</option>
+                      <option value="General Secretary">General Secretary</option>
+                  </select></td>
+              </tr>
+            </div> 
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">@</span>
+              </div>
+              <input class="form-control" type="email" name="email" placeholder="Email Address" [(ngModel)]="memberToUpdate2.Email" formControlName="Email">
+              </div>
+            <div class="alert alert-danger" *ngIf="Email.errors && Email.touched">
+                <div *ngIf="Email.errors.required">This field is required</div>
+                <div *ngIf="Email.errors.pattern">Your email should have this form test@test.com</div>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="icon-lock"></i></span>
+                </div>
+                <input class="form-control" type="password" name="Password" placeholder="Password" [(ngModel)]="memberToUpdate2.Password" formControlName="Password">
+              </div>
+              <div class="alert alert-danger" *ngIf="Password.errors && Password.touched">
+                <div *ngIf="Password.errors.required">This field is required</div>
+                <div *ngIf="Password.errors.pattern">Your password should include upper and lower cases and numbers</div>
+            </div>
+
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="icon-lock"></i></span>
+                </div>
+                <input class="form-control" type="password" name="ConfirmPassword" placeholder="ConfirmPassword" [(ngModel)]="memberToUpdate2.ConfirmPassword" formControlName="Password">
+            </div>
+            <div class="alert alert-danger" *ngIf="ConfirmPassword.errors && ConfirmPassword.touched">
+                <div *ngIf="ConfirmPassword.errors.required">This field is required</div>
+                <div *ngIf="match">Your ConfirmPassword password should be identical to your password</div>
+            </div>
+              
+                <button type="button" class="btn btn-block btn-success" (click)="save()">Create Account</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+

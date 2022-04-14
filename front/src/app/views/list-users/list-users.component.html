@@ -1,0 +1,31 @@
+<div class="container">
+    <button class="btn btn-primary add" (click)="onAdd(1)">Add new member</button>
+    <app-registration-form ></app-registration-form>
+    <ul class="responsive-table">
+      <li class="table-header">
+        <div class="col col-1"> Picture </div>
+        <div class="col col-1"> First name </div>
+        <div class="col col-1"> Last name </div>
+        <div class="col col-2"> Date of birth </div>
+        <div class="col col-1"> Email </div>
+        <div class="col col-1"> Phone </div>
+        <div class="col col-1"> Role </div>
+        <div class="col col-1"> Update </div>
+        <div class="col col-1"> Delete </div>
+      </li>
+      <div *ngFor="let m of listComplete">
+        <li class="table-row">
+          <div class="col col-1"><img src="{{m.Picture}}"/></div>
+            <div class="col col-1" data-label="Job Id">{{m.FirstName}}</div>
+            <div class="col col-1" data-label="Customer Name">{{m.LastName}}</div>
+            <div class="col col-1" data-label="Amount">{{m.DOB | date:'fullDate'}}</div>
+            <div class="col col-2" data-label="Amount">{{m.Email}}</div>
+            <div class="col col-1" data-label="Payment Status">{{m.Phone}}</div>
+            <div class="col col-1" data-label="Payment Status">{{m.Role_Association}}</div>
+            <div class="col col-1" data-label="Payment Status"><button class="btn btn-warning" (click)="onUpdate(m)">Update</button></div>
+            <div class="col col-1" data-label="Payment Status"><button class="btn btn-danger" (click)="deletMember(m)">Delete</button></div>
+        </li>
+      </div>
+    </ul>
+  </div>
+
