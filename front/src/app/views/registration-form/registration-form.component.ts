@@ -57,15 +57,13 @@ export class RegistrationFormComponent implements OnInit {
   get ConfirmPassword() {return this.registerForm.get('ConfirmPassword')};
 
   // to check confirm password
-onPasswordChange() {
-  if (this.ConfirmPassword.value == this.Password.value) {
-    this.ConfirmPassword.setErrors(null);
-    this.match = false;
-  } else {
-    this.ConfirmPassword.setErrors({ mismatch: true });
-    this.match = true;
-  }
-}
+    onPasswordChange() {
+      if (this.ConfirmPassword.value == this.Password.value) {
+        this.ConfirmPassword.setErrors(null);
+      } else {
+        this.ConfirmPassword.setErrors({ mismatch: true });
+      }
+    }
 
   save(){
     this.memberToAdd = {... this.memberToUpdate2,  Role: "member"}
@@ -74,7 +72,7 @@ onPasswordChange() {
         console.log("add")
         this.actAdd.emit(data)
     })
-    this.router.navigate(['/base/allusers'])
+    this.router.navigate(['/allusers'])
       console.log(this.memberToUpdate2);
       console.log(this.listMembers);
   }

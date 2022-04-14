@@ -11,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ResetComponent implements OnInit {
   resetPasswordForm: FormGroup;
-  match: boolean;
   member: Member;
   id: any;
   token: any;
@@ -24,7 +23,6 @@ export class ResetComponent implements OnInit {
       ConfirmPassword: new FormControl('',Validators.required),
       });
     
-      this.match = true;
       this.member = new Member;
 
     this.route.queryParams
@@ -45,15 +43,13 @@ export class ResetComponent implements OnInit {
   get ConfirmPassword() {return this.resetPasswordForm.get('ConfirmPassword')};
 
     // to check confirm password
-  onPasswordChange() {
-    if (this.ConfirmPassword.value == this.Password.value) {
-      this.ConfirmPassword.setErrors(null);
-      this.match = false;
-    } else {
-      this.ConfirmPassword.setErrors({ mismatch: true });
-      this.match = true;
+    onPasswordChange() {
+      if (this.ConfirmPassword.value == this.Password.value) {
+        this.ConfirmPassword.setErrors(null);
+      } else {
+        this.ConfirmPassword.setErrors({ mismatch: true });
+      }
     }
-  }
 
   resetPassword(){
     this.service.resetPassword(this.id,this.token,{Password: this.member.Password}).subscribe((data) =>{

@@ -15,12 +15,18 @@
                       </div>
                       <input type="text" class="form-control" placeholder="Email" autocomplete="username" required [(ngModel)]="member.Email" formControlName="Email">
                     </div>
+                    <div class="alert alert-danger" *ngIf="Email.errors && Email.touched">
+                      <div *ngIf="Email.errors.required">This field is required</div>
+                  </div>
                     <div class="input-group mb-4">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="icon-lock"></i></span>
                       </div>
                       <input type="password" class="form-control" placeholder="Password" autocomplete="current-password" required [(ngModel)]="member.Password" formControlName="Password">
                     </div>
+                    <div class="alert alert-danger" *ngIf="Password.errors && Password.touched">
+                      <div *ngIf="Password.errors.required">This field is required</div>
+                  </div>
                     <div class="row">
                       <div class="col-6">
                         <button type="button" class="btn btn-primary px-4" (click)="login()">Login</button>

@@ -90,25 +90,25 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-lock"></i></span>
                   </div>
-                  <input class="form-control" type="password" name="Password" placeholder="Password" [(ngModel)]="memberToUpdate2.Password" formControlName="Password">
+                  <input class="form-control" type="password" name="Password" placeholder="Password" [(ngModel)]="memberToUpdate2.Password" formControlName="Password" (change)="onPasswordChange()">
                 </div>
                 <div class="alert alert-danger" *ngIf="Password.errors && Password.touched">
                   <div *ngIf="Password.errors.required">This field is required</div>
-                  <div *ngIf="Password.errors.pattern">Your password should include upper and lower cases and numbers</div>
+                  <div *ngIf="Password.errors.pattern">Your password should have at leaset 6 charcters and must include upper and lower cases and numbers</div>
               </div>
   
               <div class="input-group mb-4">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-lock"></i></span>
                   </div>
-                  <input class="form-control" type="password" name="ConfirmPassword" placeholder="ConfirmPassword" [(ngModel)]="memberToUpdate2.ConfirmPassword" formControlName="Password">
+                  <input class="form-control" type="password" name="ConfirmPassword" placeholder="ConfirmPassword" [(ngModel)]="memberToUpdate2.ConfirmPassword" formControlName="ConfirmPassword" (change)="onPasswordChange()">
               </div>
               <div class="alert alert-danger" *ngIf="ConfirmPassword.errors && ConfirmPassword.touched">
                   <div *ngIf="ConfirmPassword.errors.required">This field is required</div>
-                  <div *ngIf="match">Your ConfirmPassword password should be identical to your password</div>
+                  <div *ngIf="ConfirmPassword.errors.mismatch">Your ConfirmPassword password should be identical to your password</div>
               </div>
                 
-                  <button type="button" class="btn btn-block btn-success" (click)="update()">{{val1}}</button>
+                  <button type="button" class="btn btn-block btn-success" (click)="save()">{{val1}}</button>
                 </form>
               </div>
             </div>

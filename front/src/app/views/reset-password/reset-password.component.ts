@@ -10,13 +10,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
-  Email: Text;
+  resetForm: FormGroup;
+  member: Member;
 
   constructor(private service: UsersService, private router : Router) { }
 
   ngOnInit(): void {
+    this.member = new Member;
+    this.resetForm= new FormGroup({
+      Email: new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$")])
+      });
     
   }
+
+  get Email() {return this.resetForm.get('Email')};
 
   forgot(){
     this.service.forgotPassword({Email: this.Email}).subscribe((data) =>{
