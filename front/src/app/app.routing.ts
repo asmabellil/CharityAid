@@ -29,34 +29,6 @@ export const routes: Routes = [
       title: 'Page 500'
     }
   },
-  /* {
-    path: 'login',
-    component: LoginComponent,
-    data: {
-      title: 'Login Page'
-    }
-  }, 
-  {
-    path: 'register',
-    component: RegistrationFormComponent,
-    data: {
-      title: 'Register Page'
-    }
-  },
-  {
-    path: 'reset',
-    component: ResetPasswordComponent,
-    data: {
-      title: 'Reset Page'
-    }
-  },
-  {
-    path: 'reset-password/:id/:token',
-    component: ResetComponent,
-    data: {
-      title: 'Reset Page'
-    }
-  }, */
   {
     path: '',
     component: DefaultLayoutComponent,
@@ -65,40 +37,12 @@ export const routes: Routes = [
     },
     children: [
       {
-        path: '',
-        loadChildren: () => import('./views/base/base.module').then(m => m.BaseModule)
-      },
-      {
-        path: 'buttons',
-        loadChildren: () => import('./views/buttons/buttons.module').then(m => m.ButtonsModule)
-      },
-      {
-        path: 'charts',
-        loadChildren: () => import('./views/chartjs/chartjs.module').then(m => m.ChartJSModule)
-      },
-      {
-        path: 'dashboard',
-        loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
-      },
-      {
-        path: 'icons',
-        loadChildren: () => import('./views/icons/icons.module').then(m => m.IconsModule)
-      },
-      {
-        path: 'notifications',
-        loadChildren: () => import('./views/notifications/notifications.module').then(m => m.NotificationsModule)
-      },
-      {
-        path: 'theme',
-        loadChildren: () => import('./views/theme/theme.module').then(m => m.ThemeModule)
-      },
-      {
-        path: 'widgets',
-        loadChildren: () => import('./views/widgets/widgets.module').then(m => m.WidgetsModule)
-      },
-      {
         path: 'main',
         loadChildren: () => import('./views/Super-Admin/superadmin.module').then(m => m.SuperAdminModule), canActivate: [AuthGuard]
+      },
+      {
+        path: 'members',
+        loadChildren: () => import('./views/Members/members.module').then(m => m.MembersModule), canActivate: [AuthGuard]
       }, 
     ]
   },
