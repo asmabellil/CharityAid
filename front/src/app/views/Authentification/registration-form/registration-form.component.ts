@@ -1,24 +1,24 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Member } from '../../models/Member';
-import { MembersService } from '../../services/members.service';
+import { Member } from '../../../models/Member';
+import { MembersService } from '../../../services/members.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: 'register.component.html',
-  styleUrls: ['./register.component.scss']
+  selector: 'app-registration-form',
+  templateUrl: './registration-form.component.html',
+  styleUrls: ['./registration-form.component.scss']
 })
-export class RegisterComponent {
+export class RegistrationFormComponent implements OnInit {
   registerForm: FormGroup;
   listMembers: Member[];
   memberToAdd: Member;
   member: Member;
   match: boolean;
-  @Input() val1: String;
+  @Input() val1 = "Create an account";
   @Input() memberToUpdate2: Member;
-  @Input() action1: boolean;
+  @Input() action1 = true;
   @Output() returnedMember = new EventEmitter<Member>();
   @Output() actAdd = new EventEmitter<Member>();
 
@@ -43,6 +43,7 @@ export class RegisterComponent {
       this.member = new Member;
       this.memberToUpdate2 = new Member;
       this.match = true;
+      
   }
 
   get FirstName() {return this.registerForm.get('FirstName')};
@@ -56,15 +57,13 @@ export class RegisterComponent {
   get ConfirmPassword() {return this.registerForm.get('ConfirmPassword')};
 
   // to check confirm password
-onPasswordChange() {
-  if (this.ConfirmPassword.value == this.Password.value) {
-    this.ConfirmPassword.setErrors(null);
-    this.match = false;
-  } else {
-    this.ConfirmPassword.setErrors({ mismatch: true });
-    this.match = true;
-  }
-}
+    onPasswordChange() {
+      if (this.ConfirmPassword.value == this.Password.value) {
+        this.ConfirmPassword.setErrors(null);
+      } else {
+        this.ConfirmPassword.setErrors({ mismatch: true });
+      }
+    }
 
   save(){
     this.memberToAdd = {... this.memberToUpdate2,  Role: "member"}
@@ -73,7 +72,7 @@ onPasswordChange() {
         console.log("add")
         this.actAdd.emit(data)
     })
-    this.router.navigate(['/dashboard'])
+    this.router.navigate(['/allusers'])
       console.log(this.memberToUpdate2);
       console.log(this.listMembers);
   }

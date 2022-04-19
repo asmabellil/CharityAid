@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { UsersService } from '../../services/users.service';
-import { Member } from '../../models/Member';
+import { UsersService } from '../../../services/users.service';
+import { Member } from '../../../models/Member';
 import { Router } from '@angular/router';
 
 @Component({
@@ -26,10 +26,10 @@ export class ResetPasswordComponent implements OnInit {
   get Email() {return this.resetForm.get('Email')};
 
   forgot(){
-    this.service.forgotPassword({Email: this.Email}).subscribe((data) =>{
+    this.service.forgotPassword({Email: this.resetForm.get('Email')}).subscribe((data) =>{
       console.log("data "+ data)
     })
-    this.router.navigate(['/login'])
+    
   }
 
 }

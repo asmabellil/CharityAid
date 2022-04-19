@@ -13,14 +13,13 @@ import { PopoversComponent } from './popovers.component';
 import { ProgressComponent } from './progress.component';
 import { TooltipsComponent } from './tooltips.component';
 import { NavbarsComponent } from './navbars/navbars.component';
-import { ListUsersComponent } from '../list-users/list-users.component';
 
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'main',
     data: {
-      title: ''
+      title: 'Base'
     },
     children: [
       {
@@ -109,13 +108,6 @@ const routes: Routes = [
         component: NavbarsComponent,
         data: {
           title: 'Navbars'
-        }
-      },
-      {
-        path: 'allusers',
-        component: ListUsersComponent,
-        data: {
-          title: 'All users'
         }
       }
     ]

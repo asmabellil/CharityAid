@@ -88,21 +88,26 @@ router.post("/login", function (req, res, next) {
                   if (data[0].Role == "member") {
                     var o2 = {
                       _id: data[0]._id,
-                      Role: data[0].Role,
                       Email: data[0].Email,
                       Role: data[0].Role,
-                      Firstname: doc[0].Firstname,
-                      Lastname: doc[0].Lastname,
+                      Firstname: doc[0].FirstName,
+                      Lastname: doc[0].LastName,
                       Picture: doc[0].Picture,
                       Phone: doc[0].Phone,
                       DOB: doc[0].DOB,
                       Adress: doc[0].Adress,
-                      Role_Association: doc[0].Role_Association
+                      Role_Association: doc[0].Role_Association,
+                      token: token
                     };
                     res.send(o2); 
                   } else if (data[0].Role == "superadmin") {
-                    res.set("Authorization", token)
-                    res.send(data[0]);
+                    var o1 = {
+                      _id: data[0]._id,
+                      Email: data[0].Email,
+                      Role: data[0].Role,
+                      token: token
+                    };
+                    res.send(o1); 
                   }
                   
                 }

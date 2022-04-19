@@ -41,6 +41,5 @@ export class UsersService {
   resetPassword(id,token,password){
     console.log(password)
     return this.http.post(this.url + 'reset-password/' + id + '/' + token, password);
-    
   }
 }

@@ -15,7 +15,7 @@
       </li>
       <div *ngFor="let m of listComplete">
         <li class="table-row">
-          <div class="col col-1"><img src="{{m.Picture}}"/></div>
+          <div class="col col-1"><img class="img-avatar" src="{{m.Picture}}"/></div>
             <div class="col col-1" data-label="Job Id">{{m.FirstName}}</div>
             <div class="col col-1" data-label="Customer Name">{{m.LastName}}</div>
             <div class="col col-1" data-label="Amount">{{m.DOB | date:'fullDate'}}</div>

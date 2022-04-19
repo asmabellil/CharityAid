@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Member } from '../../models/Member';
-import { UsersService } from '../../services/users.service';
+import { Member } from '../../../models/Member';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,14 +34,13 @@ export class LoginComponent {
 
   login(){
     this.service.login(this.loginForm.value).subscribe(
-      response => {
+      (response : any) => {
       console.log(response);
-      console.log(response.headers.get('Authorization'))
-      localStorage.setItem('token', response.headers.get("Authorization"))
-      this.router.navigate(['/allusers'])
+      this.router.navigate(['/main/allusers'])
+      localStorage.setItem("User", JSON.stringify(response.body))
     },
     error => {
-      
+      console.log(error)
     });
   }
 

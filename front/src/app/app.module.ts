@@ -11,12 +11,7 @@ import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import { 
-  MatGridListModule
-} from '@angular/material/grid-list';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -29,8 +24,6 @@ import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
-import { LoginComponent } from './views/login/login.component';
-import { RegisterComponent } from './views/register/register.component';
 
 const APP_CONTAINERS = [
   DefaultLayoutComponent
@@ -51,9 +44,6 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
-import { ResetPasswordComponent } from './views/reset-password/reset-password.component';
-import { ResetComponent } from './views/reset/reset.component';
-import { RegistrationFormComponent } from './views/registration-form/registration-form.component';
 
 @NgModule({
   imports: [
@@ -73,9 +63,6 @@ import { RegistrationFormComponent } from './views/registration-form/registratio
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
-    MatGridListModule,
     NoopAnimationsModule,
     IconSetModule.forRoot(),
   ],
@@ -88,11 +75,6 @@ import { RegistrationFormComponent } from './views/registration-form/registratio
     ...APP_CONTAINERS,
     P404Component,
     P500Component,
-    LoginComponent,
-    RegisterComponent,
-    ResetPasswordComponent,
-    ResetComponent,
-    RegistrationFormComponent
   ],
   providers: [
     {

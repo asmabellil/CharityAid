@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { UsersService } from '../../services/users.service';
-import { Member } from '../../models/Member';
-import { ActivatedRoute } from '@angular/router';
+import { UsersService } from '../../../services/users.service';
+import { Member } from '../../../models/Member';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset',
@@ -15,7 +15,7 @@ export class ResetComponent implements OnInit {
   id: any;
   token: any;
 
-  constructor(private service: UsersService, private route: ActivatedRoute) { }
+  constructor(private service: UsersService, private route: ActivatedRoute, private router : Router) { }
 
   ngOnInit(): void {
     this.resetPasswordForm= new FormGroup({
@@ -55,6 +55,7 @@ export class ResetComponent implements OnInit {
     this.service.resetPassword(this.id,this.token,{Password: this.member.Password}).subscribe((data) =>{
       console.log(data)
     })
+    this.router.navigate(['/login'])
   }
 
 }

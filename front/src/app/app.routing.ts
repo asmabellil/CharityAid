@@ -6,10 +6,8 @@ import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
-import { LoginComponent } from './views/login/login.component';
-import { RegistrationFormComponent } from './views/registration-form/registration-form.component';
-import { ResetPasswordComponent } from './views/reset-password/reset-password.component';
-import { ResetComponent } from './views/reset/reset.component';
+import { LoginComponent } from './views/Authentification/login/login.component';
+import { AuthGuard } from './services/auth.guard'
 
 export const routes: Routes = [
   {
@@ -31,13 +29,13 @@ export const routes: Routes = [
       title: 'Page 500'
     }
   },
-  {
+  /* {
     path: 'login',
     component: LoginComponent,
     data: {
       title: 'Login Page'
     }
-  },
+  }, 
   {
     path: 'register',
     component: RegistrationFormComponent,
@@ -58,7 +56,7 @@ export const routes: Routes = [
     data: {
       title: 'Reset Page'
     }
-  }, 
+  }, */
   {
     path: '',
     component: DefaultLayoutComponent,
@@ -99,9 +97,21 @@ export const routes: Routes = [
         loadChildren: () => import('./views/widgets/widgets.module').then(m => m.WidgetsModule)
       },
       {
-        path: 'authentification',
+        path: 'main',
+        loadChildren: () => import('./views/Super-Admin/superadmin.module').then(m => m.SuperAdminModule), canActivate: [AuthGuard]
+      }, 
+    ]
+  },
+  {
+    path: '',
+    data: {
+      title: 'Home'
+    },
+    children: [
+      {
+        path: '', //can add authentification for the url
         loadChildren: () => import('./views/Authentification/authentification.module').then(m => m.AuthentificationModule)
-      }
+      },
     ]
   },
   { path: '**', component: P404Component }

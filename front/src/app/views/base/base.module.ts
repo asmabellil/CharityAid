@@ -50,7 +50,6 @@ import { BaseRoutingModule } from './base-routing.module';
 
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { ListUsersComponent } from '../list-users/list-users.component';
 
 @NgModule({
   imports: [
@@ -83,7 +82,6 @@ import { ListUsersComponent } from '../list-users/list-users.component';
     ProgressComponent,
     TooltipsComponent,
     NavbarsComponent,
-    ListUsersComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
