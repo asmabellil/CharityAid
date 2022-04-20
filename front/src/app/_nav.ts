@@ -1,33 +1,47 @@
 import { INavData } from '@coreui/angular';
 
-export const navItems: INavData[] = [
+export const navItems = {
+  "superadmin" :
+  [
   {
     title: true,
     name: 'Menu'
   }, 
   {
-    name: 'Members',
-    url: '/allusers',
+    name: 'Users',
+    url: '/main/allusers',
     icon: 'cil-user',
   },
   {
     name: 'Associations',
-    url: '/allusers',
+    url: 'main/allassociations',
     icon: 'cil-building'
+  },
+  ],
+  "member" :
+  [
+  {
+    title: true,
+    name: 'Menu'
+  }, 
+  {
+    name: 'Users',
+    url: '/main/allusers',
+    icon: 'cil-user',
   },
   {
     name: 'Subscribers',
-    url: '/allusers',
+    url: '/main/allassociations',
     icon: 'icon-people'
   },
   {
     name: 'Events',
-    url: '/allusers',
+    url: '/main/allassociations',
     icon: 'cil-highlighter',
     children: [
       {
         name: 'Tasks',
-        url: '/allusers',
+        url: '/main/allassociations',
         icon: 'cil-list-rich',
         /* badge: {
           variant: 'success',
@@ -38,17 +52,17 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Reports',
-    url: '/allusers',
+    url: '/main/allassociations',
     icon: 'cil-description'
   },
   {
     name: 'Cash flow',
-    url: '/allusers',
+    url: '/main/allassociations',
     icon: 'cil-money'
   },
   {
     name: 'Contact',
-    url: '/allusers',
+    url: '/main/allassociations',
     icon: 'cil-contact'
-  }
-];
+  }]
+};

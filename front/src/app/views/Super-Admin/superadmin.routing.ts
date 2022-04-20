@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ListAssociationsComponent } from './list-associations/list-associations.component';
 import { ListUsersComponent } from './list-users/list-users.component'
 
 const routes: Routes = [
@@ -17,7 +18,14 @@ const routes: Routes = [
         path: 'allusers',
         component: ListUsersComponent,
         data: {
-          title: 'allusers'
+          title: 'All users'
+        }
+      },
+      {
+        path: 'allassociations',
+        component: ListAssociationsComponent,
+        data: {
+          title: 'All associations'
         }
       },
     ]

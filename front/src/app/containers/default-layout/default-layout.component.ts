@@ -16,7 +16,7 @@ export class DefaultLayoutComponent {
   }
 
   public sidebarMinimized = false;
-  public navItems = navItems;
+  public navItems = navItems[JSON.parse(localStorage.getItem("User")).Role];
 
 
   toggleMinimize(e) {

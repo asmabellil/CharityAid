@@ -5,7 +5,8 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SuperAdminRoutingModule } from './superadmin.routing';
 
 // Components Routing
-import { ListUsersComponent } from './list-users/list-users.component'
+import { ListUsersComponent } from './list-users/list-users.component';
+import { ListAssociationsComponent } from './list-associations/list-associations.component'
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { ListUsersComponent } from './list-users/list-users.component'
 
   ],
   declarations: [
-    ListUsersComponent
+    ListUsersComponent,
+    ListAssociationsComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
