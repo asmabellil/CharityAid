@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Member } from '../../../models/Member';
 import { User } from '../../../models/User';
 import { MembersService } from '../../../services/members.service';
 import { UsersService } from '../../../services/users.service';
+import { RegistrationFormComponent } from '../../Authentification/registration-form/registration-form.component';
 
 @Component({
   selector: 'app-list-users',
@@ -15,11 +17,13 @@ export class ListUsersComponent implements OnInit {
   listMembers: Member[];
   listUsers: User[];
   show: boolean;
-  val: String;
+  val: string;
   memberToUpdate: Member;
   listComplete: Member[];
+  bsModalRef: BsModalRef;
 
-  constructor(private service: MembersService, private serviceUser: UsersService) { }
+
+  constructor(private service: MembersService, private serviceUser: UsersService, private modalService: BsModalService) { }
 
   ngOnInit(): void {
 
@@ -50,6 +54,15 @@ export class ListUsersComponent implements OnInit {
     this.val = "Update member";
     this.memberToUpdate = member;
     this.action =false;
+
+    this.bsModalRef = this.modalService.show(RegistrationFormComponent, {
+      initialState :  {
+        memberToUpdate2 : this.memberToUpdate,
+        val1: this.val,
+        action1: this.action
+      }
+    });
+    
   }
 
   onAdd (member){
@@ -57,6 +70,15 @@ export class ListUsersComponent implements OnInit {
     this.show = ! this.show;
     this.val = "Add member";
     this.action= true;
+
+    this.bsModalRef = this.modalService.show(RegistrationFormComponent,{
+      initialState: {
+        val1: this.val,
+        action1: this.action
+      }   
+    });
+    
+
   }
 
   deletMember(member: Member){
@@ -79,7 +101,7 @@ export class ListUsersComponent implements OnInit {
     this.listComplete = [
        ...this.listComplete, m 
     ]
-    //() => this.listMembers.push(this.member));
+    //this.listMembers.push(this.member));
     this.show = false;
     this.memberToUpdate = new Member;
   }

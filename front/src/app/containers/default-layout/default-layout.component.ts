@@ -11,7 +11,7 @@ export class DefaultLayoutComponent {
   Picture;
   Name;
   ngOnInit(): void {
-    this.Picture = this.sanitizer.bypassSecurityTrustResourceUrl(localStorage.getItem("Picture"))
+    this.Picture = localStorage.getItem("Picture")
     this.Name ="Welcome " + JSON.parse(localStorage.getItem("User")).Firstname + " " + JSON.parse(localStorage.getItem("User")).Lastname;
   }
 

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Association } from '../../../models/Association';
+import { AssociationsService } from '../../../services/associations.service';
 
 @Component({
   selector: 'app-list-associations',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListAssociationsComponent implements OnInit {
 
-  constructor() { }
+  listAssociations: Association[];
+  constructor(private service: AssociationsService) { }
 
   ngOnInit(): void {
+    this.listAssociations = new Array;
+    
+    this.service.getAssociations().subscribe(
+      (data: Association[]) => {
+        this.listAssociations = data
+      })
   }
 
 }

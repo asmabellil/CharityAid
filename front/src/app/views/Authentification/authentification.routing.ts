@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import { RegitrationPageComponent } from './regitration-page/regitration-page.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ResetComponent } from './reset/reset.component';
 
@@ -25,7 +26,7 @@ const routes: Routes = [
       },
       {
         path: 'register',
-        component: RegistrationFormComponent,
+        component: RegitrationPageComponent,
         data: {
           title: 'Register'
         }

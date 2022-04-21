@@ -17,6 +17,11 @@ export const navItems = {
     url: 'main/allassociations',
     icon: 'cil-building'
   },
+  {
+    name: 'Statistics',
+    url: 'main/allassociations',
+    icon: 'cil-chart'
+  },
   ],
   "member" :
   [

@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Member } from '../../../models/Member';
 import { MembersService } from '../../../services/members.service';
 import { Router } from '@angular/router';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-registration-form',
@@ -15,14 +16,20 @@ export class RegistrationFormComponent implements OnInit {
   listMembers: Member[];
   memberToAdd: Member;
   member: Member;
-  match: boolean;
   @Input() val1 = "Create an account";
   @Input() memberToUpdate2: Member;
   @Input() action1 = true;
   @Output() returnedMember = new EventEmitter<Member>();
   @Output() actAdd = new EventEmitter<Member>();
+  registerPage : boolean;
+  bsModalRef: BsModalRef;
+  closeBtnName: string;
 
-  constructor(private service: MembersService, private datePipe: DatePipe, private router : Router) { }
+  constructor(private service: MembersService, private datePipe: DatePipe, private router : Router, private injector : Injector) {
+    if(this.registerPage){
+      this.bsModalRef = injector.get<BsModalRef>(BsModalRef)
+    }
+   }
 
   ngOnInit(): void {
     this.registerForm= new FormGroup({
@@ -41,9 +48,7 @@ export class RegistrationFormComponent implements OnInit {
         (data: Member[]) => this.listMembers = data
       ); 
       this.member = new Member;
-      this.memberToUpdate2 = new Member;
-      this.match = true;
-      
+      !this.memberToUpdate2 ? this.memberToUpdate2 = new Member : console.log(this.memberToUpdate2)
   }
 
   get FirstName() {return this.registerForm.get('FirstName')};
@@ -77,25 +82,26 @@ export class RegistrationFormComponent implements OnInit {
       console.log(this.listMembers);
   }
 
- update(){
-   if (this.action1){
-     this.memberToAdd = {... this.memberToUpdate2,  Role: "member"}
-    this.service.addMember(this.memberToAdd).subscribe(
-      (data) => {
-        console.log("add")
-        this.actAdd.emit(data)
+  update(){
+    if (this.action1){
+      this.memberToAdd = {... this.memberToUpdate2,  Role: "member"}
+      this.service.addMember(this.memberToAdd).subscribe(
+        (data) => {
+          console.log("add")
+          this.actAdd.emit(data)
     })
-      
-      console.log(this.memberToUpdate2);
-      console.log(this.listMembers);
-      
-   }else{
-   console.log("entred")
-   this.member = {...this.memberToUpdate2}
-   this.service.updateMember(this.member).subscribe((data) =>{
+
+    console.log(this.memberToUpdate2);
+    console.log(this.listMembers);
+
+  }else{
+    console.log("entred")
+    this.member = {...this.memberToUpdate2}
+    this.service.updateMember(this.member).subscribe((data) =>{
       console.log(data + "modified")
       this.returnedMember.emit(data) 
-   })  
-   }
- }
+    })  
+  }
+  //this.bsModalRef.hide()
+  }
 }

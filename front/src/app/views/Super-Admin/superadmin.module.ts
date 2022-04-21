@@ -7,6 +7,9 @@ import { SuperAdminRoutingModule } from './superadmin.routing';
 // Components Routing
 import { ListUsersComponent } from './list-users/list-users.component';
 import { ListAssociationsComponent } from './list-associations/list-associations.component'
+import { AuthentificationModule } from '../Authentification/authentification.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 
 @NgModule({
   imports: [
@@ -14,6 +17,8 @@ import { ListAssociationsComponent } from './list-associations/list-associations
     FormsModule,
     ReactiveFormsModule,
     SuperAdminRoutingModule,
+    AuthentificationModule,
+    ModalModule.forRoot()
 
   ],
   declarations: [

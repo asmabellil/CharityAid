@@ -14,7 +14,8 @@ import { AuthentificationRoutingModule } from './authentification.routing';
 import { LoginComponent } from './login/login.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { ResetComponent } from './reset/reset.component'
-import { ResetPasswordComponent } from './reset-password/reset-password.component'
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RegitrationPageComponent } from './regitration-page/regitration-page.component'
 
 @NgModule({
   imports: [
@@ -31,8 +32,12 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LoginComponent,
     RegistrationFormComponent,
     ResetComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    RegitrationPageComponent
 
+  ],
+  exports: [
+    RegistrationFormComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
