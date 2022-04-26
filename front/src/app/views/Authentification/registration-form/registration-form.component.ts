@@ -99,7 +99,7 @@ export class RegistrationFormComponent implements OnInit {
     this.member = {...this.memberToUpdate2}
     this.service.updateMember(this.member).subscribe((data) =>{
       console.log(data + "modified")
-      this.returnedMember.emit(data) 
+      this.returnedMember.emit(data)
     })  
   }
   //this.bsModalRef.hide()

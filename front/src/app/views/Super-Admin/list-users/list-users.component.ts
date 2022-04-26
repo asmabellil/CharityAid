@@ -54,7 +54,7 @@ export class ListUsersComponent implements OnInit {
     this.val = "Update member";
     this.memberToUpdate = member;
     this.action =false;
-
+    
     this.bsModalRef = this.modalService.show(RegistrationFormComponent, {
       initialState :  {
         memberToUpdate2 : this.memberToUpdate,

@@ -1,5 +1,5 @@
 <div class="container">
-    <button class="btn btn-primary add" >Add new association</button>
+    <button class="btn btn-primary add" (click)="onAdd(1)"><i class="cil-user-plus"></i> Add new association</button>
     
     <ul class="responsive-table">
       <li class="table-header">
@@ -8,20 +8,18 @@
         <div class="col col-2"> Foundation_date </div>
         <div class="col col-1"> Adress </div>
         <div class="col col-1"> Phone </div>
-        <div class="col col-1"> Email </div>
-        <div class="col col-1"> Update </div>
-        <div class="col col-1"> Delete </div>
+        <div class="col col-2"> Email </div>
+        <div class="col col-2"> Actions </div>
       </li>
       <div *ngFor="let m of listAssociations">
         <li class="table-row">
           <div class="col col-1"><img class="img-avatar" src="{{m.Picture}}"/></div>
             <div class="col col-1" data-label="Job Id">{{m.Name}}</div>
-            <div class="col col-1" data-label="Amount">{{m.Foundation_date | date:'fullDate'}}</div>
-            <div class="col col-2" data-label="Amount">{{m.Adress}}</div>
+            <div class="col col-2" data-label="Amount">{{m.Foundation_date | date:'fullDate'}}</div>
+            <div class="col col-1" data-label="Amount">{{m.Adress}}</div>
             <div class="col col-1" data-label="Payment Status">{{m.Phone}}</div>
-            <div class="col col-1" data-label="Payment Status">{{m.Email}}</div>
-            <div class="col col-1" data-label="Payment Status"><button class="btn btn-warning" >Update</button></div>
-            <div class="col col-1" data-label="Payment Status"><button class="btn btn-danger" >Delete</button></div>
+            <div class="col col-2" data-label="Payment Status">{{m.Email}}</div>
+            <div class="col col-2" data-label="Payment Status"><button class="btn btn-warning mr-3" (click)="onUpdate(m)"><i class="icon-pencil"></i></button> <button class="btn btn-danger" (click)="deletMember(m)"><i class="icon-trash"></i></button></div>
         </li>
       </div>
     </ul>
