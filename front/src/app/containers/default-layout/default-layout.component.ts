@@ -12,7 +12,7 @@ export class DefaultLayoutComponent {
   Name;
   ngOnInit(): void {
     this.Picture = JSON.parse(localStorage.getItem("User")).Picture
-    this.Name ="Welcome " + JSON.parse(localStorage.getItem("User")).Firstname + " " + JSON.parse(localStorage.getItem("User")).Lastname;
+    this.Name ="Welcome " + JSON.parse(localStorage.getItem("User")).FirstName + " " + JSON.parse(localStorage.getItem("User")).LastName;
   }
 
   public sidebarMinimized = false;

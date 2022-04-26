@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -13,10 +14,10 @@ const routes: Routes = [
         redirectTo: 'allusers'
       },
       {
-        path: 'allusers',
-        //component: ,
+        path: 'profile',
+        component: ProfileComponent,
         data: {
-          title: 'allusers'
+          title: 'Profile'
         }
       },
     ]
