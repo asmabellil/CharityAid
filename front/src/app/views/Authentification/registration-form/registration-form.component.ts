@@ -1,10 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Member } from '../../../models/Member';
 import { MembersService } from '../../../services/members.service';
 import { Router } from '@angular/router';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-registration-form',
@@ -24,8 +24,9 @@ export class RegistrationFormComponent implements OnInit {
   registerPage : boolean;
   bsModalRef: BsModalRef;
   closeBtnName: string;
+  modalRef: BsModalRef;
 
-  constructor(private service: MembersService, private datePipe: DatePipe, private router : Router, private injector : Injector) {
+  constructor(private service: MembersService, private datePipe: DatePipe, private router : Router, private injector : Injector, private modalService: BsModalService) {
     if(this.registerPage){
       this.bsModalRef = injector.get<BsModalRef>(BsModalRef)
     }
@@ -103,5 +104,10 @@ export class RegistrationFormComponent implements OnInit {
     })  
   }
   //this.bsModalRef.hide()
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+    this.bsModalRef.hide()
   }
 }

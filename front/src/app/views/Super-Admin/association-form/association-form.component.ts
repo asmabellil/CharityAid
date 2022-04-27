@@ -1,10 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Association } from '../../../models/Association';
 import { AssociationsService } from '../../../services/associations.service';
 import { Router } from '@angular/router';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-association-form',
@@ -20,8 +20,9 @@ export class AssociationFormComponent implements OnInit {
   @Input() val1;
   @Output() actAdd = new EventEmitter<Association>();
   @Output() returnedAssociation = new EventEmitter<Association>();
+  modalRef: BsModalRef;
 
-  constructor(private service: AssociationsService, public bsModalRef: BsModalRef) { }
+  constructor(private service: AssociationsService, public bsModalRef: BsModalRef, private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.registerForm= new FormGroup({
@@ -57,6 +58,12 @@ export class AssociationFormComponent implements OnInit {
       this.returnedAssociation.emit(data)
     })  
   }
+  this.modalRef.hide();
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+    this.bsModalRef.hide()
   }
 
 }

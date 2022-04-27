@@ -35,10 +35,10 @@ export class ProfileComponent implements OnInit {
   get Email() {return this.registerForm.get('Email')};
 
   editProfile(member){
-    this.service.updateMember(this.member).subscribe((data) =>{
+    this.service.updateMember(member).subscribe((data) =>{
       console.log(data + "modified")
       localStorage.setItem("User", JSON.stringify(data))
     })
+    this.member = {... member}
   }
-
 }

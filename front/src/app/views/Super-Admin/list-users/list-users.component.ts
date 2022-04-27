@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Member } from '../../../models/Member';
 import { User } from '../../../models/User';
@@ -21,12 +21,15 @@ export class ListUsersComponent implements OnInit {
   memberToUpdate: Member;
   listComplete: Member[];
   bsModalRef: BsModalRef;
-
+  firstname: any;
+  key = 'id';
+  reverse: Boolean = false;
+  p: number =1;
+  modalRef: BsModalRef;
 
   constructor(private service: MembersService, private serviceUser: UsersService, private modalService: BsModalService) { }
 
   ngOnInit(): void {
-
     //this.listComplete = [{_id: "", Password: "", ConfirmPassword: "", Email: "", Role: "", FirstName: "", LastName: "", Picture: "", DOB: "", Adress: "", Phone: 0 , Role_Association: ""}]
     this.listComplete = new Array;
     
@@ -43,7 +46,6 @@ export class ListUsersComponent implements OnInit {
         );    
       }     
     );
-
     this.show = false;
     this.memberToUpdate = new Member;
     this.action = true;
@@ -86,6 +88,7 @@ export class ListUsersComponent implements OnInit {
     this.service.deleteMember(this.listComplete[i]._id).subscribe(
       () => this.listComplete = this.listComplete.filter(member => member._id != this.listComplete[i]._id)
     ); 
+    this.modalRef.hide(); 
   }
 
   updateList(m : Member){
@@ -104,5 +107,25 @@ export class ListUsersComponent implements OnInit {
     //this.listMembers.push(this.member));
     this.show = false;
     this.memberToUpdate = new Member;
+  }
+
+  Search(){
+    if (this.firstname === ""){
+      this.ngOnInit();
+    }
+    else{
+      this.listComplete = this.listComplete.filter(res => {
+        return (res.FirstName.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) || res.Phone.toString().match(this.firstname) || res.LastName.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) || res.Email.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) )
+      })
+    }
+  }
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+    this.bsModalRef.hide()
   }
 }

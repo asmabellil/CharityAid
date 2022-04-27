@@ -1,27 +1,43 @@
 <div class="container">
     <button class="btn btn-primary add mb-3 ml-5" (click)="onAdd(1)"><i class="cil-user-plus"></i> Add member</button>
+    <input class="form-control mb-3 w-50 ml-5" type="text" name="firstname" [(ngModel)]="firstname" (ngModelChange)="Search()" placeholder="Enter the word to search"/>
     <ul class="responsive-table">
       <li class="table-header">
         <div class="col col-1"> Picture </div>
-        <div class="col col-1"> First name </div>
-        <div class="col col-1"> Last name </div>
-        <div class="col col-2"> Date of birth </div>
-        <div class="col col-2"> Email </div>
+        <div class="col col-2" (click)="sort('FirstName')"> First name &nbsp; <i class="fa fa-sort"></i> </div>
+        <div class="col col-2" (click)="sort('LastName')"> Last name &nbsp; <i class="fa fa-sort"></i> </div>
+        <div class="col col-2" > Date of birth </div>
+        <div class="col col-3"> Email </div>
         <div class="col col-1"> Phone </div>
         <div class="col col-1"> Role </div>
         <div class="col col-2"> Actions </div>
       </li>
-      <div *ngFor="let m of listComplete">
+      <div *ngFor="let m of listComplete | orderBy: key: reverse | paginate: {itemsPerPage:2,currentPage:p}">
         <li class="table-row">
           <div class="col col-1"><img class="img-avatar" src="{{m.Picture}}"/></div>
-            <div class="col col-1" data-label="Job Id">{{m.FirstName}}</div>
-            <div class="col col-1" data-label="Customer Name">{{m.LastName}}</div>
+            <div class="col col-2" data-label="Job Id">{{m.FirstName}}</div>
+            <div class="col col-2" data-label="Customer Name">{{m.LastName}}</div>
             <div class="col col-2" data-label="Amount">{{m.DOB | date:'fullDate'}}</div>
-            <div class="col col-2" data-label="Amount">{{m.Email}}</div>
+            <div class="col col-3" data-label="Amount">{{m.Email}}</div>
             <div class="col col-1" data-label="Payment Status">{{m.Phone}}</div>
             <div class="col col-1" data-label="Payment Status">{{m.Role_Association}}</div>
-            <div class="col col-2" data-label="Payment Status"><button class="btn btn-warning mr-3" (click)="onUpdate(m)"><i class="icon-pencil"></i></button> <button class="btn btn-danger" (click)="deletMember(m)"><i class="icon-trash"></i></button></div>
+            <div class="col col-2" data-label="Payment Status"><button class="btn btn-warning mr-3" (click)="onUpdate(m)"><i class="icon-pencil"></i></button> <button class="btn btn-danger" (click)="openModal(template)"><i class="icon-trash"></i></button></div>
         </li>
+
+        <ng-template #template>
+          <div class="modal-header">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body text-center">
+            <p>Do you want to confirm ?</p>
+            <button type="button" class="btn btn-primary" (click)="deletMember(m)" >Yes</button>
+            <button type="button" class="btn btn-default" (click)="modalRef.hide()" >No</button>
+          </div>
+        </ng-template>  
+
       </div>
     </ul>
+    <pagination-controls class="text-right" (pageChange)="p = $event"></pagination-controls> 
   </div>

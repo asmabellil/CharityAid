@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Association } from '../../../models/Association';
 import { AssociationsService } from '../../../services/associations.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -16,6 +16,12 @@ export class ListAssociationsComponent implements OnInit {
   val: String;
   action: boolean;
   bsModalRef: BsModalRef;  
+  firstname: any;
+  key = 'id';
+  reverse: Boolean = false;
+  p: number =1;
+  modalRef: BsModalRef;
+
   constructor(private service: AssociationsService, private modalService: BsModalService) { }
 
   ngOnInit(): void {
@@ -61,7 +67,28 @@ export class ListAssociationsComponent implements OnInit {
     let i= this.listAssociations.indexOf(association);
     this.service.deleteAssociation(this.listAssociations[i]._id).subscribe(
       () => this.listAssociations = this.listAssociations.filter(association => association._id != this.listAssociations[i]._id)
-    ); 
+    );
+    this.modalRef.hide(); 
+  }
+
+  Search(){
+    if (this.firstname === ""){
+      this.ngOnInit();
+    }
+    else{
+      this.listAssociations = this.listAssociations.filter(res => {
+        return (res.Name.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) || res.Phone.toString().match(this.firstname) || res.Adress.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) || res.Email.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) )
+      })
+    }
+  }
+  sort(key){
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+    this.bsModalRef.hide()
   }
 
 }
