@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 export class ResetPasswordComponent implements OnInit {
   resetForm: FormGroup;
   member: Member;
+  message: any;
+  show: Boolean;
 
   constructor(private service: UsersService, private router : Router) { }
 
@@ -26,8 +28,14 @@ export class ResetPasswordComponent implements OnInit {
   get Email() {return this.resetForm.get('Email')};
 
   forgot(){
-    this.service.forgotPassword({Email: this.resetForm.get('Email')}).subscribe((data) =>{
+    console.log(this.resetForm.get('Email').value)
+    this.service.forgotPassword({Email: this.resetForm.get('Email').value}).subscribe((data) =>{
       console.log("data "+ data)
+    },
+    error => {
+      console.log(error)
+      this.show = true;
+      this.message = error.error.text;      
     })
     
   }

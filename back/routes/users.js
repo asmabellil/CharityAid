@@ -71,32 +71,33 @@ router.post("/login", function (req, res, next) {
       if (err) throw err;
       if (data.length === 0) {
         console.log(data);
-        return res.send("UserNotFound");
+        return res.send("User Not Registred");
       } else if ((await bcrypt.compare(password, data[0].Password)) === false) {
         console.log(password);
 
         console.log("WrongPassword");
-        return res.send("WrongPassword");
+        return res.send("Wrong Password");
       } else {
         console.log(data[0].Role);
         
-        Member.find(data[0]._id, function (err, doc) {
+        Member.findById(data[0]._id, function (err, doc) {
                 if (err) {
                   res.send(err);
                 } else {
+                  index = Member.find(data[0]._id).index;
                   let token = jwt.sign({email : data[0].Email}, 'secret', {expiresIn: '3h'})
                   if (data[0].Role == "member") {
                     var o2 = {
                       _id: data[0]._id,
                       Email: data[0].Email,
                       Role: data[0].Role,
-                      FirstName: doc[0].FirstName,
-                      LastName: doc[0].LastName,
-                      Picture: doc[0].Picture,
-                      Phone: doc[0].Phone,
-                      DOB: doc[0].DOB,
-                      Adress: doc[0].Adress,
-                      Role_Association: doc[0].Role_Association,
+                      FirstName: doc.FirstName,
+                      LastName: doc.LastName,
+                      Picture: doc.Picture,
+                      Phone: doc.Phone,
+                      DOB: doc.DOB,
+                      Adress: doc.Adress,
+                      Role_Association: doc.Role_Association,
                       token: token
                     };
                     res.send(o2); 

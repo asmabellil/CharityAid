@@ -11,6 +11,8 @@ import { UsersService } from '../../../services/users.service';
 export class LoginComponent {
   loginForm: FormGroup;
   member: Member;
+  message: any;
+  show: Boolean;
 
   constructor(private service: UsersService, private router : Router) { }
 
@@ -20,6 +22,7 @@ export class LoginComponent {
       Email: new FormControl('',Validators.required),
       Password: new FormControl('',Validators.required),
       });
+    this.show = false;
   }
   get Email() {return this.loginForm.get('Email')};
   get Password() {return this.loginForm.get('Password')};
@@ -40,7 +43,9 @@ export class LoginComponent {
       localStorage.setItem("User", JSON.stringify(response.body))
     },
     error => {
-      console.log(error)
+      console.log(error.error.text)
+      this.show = true;
+      this.message = error.error.text;
     });
   }
 

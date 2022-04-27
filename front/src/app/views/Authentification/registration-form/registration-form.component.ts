@@ -103,11 +103,11 @@ export class RegistrationFormComponent implements OnInit {
       this.returnedMember.emit(data)
     })  
   }
-  //this.bsModalRef.hide()
+  this.modalRef.hide();
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
-    this.bsModalRef.hide()
+    this.bsModalRef.hide() //hedhi feha mochkol
   }
 }
