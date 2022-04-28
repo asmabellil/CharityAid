@@ -43,6 +43,7 @@ router.post("/", upload, async function (req, res, next) {
       DOB: obj.DOB,
       Phone: obj.Phone,
       Adress: obj.Adress,
+      Association: obj.Association,
       Role_Association: obj.Role_Association,
     };
     var ids;

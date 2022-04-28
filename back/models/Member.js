@@ -10,6 +10,7 @@ var Member = new Schema(
     DOB: String,
     Adress: String,
     Phone: Number,
+    Association: String,
     Role_Association: String
   },
   { timestamps: true }

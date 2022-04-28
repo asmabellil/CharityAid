@@ -1,31 +1,49 @@
-<div class="container rounded bg-white mt-5 mb-5">
-    <div class="row">
-        <div class="col-md-4 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="{{member.Picture}}"><span class="font-weight-bold">{{member.FirstName}} {{member.LastName}}</span><span class="text-black-50">{{member.Email}}</span><span> </span></div>
-        </div>
-        <div class="col-md-8 border-right">
-            <form method="post" [formGroup]="registerForm">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right"> My Profile </h4>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">First Name</label><input type="text" class="form-control" placeholder="First name" [(ngModel)]="member.FirstName" formControlName="FirstName"></div>
-                    <div class="col-md-6"><label class="labels">Las Name</label><input type="text" class="form-control" placeholder="Last name" [(ngModel)]="member.LastName" formControlName="LastName"></div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Phone Number</label><input type="text" class="form-control" placeholder="Enter phone number" [(ngModel)]="member.Phone" formControlName="Phone"></div>
-                    <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" placeholder="Enter your address" [(ngModel)]="member.Adress" formControlName="Adress"></div>
-                    <div class="col-md-12"><label class="labels">Date of birth</label><input type="text" class="form-control" placeholder="Enter your date of birth" [(ngModel)]="member.DOB" formControlName="DOB"></div>
-                    <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="Enter your Email" [(ngModel)]="member.Email" formControlName="Email"></div>
-                </div>
-                <!-- <div class="row mt-3">
-                    <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
-                    <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
-                </div> -->
-                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" (click)="editProfile(member)">Edit Profile</button></div>
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-4 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="{{member.Picture}}"><span class="font-weight-bold">{{member.FirstName}} {{member.LastName}}</span><span class="text-black-50">{{member.Email}}</span><span> </span></div>
             </div>
-        </form>
+            <div class="col-md-8 border-right">
+                <form method="post" [formGroup]="registerForm">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right"> My Profile </h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">First Name</label><input type="text" class="form-control" placeholder="First name" [(ngModel)]="member.FirstName" formControlName="FirstName"></div>
+                        <div class="col-md-6"><label class="labels">Las Name</label><input type="text" class="form-control" placeholder="Last name" [(ngModel)]="member.LastName" formControlName="LastName"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Phone Number</label><input type="text" class="form-control" placeholder="Enter phone number" [(ngModel)]="member.Phone" formControlName="Phone"></div>
+                        <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" placeholder="Enter your address" [(ngModel)]="member.Adress" formControlName="Adress"></div>
+                        <div class="col-md-12 mat-calander" >
+                            <div class="labels">Date of birth:</div>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <input matInput [matDatepicker]="picker" [(ngModel)]="member.DOB" formControlName="DOB">
+                          </div>
+                        <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="Enter your Email" [(ngModel)]="member.Email" formControlName="Email"></div>
+                    </div>
+                    <!-- <div class="row mt-3">
+                        <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
+                        <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
+                    </div> -->
+                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" (click)="openModal(template)">Edit Profile</button></div>
+                </div>
+            </form>
+            </div>
         </div>
     </div>
-</div>
+
+    <ng-template #template>
+        <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body text-center">
+        <p>Do you want to confirm ?</p>
+        <button type="button" class="btn btn-primary" (click)="editProfile(member)" >Yes</button>
+        <button type="button" class="btn btn-default" (click)="modalRef.hide()" >No</button>
+        </div>
+    </ng-template>

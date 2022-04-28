@@ -43,6 +43,7 @@ export class ListUsersComponent implements OnInit {
               this.listComplete[i] = {...data[i], ...data1[i+1]}
             }
           }
+          
         );    
       }     
     );
@@ -126,6 +127,6 @@ export class ListUsersComponent implements OnInit {
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
-    this.bsModalRef.hide()
+
   }
 }

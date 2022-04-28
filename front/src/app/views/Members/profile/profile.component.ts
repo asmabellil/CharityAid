@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Member } from 'src/app/models/Member';
 import { MembersService } from 'src/app/services/members.service';
 
@@ -11,8 +12,9 @@ import { MembersService } from 'src/app/services/members.service';
 export class ProfileComponent implements OnInit {
   member: Member;
   registerForm: FormGroup;
+  modalRef: BsModalRef;
 
-  constructor(private service: MembersService) { }
+  constructor(private service: MembersService, public bsModalRef: BsModalRef, private modalService: BsModalService) { }
 
   ngOnInit(): void {
    this.member = JSON.parse(localStorage.getItem("User"));
@@ -40,5 +42,10 @@ export class ProfileComponent implements OnInit {
       localStorage.setItem("User", JSON.stringify(data))
     })
     this.member = {... member}
+    this.modalRef.hide();
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 }

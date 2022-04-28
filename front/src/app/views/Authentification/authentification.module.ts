@@ -15,7 +15,8 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { ResetComponent } from './reset/reset.component'
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { RegitrationPageComponent } from './regitration-page/regitration-page.component'
+import { RegitrationPageComponent } from './regitration-page/regitration-page.component';
+import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { RegitrationPageComponent } from './regitration-page/regitration-page.co
     MatNativeDateModule,
     MatDatepickerModule,
     MatGridListModule,
+    ModalModule.forRoot()
 
   ],
   declarations: [
@@ -38,6 +40,9 @@ import { RegitrationPageComponent } from './regitration-page/regitration-page.co
   ],
   exports: [
     RegistrationFormComponent
+  ],
+  providers: [
+    BsModalRef
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

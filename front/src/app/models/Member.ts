@@ -7,5 +7,6 @@ export class Member extends User{
     DOB: String;
     Adress: String;
     Phone: Number;
+    Association: String;
     Role_Association: String
 }

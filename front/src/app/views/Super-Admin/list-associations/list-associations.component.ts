@@ -88,7 +88,7 @@ export class ListAssociationsComponent implements OnInit {
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
-    this.bsModalRef.hide()
+
   }
 
 }

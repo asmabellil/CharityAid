@@ -5,6 +5,8 @@ import { Member } from '../../../models/Member';
 import { MembersService } from '../../../services/members.service';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { AssociationsService } from 'src/app/services/associations.service';
+import { Association } from 'src/app/models/Association';
 
 @Component({
   selector: 'app-registration-form',
@@ -16,20 +18,18 @@ export class RegistrationFormComponent implements OnInit {
   listMembers: Member[];
   memberToAdd: Member;
   member: Member;
+  listAssociations: Association[];
   @Input() val1 = "Create an account";
   @Input() memberToUpdate2: Member;
   @Input() action1 = true;
   @Output() returnedMember = new EventEmitter<Member>();
   @Output() actAdd = new EventEmitter<Member>();
   registerPage : boolean;
-  bsModalRef: BsModalRef;
   closeBtnName: string;
   modalRef: BsModalRef;
 
-  constructor(private service: MembersService, private datePipe: DatePipe, private router : Router, private injector : Injector, private modalService: BsModalService) {
-    if(this.registerPage){
-      this.bsModalRef = injector.get<BsModalRef>(BsModalRef)
-    }
+  constructor(private service: MembersService, private serviceAssociation: AssociationsService, private datePipe: DatePipe, private router : Router, public bsModalRef: BsModalRef, private modalService: BsModalService) {
+
    }
 
   ngOnInit(): void {
@@ -39,6 +39,7 @@ export class RegistrationFormComponent implements OnInit {
       DOB: new FormControl('',Validators.required),
       Adress: new FormControl('',[Validators.required,Validators.minLength(3)]),
       Phone: new FormControl('',[Validators.required,Validators.pattern('[0-9]{8}')]),
+      Association: new FormControl('',Validators.required),
       Role_Association: new FormControl('',Validators.required),
       Email: new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$")]),
       Password: new FormControl('',[Validators.required,Validators.minLength(6),Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{6,50}')]),
@@ -50,6 +51,17 @@ export class RegistrationFormComponent implements OnInit {
       ); 
       this.member = new Member;
       !this.memberToUpdate2 ? this.memberToUpdate2 = new Member : console.log(this.memberToUpdate2)
+
+      this.listAssociations = new Array;
+
+      this.serviceAssociation.getAssociations().subscribe(
+        (data: Association[]) => {
+        /* for (let i = 0; i < data.length; i++) {
+          this.listAssociations[i] = data[i].Name  
+        } */
+        this.listAssociations = data
+      }
+      )
   }
 
   get FirstName() {return this.registerForm.get('FirstName')};
@@ -58,6 +70,7 @@ export class RegistrationFormComponent implements OnInit {
   get Adress() {return this.registerForm.get('Adress')};
   get Phone() {return this.registerForm.get('Phone')};
   get Role_Association() {return this.registerForm.get('Role_Association')};
+  get Association() {return this.registerForm.get('Association')};
   get Email() {return this.registerForm.get('Email')};
   get Password() {return this.registerForm.get('Password')};
   get ConfirmPassword() {return this.registerForm.get('ConfirmPassword')};
