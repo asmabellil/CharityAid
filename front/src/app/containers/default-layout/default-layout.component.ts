@@ -10,14 +10,14 @@ export class DefaultLayoutComponent {
   constructor(private readonly sanitizer: DomSanitizer) { }
   Picture;
   Name;
+  public navItems
   ngOnInit(): void {
     this.Picture = JSON.parse(localStorage.getItem("User")).Picture
     this.Name ="Welcome " + JSON.parse(localStorage.getItem("User")).FirstName + " " + JSON.parse(localStorage.getItem("User")).LastName;
+    JSON.parse(localStorage.getItem("User")).Role === "superadmin" ? this.navItems = navItems[JSON.parse(localStorage.getItem("User")).Role] : this.navItems = navItems[JSON.parse(localStorage.getItem("User")).Role_Association]
   }
 
   public sidebarMinimized = false;
-  public navItems = navItems[JSON.parse(localStorage.getItem("User")).Role];
-
 
   toggleMinimize(e) {
     this.sidebarMinimized = e;

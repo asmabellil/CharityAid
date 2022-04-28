@@ -24,6 +24,8 @@ export class ProfileComponent implements OnInit {
     LastName: new FormControl('',[Validators.required,Validators.minLength(2)]),
     DOB: new FormControl('',Validators.required),
     Adress: new FormControl('',[Validators.required,Validators.minLength(3)]),
+    Association: new FormControl('',Validators.required),
+    Role_Association: new FormControl('',Validators.required),
     Phone: new FormControl('',[Validators.required,Validators.pattern('[0-9]{8}')]),
     Email: new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$")]),
     });
@@ -35,6 +37,8 @@ export class ProfileComponent implements OnInit {
   get Adress() {return this.registerForm.get('Adress')};
   get Phone() {return this.registerForm.get('Phone')};
   get Email() {return this.registerForm.get('Email')};
+  get Association() {return this.registerForm.get('Association')};
+  get Role_Association() {return this.registerForm.get('Role_Association')};
 
   editProfile(member){
     this.service.updateMember(member).subscribe((data) =>{

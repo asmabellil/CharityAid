@@ -23,7 +23,7 @@ export const navItems = {
     icon: 'cil-chart'
   },
   ],
-  "member" :
+  "Chair" :
   [
   {
     title: true,
@@ -34,6 +34,133 @@ export const navItems = {
     url: '/main/allusers',
     icon: 'cil-user',
   },
+  {
+    name: 'Subscribers',
+    url: '/main/allassociations',
+    icon: 'icon-people'
+  },
+  {
+    name: 'Events',
+    url: '/main/allassociations',
+    icon: 'cil-highlighter',
+    children: [
+      {
+        name: 'Tasks',
+        url: '/main/allassociations',
+        icon: 'cil-list-rich',
+        /* badge: {
+          variant: 'success',
+          text: 'NEW'
+        } */
+      },
+    ]
+  },
+  {
+    name: 'Reports',
+    url: '/main/allassociations',
+    icon: 'cil-description'
+  },
+  {
+    name: 'Cash flow',
+    url: '/main/allassociations',
+    icon: 'cil-money'
+  },
+  {
+    name: 'Contact',
+    url: '/main/allassociations',
+    icon: 'cil-contact'
+  },
+  ],
+  "Vice Chair" :
+  [
+  {
+    title: true,
+    name: 'Menu'
+  }, 
+  {
+    name: 'Subscribers',
+    url: '/main/allassociations',
+    icon: 'icon-people'
+  },
+  {
+    name: 'Events',
+    url: '/main/allassociations',
+    icon: 'cil-highlighter',
+    children: [
+      {
+        name: 'Tasks',
+        url: '/main/allassociations',
+        icon: 'cil-list-rich',
+        /* badge: {
+          variant: 'success',
+          text: 'NEW'
+        } */
+      },
+    ]
+  },
+  {
+    name: 'Reports',
+    url: '/main/allassociations',
+    icon: 'cil-description'
+  },
+  {
+    name: 'Cash flow',
+    url: '/main/allassociations',
+    icon: 'cil-money'
+  },
+  {
+    name: 'Contact',
+    url: '/main/allassociations',
+    icon: 'cil-contact'
+  }],
+  "Treasurer" :
+  [
+  {
+    title: true,
+    name: 'Menu'
+  }, 
+  {
+    name: 'Subscribers',
+    url: '/main/allassociations',
+    icon: 'icon-people'
+  },
+  {
+    name: 'Events',
+    url: '/main/allassociations',
+    icon: 'cil-highlighter',
+    children: [
+      {
+        name: 'Tasks',
+        url: '/main/allassociations',
+        icon: 'cil-list-rich',
+        /* badge: {
+          variant: 'success',
+          text: 'NEW'
+        } */
+      },
+    ]
+  },
+  {
+    name: 'Reports',
+    url: '/main/allassociations',
+    icon: 'cil-description'
+  },
+  {
+    name: 'Cash flow',
+    url: '/main/allassociations',
+    icon: 'cil-money'
+  },
+  {
+    name: 'Contact',
+    url: '/main/allassociations',
+    icon: 'cil-contact'
+  }],
+  "General Secretary" :
+  [
+  {
+    title: true,
+    name: 'Menu'
+  }, 
   {
     name: 'Subscribers',
     url: '/main/allassociations',

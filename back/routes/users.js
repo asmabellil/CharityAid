@@ -97,6 +97,7 @@ router.post("/login", function (req, res, next) {
                       Phone: doc.Phone,
                       DOB: doc.DOB,
                       Adress: doc.Adress,
+                      Association: doc.Association,
                       Role_Association: doc.Role_Association,
                       token: token
                     };

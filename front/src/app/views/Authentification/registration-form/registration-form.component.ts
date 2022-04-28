@@ -27,6 +27,8 @@ export class RegistrationFormComponent implements OnInit {
   registerPage : boolean;
   closeBtnName: string;
   modalRef: BsModalRef;
+  testRole: Boolean;
+  association: String;
 
   constructor(private service: MembersService, private serviceAssociation: AssociationsService, private datePipe: DatePipe, private router : Router, public bsModalRef: BsModalRef, private modalService: BsModalService) {
 
@@ -62,6 +64,22 @@ export class RegistrationFormComponent implements OnInit {
         this.listAssociations = data
       }
       )
+      this.testRole= false;
+      this.association = "";
+      if (JSON.parse(localStorage.getItem("User")).Role === "superadmin" ){
+        this.testRole = true;
+      }else{
+        this.testRole = false;
+        this.association = JSON.parse(localStorage.getItem("User")).Association
+      }
+  
+      /* if (JSON.parse(localStorage.getItem("User")).Role === "superadmin" ){
+        this.testRole = "1";
+      }else if (JSON.parse(localStorage.getItem("User")).Role_Association === "Chair" ){
+        this.testRole = "2";
+      }else {
+        this.testRole="3"
+      } */
   }
 
   get FirstName() {return this.registerForm.get('FirstName')};
@@ -76,13 +94,13 @@ export class RegistrationFormComponent implements OnInit {
   get ConfirmPassword() {return this.registerForm.get('ConfirmPassword')};
 
   // to check confirm password
-    onPasswordChange() {
-      if (this.ConfirmPassword.value == this.Password.value) {
-        this.ConfirmPassword.setErrors(null);
-      } else {
-        this.ConfirmPassword.setErrors({ mismatch: true });
-      }
+  onPasswordChange() {
+    if (this.ConfirmPassword.value == this.Password.value) {
+      this.ConfirmPassword.setErrors(null);
+    } else {
+      this.ConfirmPassword.setErrors({ mismatch: true });
     }
+  }
 
   save(){
     this.memberToAdd = {... this.memberToUpdate2,  Role: "member"}
@@ -98,6 +116,7 @@ export class RegistrationFormComponent implements OnInit {
 
   update(){
     if (this.action1){
+      if(JSON.parse(localStorage.getItem("User")).Role === "superadmin"){
       this.memberToAdd = {... this.memberToUpdate2,  Role: "member"}
       this.service.addMember(this.memberToAdd).subscribe(
         (data) => {
@@ -106,7 +125,16 @@ export class RegistrationFormComponent implements OnInit {
     })
 
     console.log(this.memberToUpdate2);
-    console.log(this.listMembers);
+    console.log(this.listMembers);        
+      }
+      else {
+          this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Association: this.association}
+          this.service.addMember(this.memberToAdd).subscribe(
+            (data) => {
+              console.log("add")
+              this.actAdd.emit(data)
+        })        
+    }
 
   }else{
     console.log("entred")

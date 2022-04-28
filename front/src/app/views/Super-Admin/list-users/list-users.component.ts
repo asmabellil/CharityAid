@@ -26,6 +26,7 @@ export class ListUsersComponent implements OnInit {
   reverse: Boolean = false;
   p: number =1;
   modalRef: BsModalRef;
+  config: any;
 
   constructor(private service: MembersService, private serviceUser: UsersService, private modalService: BsModalService) { }
 
@@ -42,6 +43,11 @@ export class ListUsersComponent implements OnInit {
             for (let i = 0; i < data.length; i++) {
               this.listComplete[i] = {...data[i], ...data1[i+1]}
             }
+            if (JSON.parse(localStorage.getItem("User")).Role === "superadmin" ){
+              this.listComplete = this.listComplete
+            }else{
+              this.listComplete = this.listComplete.filter(member => member.Association === JSON.parse(localStorage.getItem("User")).Association  )
+            }
           }
           
         );    
@@ -50,6 +56,7 @@ export class ListUsersComponent implements OnInit {
     this.show = false;
     this.memberToUpdate = new Member;
     this.action = true;
+    this.config= {class: 'gray modal-lg'}
   }
 
   onUpdate (member){
@@ -63,7 +70,7 @@ export class ListUsersComponent implements OnInit {
         memberToUpdate2 : this.memberToUpdate,
         val1: this.val,
         action1: this.action
-      }
+      },
     });
     
   }
@@ -74,14 +81,13 @@ export class ListUsersComponent implements OnInit {
     this.val = "Add member";
     this.action= true;
 
-    this.bsModalRef = this.modalService.show(RegistrationFormComponent,{
+    this.bsModalRef = this.modalService.show(RegistrationFormComponent ,{
       initialState: {
         val1: this.val,
         action1: this.action
-      }   
-    });
-    
-
+      } 
+    }
+    );
   }
 
   deletMember(member: Member){
