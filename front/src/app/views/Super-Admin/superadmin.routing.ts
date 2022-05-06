@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AssociationFormComponent } from './association-form/association-form.component';
-import { EventsComponent } from './events/events.component';
 import { ListAssociationsComponent } from './list-associations/list-associations.component';
 import { ListUsersComponent } from './list-users/list-users.component'
 
@@ -35,13 +34,6 @@ const routes: Routes = [
         component: AssociationFormComponent,
         data: {
           title: 'All associations'
-        }
-      },
-      {
-        path: 'allevents',
-        component: EventsComponent,
-        data: {
-          title: 'All events'
         }
       },
     ]

@@ -41,7 +41,7 @@ export const navItems = {
   },
   {
     name: 'Events',
-    url: '/main/allevents',
+    url: '/members/allevents',
     icon: 'cil-highlighter'
   },
   {
@@ -82,7 +82,7 @@ export const navItems = {
   },
   {
     name: 'Events',
-    url: '/main/allevents',
+    url: '/members/allevents',
     icon: 'cil-highlighter'
   },
   {
@@ -122,7 +122,7 @@ export const navItems = {
   },
   {
     name: 'Events',
-    url: '/main/allevents',
+    url: '/members/allevents',
     icon: 'cil-highlighter'
   },
   {
@@ -162,7 +162,7 @@ export const navItems = {
   },
   {
     name: 'Events',
-    url: '/main/allevents',
+    url: '/members/allevents',
     icon: 'cil-highlighter'
   },
   {

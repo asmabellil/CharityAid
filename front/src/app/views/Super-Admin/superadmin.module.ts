@@ -9,6 +9,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // Components Routing
 import { ListUsersComponent } from './list-users/list-users.component';
@@ -16,13 +21,6 @@ import { ListAssociationsComponent } from './list-associations/list-associations
 import { AuthentificationModule } from '../Authentification/authentification.module';
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { AssociationFormComponent } from './association-form/association-form.component';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { EventsComponent } from './events/events.component';
-import { EventFormComponent } from './event-form/event-form.component'
 
 
 @NgModule({
@@ -49,9 +47,7 @@ import { EventFormComponent } from './event-form/event-form.component'
   declarations: [
     ListUsersComponent,
     ListAssociationsComponent,
-    AssociationFormComponent,
-    EventsComponent,
-    EventFormComponent
+    AssociationFormComponent
   ],
   providers: [
     DatePipe,

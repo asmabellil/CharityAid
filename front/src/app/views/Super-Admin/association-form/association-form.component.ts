@@ -30,6 +30,10 @@ export class AssociationFormComponent implements OnInit {
       Foundation_date: new FormControl('',Validators.required),
       Adress: new FormControl('',[Validators.required,Validators.minLength(3)]),
       Phone: new FormControl('',[Validators.required,Validators.pattern('[0-9]{8}')]),
+      Siret_Number: new FormControl('',[Validators.required,Validators.pattern('[0-9]{9}')]),
+      Type: new FormControl('',Validators.required),
+      Responsible: new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$")]),
+      Username: new FormControl('',Validators.required),
       Email: new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$")]),
       });
       !this.associationToUpdate ? this.associationToUpdate = new Association : console.log(this.associationToUpdate)
@@ -39,6 +43,10 @@ export class AssociationFormComponent implements OnInit {
   get Foundation_date() {return this.registerForm.get('Foundation_date')};
   get Adress() {return this.registerForm.get('Adress')};
   get Phone() {return this.registerForm.get('Phone')};
+  get Siret_Number() {return this.registerForm.get('Siret_Number')};
+  get Type() {return this.registerForm.get('Type')};
+  get Responsible() {return this.registerForm.get('Responsible')};
+  get Username() {return this.registerForm.get('Username')};
   get Email() {return this.registerForm.get('Email')};
 
   update(){

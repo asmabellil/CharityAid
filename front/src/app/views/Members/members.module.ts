@@ -7,9 +7,13 @@ import { ProfileComponent } from './profile/profile.component'
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { 
-  MatGridListModule
-} from '@angular/material/grid-list';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { EventsComponent } from './events/events.component';
+import { EventFormComponent } from './event-form/event-form.component';
 
 // Components Routing
 
@@ -23,11 +27,16 @@ import {
     MatNativeDateModule,
     MatDatepickerModule,
     MatGridListModule,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
 
   ],
   declarations: [
     
-  
+    EventsComponent,
+    EventFormComponent,
     ProfileComponent
   ],
   providers: [
