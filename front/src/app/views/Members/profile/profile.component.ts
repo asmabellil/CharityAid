@@ -13,6 +13,7 @@ export class ProfileComponent implements OnInit {
   member: Member;
   registerForm: FormGroup;
   modalRef: BsModalRef;
+  content : String = "Change picture";
 
   constructor(private service: MembersService, public bsModalRef: BsModalRef, private modalService: BsModalService) { }
 

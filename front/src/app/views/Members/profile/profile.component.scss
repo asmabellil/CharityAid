@@ -42,3 +42,15 @@ body {
     cursor: pointer;
     border: solid 1px #BA68C8
 }
+
+figure { position: relative; display: block; overflow: hidden; }
+figure img { max-width: 100% }
+figure .caption { position: absolute; display: block; top: 0; left: 0; height: 100%; width: 100%; opacity: 0; transition: all .2s ease-in-out }
+figure:hover .caption { opacity: 1; }
+figure:hover { transform: scale(1.5) }
+
+.img-avatar {
+    width: 100%;
+    height: 100%;
+}
+

@@ -1,17 +1,28 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Member } from '../../../models/Member';
 import { User } from '../../../models/User';
 import { MembersService } from '../../../services/members.service';
 import { UsersService } from '../../../services/users.service';
 import { RegistrationFormComponent } from '../../Authentification/registration-form/registration-form.component';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-list-users',
   templateUrl: './list-users.component.html',
   styleUrls: ['./list-users.component.scss']
 })
-export class ListUsersComponent implements OnInit {
+export class ListUsersComponent implements AfterViewInit {
+  displayedColumns: string[] = ['Picture', 'FirstName', 'LastName', 'DOB', 'Association', 'Role_Association', 'Email', 'Phone', 'Actions'];
+  dataSource: MatTableDataSource<Member>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  showFilter: Boolean;
   action: boolean;
   user: User;
   listMembers: Member[];
@@ -28,10 +39,7 @@ export class ListUsersComponent implements OnInit {
   modalRef: BsModalRef;
   config: any;
 
-  constructor(private service: MembersService, private serviceUser: UsersService, private modalService: BsModalService) { }
-
-  ngOnInit(): void {
-    //this.listComplete = [{_id: "", Password: "", ConfirmPassword: "", Email: "", Role: "", FirstName: "", LastName: "", Picture: "", DOB: "", Adress: "", Phone: 0 , Role_Association: ""}]
+  constructor(private service: MembersService, private serviceUser: UsersService, private modalService: BsModalService) {
     this.listComplete = new Array;
     
     this.service.getMembers().subscribe(
@@ -45,19 +53,35 @@ export class ListUsersComponent implements OnInit {
             }
             if (JSON.parse(localStorage.getItem("User")).Role === "superadmin" ){
               this.listComplete = this.listComplete
+              this.dataSource = new MatTableDataSource(this.listComplete);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
             }else{
               this.listComplete = this.listComplete.filter(member => member.Association === JSON.parse(localStorage.getItem("User")).Association  )
+              this.dataSource = new MatTableDataSource(this.listComplete);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
             }
           }
           
         );    
       }     
     );
+    
+    console.log(this.dataSource);
     this.show = false;
     this.memberToUpdate = new Member;
     this.action = true;
-    this.config= {class: 'gray modal-lg'}
+    this.config= {class: 'gray modal-lg'};
+    this.showFilter = false;
+   }
+
+  ngAfterViewInit(): void {
+    //this.listComplete = [{_id: "", Password: "", ConfirmPassword: "", Email: "", Role: "", FirstName: "", LastName: "", Picture: "", DOB: "", Adress: "", Phone: 0 , Role_Association: ""}]
+
   }
+
+  
 
   onUpdate (member){
     this.show = ! this.show;
@@ -93,8 +117,11 @@ export class ListUsersComponent implements OnInit {
   deletMember(member: Member){
     let i= this.listComplete.indexOf(member);
     this.service.deleteMember(this.listComplete[i]._id).subscribe(
-      () => this.listComplete = this.listComplete.filter(member => member._id != this.listComplete[i]._id)
+      () => {this.listComplete = this.listComplete.filter(member => member._id != this.listComplete[i]._id),
+        this.dataSource = new MatTableDataSource(this.listComplete)
+    }
     ); 
+    
     this.modalRef.hide(); 
   }
 
@@ -118,7 +145,7 @@ export class ListUsersComponent implements OnInit {
 
   Search(){
     if (this.firstname === ""){
-      this.ngOnInit();
+      this.ngAfterViewInit();
     }
     else{
       this.listComplete = this.listComplete.filter(res => {
@@ -126,7 +153,7 @@ export class ListUsersComponent implements OnInit {
       })
     }
   }
-  sort(key){
+  sortt(key){
     this.key = key;
     this.reverse = !this.reverse;
   }
@@ -134,5 +161,18 @@ export class ListUsersComponent implements OnInit {
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
 
+  }
+
+  onChangeFilter(){
+    this.showFilter = true;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

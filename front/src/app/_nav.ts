@@ -41,19 +41,17 @@ export const navItems = {
   },
   {
     name: 'Events',
+    url: '/main/allevents',
+    icon: 'cil-highlighter'
+  },
+  {
+    name: 'Tasks',
     url: '/main/allassociations',
-    icon: 'cil-highlighter',
-    children: [
-      {
-        name: 'Tasks',
-        url: '/main/allassociations',
-        icon: 'cil-list-rich',
-        /* badge: {
-          variant: 'success',
-          text: 'NEW'
-        } */
-      },
-    ]
+    icon: 'cil-list-rich',
+    /* badge: {
+      variant: 'success',
+      text: 'NEW'
+    } */
   },
   {
     name: 'Reports',
@@ -84,19 +82,17 @@ export const navItems = {
   },
   {
     name: 'Events',
+    url: '/main/allevents',
+    icon: 'cil-highlighter'
+  },
+  {
+    name: 'Tasks',
     url: '/main/allassociations',
-    icon: 'cil-highlighter',
-    children: [
-      {
-        name: 'Tasks',
-        url: '/main/allassociations',
-        icon: 'cil-list-rich',
-        /* badge: {
-          variant: 'success',
-          text: 'NEW'
-        } */
-      },
-    ]
+    icon: 'cil-list-rich',
+    /* badge: {
+      variant: 'success',
+      text: 'NEW'
+    } */
   },
   {
     name: 'Reports',
@@ -126,19 +122,17 @@ export const navItems = {
   },
   {
     name: 'Events',
+    url: '/main/allevents',
+    icon: 'cil-highlighter'
+  },
+  {
+    name: 'Tasks',
     url: '/main/allassociations',
-    icon: 'cil-highlighter',
-    children: [
-      {
-        name: 'Tasks',
-        url: '/main/allassociations',
-        icon: 'cil-list-rich',
-        /* badge: {
-          variant: 'success',
-          text: 'NEW'
-        } */
-      },
-    ]
+    icon: 'cil-list-rich',
+    /* badge: {
+      variant: 'success',
+      text: 'NEW'
+    } */
   },
   {
     name: 'Reports',
@@ -168,19 +162,17 @@ export const navItems = {
   },
   {
     name: 'Events',
+    url: '/main/allevents',
+    icon: 'cil-highlighter'
+  },
+  {
+    name: 'Tasks',
     url: '/main/allassociations',
-    icon: 'cil-highlighter',
-    children: [
-      {
-        name: 'Tasks',
-        url: '/main/allassociations',
-        icon: 'cil-list-rich',
-        /* badge: {
-          variant: 'success',
-          text: 'NEW'
-        } */
-      },
-    ]
+    icon: 'cil-list-rich',
+    /* badge: {
+      variant: 'success',
+      text: 'NEW'
+    } */
   },
   {
     name: 'Reports',

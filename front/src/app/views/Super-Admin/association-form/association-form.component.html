@@ -13,11 +13,15 @@
           <div *ngIf="Name.errors.minlength">Your name should have at leaset two charcters</div>
       </div>
   
-      <div class="mb-3 mat-calander" >
-        <input matInput [matDatepicker]="picker" [(ngModel)]="associationToUpdate.Foundation_date" formControlName="Foundation_date">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </div>
+      <div class="mb-3 mat-calander " >
+        <tr class="label">Date of foundation:</tr>
+        <mat-datepicker #picker class="datepicker"></mat-datepicker>
+        <td >
+        <mat-datepicker-toggle matSuffix [for]="picker" class="datepicker"></mat-datepicker-toggle>
+        </td>
+        <td style="width:133% ">
+        <input class="form-control"  matInput [matDatepicker]="picker" [(ngModel)]="associationToUpdate.Foundation_date" formControlName="Foundation_date">
+      </td></div>
   
       <div class="input-group mb-3">
         <div class="input-group-prepend">

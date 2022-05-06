@@ -4,13 +4,15 @@ import { navItems } from '../../_nav';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './default-layout.component.html'
+  templateUrl: './default-layout.component.html',
+  styleUrls: ['./default-layout.component.scss']
 })
 export class DefaultLayoutComponent {
   constructor(private readonly sanitizer: DomSanitizer) { }
   Picture;
   Name;
-  public navItems
+  public navItems;
+  
   ngOnInit(): void {
     this.Picture = JSON.parse(localStorage.getItem("User")).Picture
     this.Name ="Welcome " + JSON.parse(localStorage.getItem("User")).FirstName + " " + JSON.parse(localStorage.getItem("User")).LastName;

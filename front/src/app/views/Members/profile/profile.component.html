@@ -1,7 +1,14 @@
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
             <div class="col-md-4 border-right">
-                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="{{member.Picture}}"><span class="font-weight-bold">{{member.FirstName}} {{member.LastName}}</span><span class="text-black-50">{{member.Email}}</span><span> </span></div>
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">        
+                    <figure>
+                    <img src="{{member.Picture}}" class="img-avatar pic"/>
+                    <span class="caption">{{content}}</span>
+                  </figure>
+                <span class="font-weight-bold">{{member.FirstName}} {{member.LastName}}</span>
+                <span class="text-black-50">{{member.Email}}</span><span> </span>
+            </div>
             </div>
             <div class="col-md-8 border-right">
                 <form method="post" [formGroup]="registerForm">

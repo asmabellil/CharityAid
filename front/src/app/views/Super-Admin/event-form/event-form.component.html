@@ -1,0 +1,101 @@
+
+<div class="card-body p-4">
+    <form method="post" [formGroup]="registerForm">
+      <p class="text-muted"> {{val1}} </p>
+  
+      <div class="row mt-2">
+      <div class="input-group mb-3 col-md-6">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="cil-highlighter"></i></span>
+        </div>
+        <input class="form-control" type="text" name="Title" placeholder="Title" [(ngModel)]="eventToUpdate.Title" formControlName="Title">
+      </div>
+
+      <div class="input-group mb-3 col-md-6">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="cil-money"></i></span>
+        </div>
+        <input class="form-control" type="text" name="Cout" placeholder="Cout" [(ngModel)]="eventToUpdate.Cout" formControlName="Cout">
+    </div>
+        
+    </div>    
+
+    <div class="row mt-2">
+        <div class="alert alert-danger col-md-6" *ngIf="Title.errors && Title.touched">
+            <div *ngIf="Title.errors.required">This field is required</div>
+            <div *ngIf="Title.errors.minlength">Your title should have at leaset two charcters</div>
+        </div>
+
+        <div class="alert alert-danger col-md-6" *ngIf="Cout.errors && Cout.touched">
+            <div *ngIf="Cout.errors.required">This field is required</div>
+        </div>
+    </div>
+
+      <mat-form-field class="col-md-12" appearance="fill">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input  [rangePicker]="picker">
+          <input matStartDate [(ngModel)]="eventToUpdate.Start_date" formControlName="Start_date" placeholder="Start date">
+          <input matEndDate [(ngModel)]="eventToUpdate.End_date" formControlName="End_date" placeholder="End date">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      
+        <mat-error *ngIf="Start_date.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+        <mat-error *ngIf="End_date.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+      </mat-form-field>
+
+        <div class="row mt-2">
+        <div class="input-group mb-3 col-md-6">
+            <div class="input-group-prepend">
+            <span class="input-group-text"><i class="cil-home"></i></span>
+            </div>
+            <input class="form-control" type="text" name="Place" placeholder="Place" [(ngModel)]="eventToUpdate.Place" formControlName="Place">
+        </div>
+  
+        <div class="input-group mb-3 col-md-6">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="icon-people"></i></span>
+        </div>
+        <input class="form-control" type="number" name="Number_Participants" placeholder="Number Participants" [(ngModel)]="eventToUpdate.Number_Participants" formControlName="Number_Participants">
+        </div>
+    
+    </div>
+
+    <div class="row mt-2">
+        <div class="alert alert-danger col-md-6" *ngIf="Place.errors && Place.touched">
+            <div *ngIf="Place.errors.required">This field is required</div>
+        </div>
+
+    <div class="alert alert-danger col-md-6" *ngIf="Number_Participants.errors && Number_Participants.touched">
+        <div *ngIf="Number_Participants.errors.required">This field is required</div>
+    </div>
+</div>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text"><i class="cil-list-rich"></i></span>
+      </div>
+    <textarea class="form-control" type="text" name="Description" placeholder="Description" [(ngModel)]="eventToUpdate.Description" formControlName="Description"> </textarea>
+    </div>
+  <div class="alert alert-danger" *ngIf="Description.errors && Description.touched">
+      <div *ngIf="Description.errors.required">This field is required</div>
+      <div *ngIf="Description.errors.minLength">This field should contain at leaset 10 caracters</div>
+  </div>
+    
+      <button type="button" class="btn btn-block btn-success" (click)="openModal(template)">{{val1}}</button>
+    </form>
+  </div>
+ 
+  <ng-template #template>
+    <div class="modal-header">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body text-center">
+      <p>Do you want to confirm ?</p>
+      <button type="button" class="btn btn-primary" (click)="update()" >Yes</button>
+      <button type="button" class="btn btn-default" (click)="modalRef.hide()" >No</button>
+    </div>
+  </ng-template>

@@ -14,8 +14,15 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
 import { ListUsersComponent } from './list-users/list-users.component';
 import { ListAssociationsComponent } from './list-associations/list-associations.component'
 import { AuthentificationModule } from '../Authentification/authentification.module';
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { AssociationFormComponent } from './association-form/association-form.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { EventsComponent } from './events/events.component';
+import { EventFormComponent } from './event-form/event-form.component'
 
 
 @NgModule({
@@ -31,16 +38,24 @@ import { AssociationFormComponent } from './association-form/association-form.co
     ModalModule.forRoot(),
     NgxPaginationModule,
     Ng2SearchPipeModule,
-    Ng2OrderModule
+    Ng2OrderModule,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule
 
   ],
   declarations: [
     ListUsersComponent,
     ListAssociationsComponent,
-    AssociationFormComponent
+    AssociationFormComponent,
+    EventsComponent,
+    EventFormComponent
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    BsModalRef
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
