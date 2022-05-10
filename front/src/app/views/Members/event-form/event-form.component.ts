@@ -48,7 +48,7 @@ export class EventFormComponent implements OnInit {
 
     update(){
       if (this.action1){
-        this.eventToAdd = {... this.eventToUpdate}
+        this.eventToAdd = {... this.eventToUpdate, "IdAssociation": JSON.parse(localStorage.getItem("User")).IdAssociation, "MemberName": JSON.parse(localStorage.getItem("User")).FirstName + " " + JSON.parse(localStorage.getItem("User")).LastName}
         this.service.addEvent(this.eventToAdd).subscribe(
           (data) => {
             console.log("add")

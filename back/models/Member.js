@@ -11,7 +11,8 @@ var Member = new Schema(
     Adress: String,
     Phone: Number,
     Association: String,
-    Role_Association: String
+    Role_Association: String,
+    IdAssociation: String
   },
   { timestamps: true }
 );

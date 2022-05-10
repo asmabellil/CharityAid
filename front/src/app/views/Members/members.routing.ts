@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { EventFormComponent } from './event-form/event-form.component';
 import { EventsComponent } from './events/events.component';
 import { ProfileComponent } from './profile/profile.component';
+import { TasksComponent } from './tasks/tasks.component';
 
 const routes: Routes = [
   {
@@ -26,6 +28,20 @@ const routes: Routes = [
         component: EventsComponent,
         data: {
           title: 'All events'
+        }
+      },
+      {
+        path: 'formEvent',
+        component: EventFormComponent,
+        data: {
+          title: 'All events'
+        }
+      },
+      {
+        path: 'alltasks',
+        component: TasksComponent,
+        data: {
+          title: 'All tasks'
         }
       },
     ]

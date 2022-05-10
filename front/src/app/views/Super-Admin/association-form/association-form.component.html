@@ -18,7 +18,7 @@
         <input class="form-control" type="text" name="Username" placeholder="Username" [(ngModel)]="associationToUpdate.Username" formControlName="Username">
       </div>
     </div>
-
+    
     <div class="row mt-2">
       <div class="alert alert-danger col-md-6" *ngIf="Name.errors && Name.touched">
         <div *ngIf="Name.errors.required">This field is required</div>

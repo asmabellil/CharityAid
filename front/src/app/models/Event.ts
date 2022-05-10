@@ -7,5 +7,7 @@ export class Eventt{
     End_date: string;
     Place: string;
     Number_Participants: Number;
-    Cout: string
+    Cout: string;
+    IdAssociation: string;
+    MemberName: string;
 }

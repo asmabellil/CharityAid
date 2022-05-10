@@ -36,7 +36,7 @@ export class EventsComponent implements AfterViewInit {
     
     this.service.getEvents().subscribe(
       (data: Eventt[]) => {
-        this.listEvents = data,
+        this.listEvents = data.filter(event => event.IdAssociation === JSON.parse(localStorage.getItem("User")).IdAssociation),
         this.dataSource = new MatTableDataSource(this.listEvents);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

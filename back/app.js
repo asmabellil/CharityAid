@@ -8,7 +8,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var membersRouter = require('./routes/members');
 var associationsRouter = require('./routes/associations');
-var eventsRouter = require('./routes/events')
+var eventsRouter = require('./routes/events');
+var tasksRouter = require('./routes/tasks');
 bodyParser = require('body-parser');
 
 
@@ -38,6 +39,7 @@ app.use('/users', usersRouter);
 app.use('/members', membersRouter);
 app.use('/associations', associationsRouter);
 app.use('/events', eventsRouter);
+app.use('/tasks', tasksRouter);
 
 // CORS HEADERS MIDDELWARE 
 app.use(function(req, res, next) {

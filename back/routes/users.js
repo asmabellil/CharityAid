@@ -99,6 +99,7 @@ router.post("/login", function (req, res, next) {
                       Adress: doc.Adress,
                       Association: doc.Association,
                       Role_Association: doc.Role_Association,
+                      IdAssociation: doc.IdAssociation,
                       token: token
                     };
                     res.send(o2); 

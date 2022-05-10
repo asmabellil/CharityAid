@@ -14,6 +14,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { EventsComponent } from './events/events.component';
 import { EventFormComponent } from './event-form/event-form.component';
+import { TasksComponent } from './tasks/tasks.component';
+import { TaskFormComponent } from './task-form/task-form.component';
+
 
 // Components Routing
 
@@ -37,7 +40,9 @@ import { EventFormComponent } from './event-form/event-form.component';
     
     EventsComponent,
     EventFormComponent,
-    ProfileComponent
+    ProfileComponent,
+    TasksComponent,
+    TaskFormComponent
   ],
   providers: [
     BsModalRef

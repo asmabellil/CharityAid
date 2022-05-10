@@ -11,7 +11,9 @@ var Event = new Schema(
     End_date: String,
     Place: String,
     Number_Participants: Number,
-    Cout: String
+    Cout: String,
+    IdAssociation: String,
+    MemberName: String
   },
   { timestamps: true }
 );

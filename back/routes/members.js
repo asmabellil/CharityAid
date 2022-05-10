@@ -45,6 +45,7 @@ router.post("/", upload, async function (req, res, next) {
       Adress: obj.Adress,
       Association: obj.Association,
       Role_Association: obj.Role_Association,
+      IdAssociation: obj.IdAssociation,
     };
     var ids;
   

@@ -57,7 +57,7 @@ export class ListUsersComponent implements AfterViewInit {
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
             }else{
-              this.listComplete = this.listComplete.filter(member => member.Association === JSON.parse(localStorage.getItem("User")).Association  )
+              this.listComplete = this.listComplete.filter(member => member.IdAssociation === JSON.parse(localStorage.getItem("User")).IdAssociation  )
               this.dataSource = new MatTableDataSource(this.listComplete);
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;

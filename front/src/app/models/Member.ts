@@ -8,5 +8,6 @@ export class Member extends User{
     Adress: String;
     Phone: Number;
     Association: String;
-    Role_Association: String
+    Role_Association: String;
+    IdAssociation: String;
 }
