@@ -1,44 +1,14 @@
-<!--      <div class="card-hover-shadow-2x mb-3 card">
-        <div class="card-header-tab card-header">
-          <div class="card-header-title font-size-lg text-capitalize font-weight-normal">&nbsp;Task Lists</div>
-        </div>
-        <div class="scroll-area-sm">
-          <perfect-scrollbar class="ps-show-limits">
-            <div style="position: static;" class="ps ps--active-y">
-              <div class="ps-content" *ngFor = 'let e of listEvents'>
-                <ul class=" list-group list-group-flush">
-                  <li class="list-group-item">
-                    <div class="todo-indicator "></div>
-                    <div class="widget-content p-0">
-                      <div class="widget-content-wrapper">
-                        <div class="widget-content-left flex2">
-                          <div class="widget-heading">{{e.Title}}</div>
-                          <div class="widget-subheading">by {{e.MemberName}}</div>
-                        </div>
-                  
-                        <div class="widget-content-right">
-                          <!-- <button class="border-0 btn-transition btn btn-outline-success">
-                            <i class="fa fa-check"></i></button> 
-                            <button class="border-0 btn-transition btn btn-outline-primary" (click)="onAdd(e)">
-                              <i class="fa fa-plus"></i>
-                            </button>
-                          <button class="border-0 btn-transition btn btn-outline-danger">
-                            <i class="fa fa-trash"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>     
-              <div *ngFor = 'let e of listTasks'>
-                {{e.Title}}
-              </div>
-            </div>
-          </perfect-scrollbar>
-        </div>
-        <div class="d-block text-right card-footer"><button class="mr-2 btn btn-link btn-sm">Cancel</button><button
-            class="btn btn-primary">Add Task</button></div>
+<div class="d-flex flex-row">
+    <button  class="ml-auto btn btn-light" (click)="onAdd(1)">+</button>
+</div>
+<div class="card">
+  <h1>Tasks</h1>
+  <div *ngFor = 'let e of listEvents' >
+    <details class="warning">
+      <summary>{{e.Title}}</summary>
+      <div >
+        <app-single-task [event]="e"></app-single-task>
       </div>
-
-       https://bbbootstrap.com/snippets/todo-task-list-badges-71324362 -->
+    </details>
+  </div>
+</div>

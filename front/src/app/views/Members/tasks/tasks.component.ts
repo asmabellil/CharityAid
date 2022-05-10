@@ -14,6 +14,7 @@ import { TasksService } from 'src/app/services/tasks.service';
 export class TasksComponent implements OnInit {
   listEvents: Eventt[];
   listTasks: Task[];
+  listT: Task[];
   bsModalRef: BsModalRef; 
   modalRef: BsModalRef;
   taskToUpdate: Task;
@@ -33,6 +34,7 @@ export class TasksComponent implements OnInit {
         (data: Task[]) => {
           this.listTasks = data
         })
+    this.listT = new Array;
   }
 
   onAdd (e){
@@ -49,4 +51,5 @@ export class TasksComponent implements OnInit {
       }   
     }); 
   }
+
 }

@@ -4,5 +4,6 @@ export class Task{
     Description: string;
     Progress: string;
     DL: string;
-    IdEvent: string
+    IdEvent: string;
+    MemberName: String;
 }

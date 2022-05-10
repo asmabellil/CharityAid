@@ -1,8 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Eventt } from 'src/app/models/Event';
 import { Task } from 'src/app/models/Task';
+import { EventsService } from 'src/app/services/events.service';
 import { TasksService } from '../../../services/tasks.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-task-form',
@@ -20,27 +24,38 @@ export class TaskFormComponent implements OnInit {
   @Output() actAdd = new EventEmitter<Task>();
   @Output() returnedEvent = new EventEmitter<Task>();
   modalRef: BsModalRef;
+  listEvents: Eventt[];
+  filteredOptions: Observable<Eventt[]>;
+  options: string[];
   
-  constructor(private service: TasksService, public bsModalRef: BsModalRef, private modalService: BsModalService) { }
+  constructor(private service: TasksService, private serviceEvent: EventsService, public bsModalRef: BsModalRef, private modalService: BsModalService) { }
 
   ngOnInit(): void {
+    this.serviceEvent.getEvents().subscribe(
+      (data: Eventt[]) => {
+        this.listEvents = data.filter(event => event.IdAssociation === JSON.parse(localStorage.getItem("User")).IdAssociation)
+      })
+      
     this.registerForm= new FormGroup({
       Title: new FormControl('',[Validators.required,Validators.minLength(2)]),
       Description: new FormControl('',[Validators.required,Validators.minLength(10)]),
       DL: new FormControl('',Validators.required),
+      IdEvent: new FormControl('',Validators.required)
       });
       !this.taskToUpdate ? this.taskToUpdate = new Task : console.log(this.taskToUpdate)
   }
 
   get Title() {return this.registerForm.get('Title')};
   get Description() {return this.registerForm.get('Description')};
+  get DL() {return this.registerForm.get('DL')};
+  get IdEvent() {return this.registerForm.get('IdEvent')}
 
   update(){
     if (this.action1){
-      this.taskToAdd = {... this.taskToUpdate, "IdEvent": this.event._id}
+      this.taskToAdd = {... this.taskToUpdate, "Progress": "ToDo", "MemberName":  JSON.parse(localStorage.getItem("User")).FirstName + " " + JSON.parse(localStorage.getItem("User")).LastName}
       this.service.addTask(this.taskToAdd).subscribe(
         (data) => {
-          console.log("add")
+          console.log("add" + this.taskToAdd)
           this.actAdd.emit(data)
     });
   }else

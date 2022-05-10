@@ -4,6 +4,7 @@ import { EventFormComponent } from './event-form/event-form.component';
 import { EventsComponent } from './events/events.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TasksComponent } from './tasks/tasks.component';
+import { SingleTaskComponent } from './single-task/single-task.component'
 
 const routes: Routes = [
   {

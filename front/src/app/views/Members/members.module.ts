@@ -16,6 +16,9 @@ import { EventsComponent } from './events/events.component';
 import { EventFormComponent } from './event-form/event-form.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { TaskFormComponent } from './task-form/task-form.component';
+import { SingleTaskComponent } from './single-task/single-task.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 // Components Routing
@@ -34,6 +37,8 @@ import { TaskFormComponent } from './task-form/task-form.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatAutocompleteModule, 
+    MatFormFieldModule,
 
   ],
   declarations: [
@@ -42,7 +47,8 @@ import { TaskFormComponent } from './task-form/task-form.component';
     EventFormComponent,
     ProfileComponent,
     TasksComponent,
-    TaskFormComponent
+    TaskFormComponent,
+    SingleTaskComponent
   ],
   providers: [
     BsModalRef
