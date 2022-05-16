@@ -29,7 +29,7 @@ export class SingleTaskComponent implements OnInit {
   ngOnInit(): void {
     this.serviceTask.getTasks().subscribe(
       (data: Task[]) => {
-        this.listTasks = data.filter(task => task.IdEvent === this.event._id);
+        this.listTasks = data.filter(task => task.IdEvent === this.event._id).filter(task => task.Archive === "No");
         if (data.filter(task => task.IdEvent === this.event._id).length === 0){
           this.inform = "No tasks"
         }
@@ -72,5 +72,21 @@ export class SingleTaskComponent implements OnInit {
       return "rgb(104, 212, 58)"
     }
     return "#f7b924";
+  }
+
+  updateTask(t){
+    const task = {...t, "Progress" : "Done"}
+    this.serviceTask.updateTask(task).subscribe((data) =>{
+      console.log(data + "modified")
+  })
+  this.modalRef.hide(); 
+  }
+
+  updateT(t){
+    const task = {...t, "Archive" : "Yes"}
+    this.serviceTask.updateTask(task).subscribe((data) =>{
+      console.log(data + "modified")
+  })
+  this.modalRef.hide(); 
   }
 }

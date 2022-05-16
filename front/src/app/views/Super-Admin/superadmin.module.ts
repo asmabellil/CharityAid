@@ -21,6 +21,8 @@ import { ListAssociationsComponent } from './list-associations/list-associations
 import { AuthentificationModule } from '../Authentification/authentification.module';
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { AssociationFormComponent } from './association-form/association-form.component';
+import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 
 @NgModule({
@@ -41,7 +43,8 @@ import { AssociationFormComponent } from './association-form/association-form.co
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule
 
   ],
   declarations: [
@@ -51,8 +54,13 @@ import { AssociationFormComponent } from './association-form/association-form.co
   ],
   providers: [
     DatePipe,
-    BsModalRef
+    BsModalRef,
+    MatDialog,
+    {provide:MatDialogRef , useValue:{} },
+
+    { provide: MAT_DIALOG_DATA, useValue: {} }
   ],
+
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SuperAdminModule { }

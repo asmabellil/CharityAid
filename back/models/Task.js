@@ -9,6 +9,7 @@ var Task = new Schema(
     Progress: String,
     DL: String,
     IdEvent: String,
+    Archive: String,
     MemberName: String
   },
   { timestamps: true }

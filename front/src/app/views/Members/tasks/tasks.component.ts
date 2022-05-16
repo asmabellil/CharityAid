@@ -5,6 +5,7 @@ import { EventsService } from 'src/app/services/events.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TaskFormComponent } from '../task-form/task-form.component'
 import { TasksService } from 'src/app/services/tasks.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-task',
@@ -22,7 +23,7 @@ export class TasksComponent implements OnInit {
   val: String;
   action: boolean;
 
-  constructor(private service : EventsService, private serviceTask: TasksService, private modalService: BsModalService) { }
+  constructor(private service : EventsService, private serviceTask: TasksService, private modalService: BsModalService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.service.getEvents().subscribe(
@@ -43,13 +44,14 @@ export class TasksComponent implements OnInit {
     this.val = "Add Task";
     this.action= true;
 
-    this.bsModalRef = this.modalService.show(TaskFormComponent,{
-      initialState: {
+    const dialogRef = this.dialog.open(TaskFormComponent,{
+      data: {
         val1: this.val,
         action1: this.action,
         event: e
-      }   
-    }); 
+        }
+    }
+    );
   }
 
 }

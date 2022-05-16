@@ -10,7 +10,20 @@ var membersRouter = require('./routes/members');
 var associationsRouter = require('./routes/associations');
 var eventsRouter = require('./routes/events');
 var tasksRouter = require('./routes/tasks');
-bodyParser = require('body-parser');
+var subscribersRouter = require('./routes/subscribers');
+var bodyParser = require('body-parser');
+var MongoClient = require('mongodb').MongoClient
+var db;
+
+MongoClient.connect('mongodb+srv://asma_bellil:193JFT4536@cluster0.qapag.mongodb.net/End-Of-Studies?retryWrites=true&w=majority', function (err, database) {
+   if (err) 
+   	throw err
+   else
+   {
+	db = database;
+	console.log('Connected to MongoDB' + database);
+   }
+ });
 
 
 // import mongoDB
@@ -40,6 +53,7 @@ app.use('/members', membersRouter);
 app.use('/associations', associationsRouter);
 app.use('/events', eventsRouter);
 app.use('/tasks', tasksRouter);
+app.use('/subscribers', subscribersRouter);
 
 // CORS HEADERS MIDDELWARE 
 app.use(function(req, res, next) {

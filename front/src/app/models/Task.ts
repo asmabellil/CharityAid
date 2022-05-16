@@ -5,5 +5,6 @@ export class Task{
     Progress: string;
     DL: string;
     IdEvent: string;
+    Archive: string;
     MemberName: String;
 }

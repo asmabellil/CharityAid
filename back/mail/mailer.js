@@ -40,8 +40,8 @@ function sendEmail(message) {
       const transporter = nodemailer.createTransport({
           service: 'hotmail',
           auth: {
-              user: "asma.bellil@hotmail.com",
-              pass: "193JFT123456789ab"
+              user: "association369@outlook.fr",
+              pass: "AB123456789+"
           }
       })
 

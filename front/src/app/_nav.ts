@@ -36,7 +36,7 @@ export const navItems = {
   },
   {
     name: 'Subscribers',
-    url: '/main/allassociations',
+    url: '/members/allsubscribers',
     icon: 'icon-people'
   },
   {
@@ -77,7 +77,7 @@ export const navItems = {
   }, 
   {
     name: 'Subscribers',
-    url: '/main/allassociations',
+    url: '/members/allsubscribers',
     icon: 'icon-people'
   },
   {
@@ -117,7 +117,7 @@ export const navItems = {
   }, 
   {
     name: 'Subscribers',
-    url: '/main/allassociations',
+    url: '/members/allsubscribers',
     icon: 'icon-people'
   },
   {
@@ -157,7 +157,7 @@ export const navItems = {
   }, 
   {
     name: 'Subscribers',
-    url: '/main/allassociations',
+    url: '/members/allsubscribers',
     icon: 'icon-people'
   },
   {

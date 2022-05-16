@@ -5,6 +5,8 @@ import { EventsComponent } from './events/events.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { SingleTaskComponent } from './single-task/single-task.component'
+import { ListSubscribersComponent } from './list-subscribers/list-subscribers.component';
+import { SubscriberFormComponent } from './subscriber-form/subscriber-form.component';
 
 const routes: Routes = [
   {
@@ -43,6 +45,20 @@ const routes: Routes = [
         component: TasksComponent,
         data: {
           title: 'All tasks'
+        }
+      },
+      {
+        path: 'allsubscribers',
+        component: ListSubscribersComponent,
+        data: {
+          title: 'All subscribers'
+        }
+      },
+      {
+        path: 'formsubscribers',
+        component: SubscriberFormComponent,
+        data: {
+          title: 'subscribers'
         }
       },
     ]

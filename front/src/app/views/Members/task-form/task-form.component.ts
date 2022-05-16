@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Eventt } from 'src/app/models/Event';
@@ -7,6 +7,7 @@ import { EventsService } from 'src/app/services/events.service';
 import { TasksService } from '../../../services/tasks.service';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-task-form',
@@ -28,7 +29,8 @@ export class TaskFormComponent implements OnInit {
   filteredOptions: Observable<Eventt[]>;
   options: string[];
   
-  constructor(private service: TasksService, private serviceEvent: EventsService, public bsModalRef: BsModalRef, private modalService: BsModalService) { }
+  constructor(private service: TasksService, private serviceEvent: EventsService, public bsModalRef: BsModalRef, private modalService: BsModalService, public dialogRef: MatDialogRef<TaskFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     this.serviceEvent.getEvents().subscribe(
@@ -52,7 +54,7 @@ export class TaskFormComponent implements OnInit {
 
   update(){
     if (this.action1){
-      this.taskToAdd = {... this.taskToUpdate, "Progress": "ToDo", "MemberName":  JSON.parse(localStorage.getItem("User")).FirstName + " " + JSON.parse(localStorage.getItem("User")).LastName}
+      this.taskToAdd = {... this.taskToUpdate, "Archive": "No", "Progress": "ToDo", "MemberName":  JSON.parse(localStorage.getItem("User")).FirstName + " " + JSON.parse(localStorage.getItem("User")).LastName}
       this.service.addTask(this.taskToAdd).subscribe(
         (data) => {
           console.log("add" + this.taskToAdd)

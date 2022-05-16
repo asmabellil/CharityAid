@@ -20,6 +20,11 @@ import { SingleTaskComponent } from './single-task/single-task.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
+  import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ListSubscribersComponent } from './list-subscribers/list-subscribers.component';
+import { SubscriberFormComponent } from './subscriber-form/subscriber-form.component';
+
+
 
 // Components Routing
 
@@ -39,6 +44,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatSortModule,
     MatAutocompleteModule, 
     MatFormFieldModule,
+    MatDialogModule
 
   ],
   declarations: [
@@ -48,10 +54,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ProfileComponent,
     TasksComponent,
     TaskFormComponent,
-    SingleTaskComponent
+    SingleTaskComponent,
+    ListSubscribersComponent,
+    SubscriberFormComponent
   ],
   providers: [
-    BsModalRef
+    BsModalRef,
+    {provide:MatDialogRef , useValue:{} },
+
+    { provide: MAT_DIALOG_DATA, useValue: {} }
 ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

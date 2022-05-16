@@ -7,6 +7,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-list-associations',
@@ -21,7 +22,7 @@ export class ListAssociationsComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort; 
 
-  associationToUpdate: Association;
+  associationToUpdate2: Association;
   listAssociations: Association[];
   show: Boolean;
   val: String;
@@ -35,7 +36,7 @@ export class ListAssociationsComponent implements AfterViewInit {
   config: any;
   showFilter: Boolean;
 
-  constructor(private service: AssociationsService, private modalService: BsModalService) {
+  constructor(private service: AssociationsService, private modalService: BsModalService, public dialog: MatDialog) {
     this.listAssociations = new Array;
     
     this.service.getAssociations().subscribe(
@@ -45,43 +46,58 @@ export class ListAssociationsComponent implements AfterViewInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       })
-    this.associationToUpdate = new Association;
+    this.associationToUpdate2 = new Association;
     this.config= {class: 'gray modal-lg'};
     this.showFilter = false;
     
    }
 
    ngAfterViewInit(): void {
+     this.val = "Open"
 
   }
 
-  onUpdate (association){
+   onUpdate (association){
     this.show = ! this.show;
-    this.val = "Update Association";
-    this.associationToUpdate = association;
+    /* this.val = "Update Association"; */
+    this.associationToUpdate2 = association;
     this.action =false;
+    console.log(this.associationToUpdate2)
     
-    this.bsModalRef = this.modalService.show(AssociationFormComponent, {
-      initialState :  {
-        associationToUpdate : this.associationToUpdate,
+    /*const dialogRef = this.dialog.open(AssociationFormComponent, {
+       data: {
+        associationToUpdate : this.associationToUpdate2,
         val1: this.val,
         action1: this.action
-      }
-    });
-  }
+        } 
+    }
+    );*/
+  } 
 
-  onAdd (member){
-    this.associationToUpdate = new Association;
-    this.show = ! this.show;
-    this.val = "Add Association";
-    this.action= true;
+  onAdd(member): void {
+    this.associationToUpdate2 = new Association;
+    /*this.show = ! this.show;
+     this.val = "Add Association"; 
+    this.action= true;*/
 
-    this.bsModalRef = this.modalService.show(AssociationFormComponent,{
-      initialState: {
-        val1: this.val,
-        action1: this.action
-      }   
+    const dialogRef = this.dialog.open(AssociationFormComponent, {
+      
+      data: {
+        val1: this.val
+        /* action1: this.action */},
+    }); 
+
+    dialogRef.beforeClosed().subscribe(result => {
+      console.log('The dialog was open' + this.val);
+     
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed' + this.val);
+      console.log('result '+ result)
+     
+    });
+   
   }
 
   deletMember(association){
