@@ -27,6 +27,8 @@ import { SubscriberFormComponent } from './subscriber-form/subscriber-form.compo
 import {MatSelectModule} from '@angular/material/select';
 import { ListContactsComponent } from './list-contacts/list-contacts.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
+import { CaisseComponent } from './caisse/caisse.component';
+import { CaisseFormComponent } from './caisse-form/caisse-form.component';
 
 // Components Routing
 
@@ -62,7 +64,9 @@ import { ContactFormComponent } from './contact-form/contact-form.component';
     ListSubscribersComponent,
     SubscriberFormComponent,
     ListContactsComponent,
-    ContactFormComponent
+    ContactFormComponent,
+    CaisseComponent,
+    CaisseFormComponent
   ],
   providers: [
     BsModalRef,

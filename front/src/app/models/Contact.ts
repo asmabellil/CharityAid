@@ -5,5 +5,7 @@ export class Contact{
     Responsible: String;
     Adress: string;
     Phone: Number;
-    Email: string
+    Email: string;
+    Association : String;
+    IdAssociation: String;
 }

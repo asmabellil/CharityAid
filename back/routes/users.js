@@ -104,10 +104,13 @@ router.post("/login", function (req, res, next) {
                     };
                     res.send(o2); 
                   } else if (data[0].Role == "superadmin") {
+                    console.log(data[0])
                     var o1 = {
                       _id: data[0]._id,
                       Email: data[0].Email,
                       Role: data[0].Role,
+                      FirstName: "Admin",
+                      LastName: "",
                       token: token
                     };
                     res.send(o1); 

@@ -35,7 +35,7 @@ export class ContactFormComponent implements OnInit {
 
     this.service.getcontacts().subscribe(
       (data: Contact[]) => {
-        this.listContacts = data
+        this.listContacts = data.filter(contact => contact.IdAssociation === JSON.parse(localStorage.getItem("User")).IdAssociation)
       }
     )
 
@@ -59,7 +59,7 @@ export class ContactFormComponent implements OnInit {
 
   update(){
     if (this.action1){
-      this.contactToAdd = {... this.contactToUpdate}
+      this.contactToAdd = {... this.contactToUpdate, Association : JSON.parse(localStorage.getItem("User")).Association, IdAssociation: JSON.parse(localStorage.getItem("User")).IdAssociation}
       this.service.addcontact(this.contactToAdd).subscribe(
         (data) => {
           console.log("add")

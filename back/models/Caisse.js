@@ -4,10 +4,12 @@ var Schema = mongoose.Schema;
 var Caisse = new Schema(
   {
     Id: String,
-    Montant: String,
+    Montant: Number,
     Type: String,
     Source: String,
-    Description: String
+    Description: String,
+    Association : String,
+    IdAssociation: String
   },
   { timestamps: true }
 );

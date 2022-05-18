@@ -60,7 +60,7 @@ export const navItems = {
   },
   {
     name: 'Cash flow',
-    url: '/main/allassociations',
+    url: '/members/caisses',
     icon: 'cil-money'
   },
   {
@@ -101,7 +101,7 @@ export const navItems = {
   },
   {
     name: 'Cash flow',
-    url: '/main/allassociations',
+    url: '/members/caisses',
     icon: 'cil-money'
   },
   {
@@ -141,7 +141,7 @@ export const navItems = {
   },
   {
     name: 'Cash flow',
-    url: '/main/allassociations',
+    url: '/members/caisses',
     icon: 'cil-money'
   },
   {
@@ -181,7 +181,7 @@ export const navItems = {
   },
   {
     name: 'Cash flow',
-    url: '/main/allassociations',
+    url: '/members/caisses',
     icon: 'cil-money'
   },
   {

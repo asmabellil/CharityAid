@@ -9,7 +9,9 @@ var Contact = new Schema(
     Responsible: String,
     Adress: String,
     Phone: Number,
-    Email: String
+    Email: String,
+    Association : String,
+    IdAssociation: String
   },
   { timestamps: true }
 );

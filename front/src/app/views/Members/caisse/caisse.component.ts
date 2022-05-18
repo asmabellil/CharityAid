@@ -1,29 +1,29 @@
 import { Component, AfterViewInit, TemplateRef, ViewChild } from '@angular/core';
-import { Contact } from '../../../models/Contact';
-import { ContactsService } from '../../../services/contacts.service';
+import { Caisse } from '../../../models/Caisse';
+import { CaissesService } from '../../../services/caisses.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { ContactFormComponent } from '../contact-form/contact-form.component';
+import { CaisseFormComponent } from '../caisse-form/caisse-form.component';
 
 @Component({
-  selector: 'app-list-contacts',
-  templateUrl: './list-contacts.component.html',
-  styleUrls: ['./list-contacts.component.scss']
+  selector: 'app-caisse',
+  templateUrl: './caisse.component.html',
+  styleUrls: ['./caisse.component.scss']
 })
-export class ListContactsComponent implements AfterViewInit {
-  
-  displayedColumns: string[] = [ 'Name', 'Type', 'Responsible', 'Adress', 'Phone', 'Email', 'Actions'];
-  dataSource: MatTableDataSource<Contact>;
+export class CaisseComponent implements AfterViewInit {
+
+  displayedColumns: string[] = ['Montant', 'Type', 'Source', 'Description', 'Actions'];
+  dataSource: MatTableDataSource<Caisse>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort; 
 
-  contactToUpdate2: Contact;
-  listContacts: Contact[];
+  caisseToUpdate2: Caisse;
+  listCaisses: Caisse[];
   show: Boolean;
   val: String;
   action: boolean;
@@ -35,74 +35,77 @@ export class ListContactsComponent implements AfterViewInit {
   modalRef: BsModalRef;
   config: any;
   showFilter: Boolean;
-  returnedContact: Contact;
+  returnedCaisse: Caisse;
   state: Boolean;
 
-  constructor(private service: ContactsService, private modalService: BsModalService, public dialog: MatDialog) { 
-    this.listContacts = new Array;
+  constructor(private service: CaissesService, private modalService: BsModalService, public dialog: MatDialog) { 
+    this.listCaisses = new Array;
     
-    this.service.getcontacts().subscribe(
-      (data: Contact[]) => {
-        this.listContacts = data.filter(contact => contact.IdAssociation === JSON.parse(localStorage.getItem("User")).IdAssociation),
-        this.dataSource = new MatTableDataSource(this.listContacts);
+    this.service.getCaisses().subscribe(
+      (data: Caisse[]) => {
+        this.listCaisses = data.filter(caisse => caisse.IdAssociation === JSON.parse(localStorage.getItem("User")).IdAssociation),
+        this.dataSource = new MatTableDataSource(this.listCaisses);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       })
-    this.contactToUpdate2 = new Contact;
+    this.caisseToUpdate2 = new Caisse;
+    this.config= {class: 'gray modal-lg'};
     this.showFilter = false;
   }
 
   ngAfterViewInit(): void {
   }
 
-  onUpdate (contact){
+  onUpdate (caisse){
     this.show = ! this.show;
-    this.val = "Update Contact"; 
-    this.contactToUpdate2 = contact;
+    this.val = "Update Caisse"; 
+    this.caisseToUpdate2 = caisse;
     this.action =false;
-    console.log(this.contactToUpdate2)
+    console.log(this.caisseToUpdate2)
     
-    const dialogRef = this.dialog.open(ContactFormComponent, {
+    const dialogRef = this.dialog.open(CaisseFormComponent, {
+      width: '25%',
        data: {
-        contactToUpdate : this.contactToUpdate2,
+        caisseToUpdate : this.caisseToUpdate2,
         val1: this.val,
         action1: this.action
         } 
     }
-    ); 
+    );
   } 
 
   onAdd(member): void {
-    this.contactToUpdate2 = new Contact;
+    this.caisseToUpdate2 = new Caisse;
     this.show = ! this.show;
-     this.val = "Add Contact"; 
+     this.val = "Add Caisse"; 
     this.action= true;
     this.state = false;
 
-    const dialogRef = this.dialog.open(ContactFormComponent, {
+    const dialogRef = this.dialog.open(CaisseFormComponent, {
+      width : '25%',
       data: {
         val1: this.val,
         action1: this.action,
-        returnedContact: this.returnedContact,
+        returnedCaisse: this.returnedCaisse,
         state: this.state },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if(result.state === true){
-        this.dataSource.data.push(result.returnedContact)
+        this.dataSource.data.push(result.returnedCaisse)
         this.dataSource.data = this.dataSource.data
       }
       
       console.log("Added successfully", result) 
-    }); 
+    });
    
   }
 
-  deletMember(contact){
-    let i= this.listContacts.indexOf(contact);
-    this.service.deletecontact(this.listContacts[i]._id).subscribe(
-      () => {this.listContacts = this.listContacts.filter(contact => contact._id != this.listContacts[i]._id),
-        this.dataSource = new MatTableDataSource(this.listContacts),
+  deletMember(caisse){
+    let i= this.listCaisses.indexOf(caisse);
+    this.service.deleteCaisse(this.listCaisses[i]._id).subscribe(
+      () => {this.listCaisses = this.listCaisses.filter(caisse => caisse._id != this.listCaisses[i]._id),
+        this.dataSource = new MatTableDataSource(this.listCaisses),
         this.dataSource.paginator = this.paginator}
     );
     this.modalRef.hide(); 
@@ -121,4 +124,5 @@ export class ListContactsComponent implements AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
 }

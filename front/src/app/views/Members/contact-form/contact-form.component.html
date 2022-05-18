@@ -2,35 +2,28 @@
     <form method="post" [formGroup]="registerForm">
       <p class="text-muted"> {{val1}} </p>
 
-      <div class="row mt-2">
-      <div class="input-group mb-3 col-md-6">
+      <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text"><i class="icon-user"></i></span>
         </div>
         <input class="form-control" type="text" name="name" placeholder="Name" [(ngModel)]="contactToUpdate.Name" formControlName="Name">
       </div>
-      </div>
     
-    <div class="row mt-2">
-      <div class="alert alert-danger col-md-6" *ngIf="Name.errors && Name.touched">
+      <div class="alert alert-danger" *ngIf="Name.errors && Name.touched">
         <div *ngIf="Name.errors.required">This field is required</div>
         <div *ngIf="Name.errors.minlength">Your name should have at leaset two charcters</div>
     </div>
-    </div>
 
-    <div class="input-group col-md-12">
+    <div class="input-group select">
       <mat-form-field appearance="fill">
       <mat-label>Type</mat-label>
       <mat-select required
           name="type"
           [(ngModel)]="contactToUpdate.Type"
           formControlName="Type">
-        <mat-option value="Educationnal"> Educationnal </mat-option>
-        <mat-option value="Health"> Health </mat-option>
-        <mat-option value="Environmental"> Environmental </mat-option>
-        <mat-option value="Animal"> Animal </mat-option>
-        <mat-option value="Art and Culture"> Art and Culture </mat-option>
-        <mat-option value="International NGOs"> International NGOs </mat-option>
+        <mat-option value="Person"> Person </mat-option>
+        <mat-option value="Family"> Family </mat-option>
+        <mat-option value="Charity"> Charity </mat-option>
         <mat-option value="volvo"> Other </mat-option>
       </mat-select>
     </mat-form-field>
@@ -40,7 +33,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text"><i class="cil-home"></i></span>
         </div>
-        <input class="form-control" type="text" name="address" placeholder="Enter your address" [(ngModel)]="contactToUpdate.Adress" formControlName="Adress">
+        <input class="form-control" type="text" name="address" placeholder="Enter address" [(ngModel)]="contactToUpdate.Adress" formControlName="Adress">
       </div>
       <div class="alert alert-danger" *ngIf="Adress.errors && Adress.touched">
         <div *ngIf="Adress.errors.required">This field is required</div>
@@ -51,7 +44,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="cil-phone"></i></span>
       </div>
-      <input class="form-control" type="number" name="phone" placeholder="Enter your phone number" [(ngModel)]="contactToUpdate.Phone" formControlName="Phone">
+      <input class="form-control" type="number" name="phone" placeholder="Enter phone number" [(ngModel)]="contactToUpdate.Phone" formControlName="Phone">
     </div>
     <div class="alert alert-danger" *ngIf="Phone.errors && Phone.touched">
       <div *ngIf="Phone.errors.required">This field is required</div>
@@ -62,7 +55,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text">@</span>
       </div>
-      <input class="form-control" type="email" name="email" placeholder="Association email" [(ngModel)]="contactToUpdate.Email" formControlName="Email">
+      <input class="form-control" type="email" name="email" placeholder="Email" [(ngModel)]="contactToUpdate.Email" formControlName="Email">
       </div>
 
     <div class="input-group mb-3 col-md-6">

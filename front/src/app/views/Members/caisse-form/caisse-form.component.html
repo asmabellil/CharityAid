@@ -1,0 +1,69 @@
+<div mat-dialog-content>
+    <form method="post" [formGroup]="registerForm">
+      <p class="text-muted"> {{val1}} </p>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="icon-user"></i></span>
+        </div>
+        <input class="form-control" type="number" name="Montant" placeholder="Amount" [(ngModel)]="caisseToUpdate.Montant" formControlName="Montant">
+      </div>
+
+    
+      <div class="alert alert-danger" *ngIf="Montant.errors && Montant.touched">
+        <div *ngIf="Montant.errors.required">This field is required</div>
+        <div *ngIf="Montant.errors.minlength">Your name should have at leaset two charcters</div>
+    </div>
+
+    <div class="input-group ">
+      <mat-form-field appearance="fill">
+      <mat-label>Type</mat-label>
+      <mat-select required
+          name="type"
+          [(ngModel)]="caisseToUpdate.Type"
+          formControlName="Type">
+        <mat-option value="Income"> Income </mat-option>
+        <mat-option value="Expenses"> Expenses </mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>   
+  
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="cil-home"></i></span>
+        </div>
+        <input class="form-control" type="text" name="Source" placeholder="Source" [(ngModel)]="caisseToUpdate.Source" formControlName="Source">
+      </div>
+      <div class="alert alert-danger" *ngIf="Source.errors && Source.touched">
+        <div *ngIf="Source.errors.required">This field is required</div>
+        <div *ngIf="Source.errors.minlength">This field should have at leaset three charcters</div>
+    </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="cil-list-rich"></i></span>
+          </div>
+          <textarea class="form-control" type="number" name="Description" placeholder="Description" [(ngModel)]="caisseToUpdate.Description" formControlName="Description"></textarea>
+        </div>
+      
+        <div class="alert alert-danger" *ngIf="Description.errors && Description.touched">
+          <div *ngIf="Description.errors.required">This field is required</div>
+          <div *ngIf="Description.errors.minlength">Your name should have at leaset two charcters</div>
+      </div>
+    
+      <button type="button" class="btn btn-block btn-success" (click)="openModal(template)">{{val1}}</button>
+    </form>
+ 
+  <ng-template #template>
+    <div class="modal-header">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body text-center">
+      <p>Do you want to confirm ?</p>
+      <button type="button" class="btn btn-primary" (click)="update()" >Yes</button>
+      <button type="button" class="btn btn-default" (click)="modalRef.hide()" >No</button>
+    </div>
+  </ng-template>
+</div> 
