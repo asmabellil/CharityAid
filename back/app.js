@@ -11,9 +11,12 @@ var associationsRouter = require('./routes/associations');
 var eventsRouter = require('./routes/events');
 var tasksRouter = require('./routes/tasks');
 var subscribersRouter = require('./routes/subscribers');
+var contactsRouter = require('./routes/contacts');
+var caissesRouter = require('./routes/caisses')
+
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient
-var db;
+var fileupload = require('express-fileupload'); 
 
 
 // import mongoDB
@@ -32,10 +35,11 @@ app.use(bodyParser.json());
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({  limit: '50mb', extended: true  }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
+app.use(fileupload({useTempFiles: true}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -44,6 +48,8 @@ app.use('/associations', associationsRouter);
 app.use('/events', eventsRouter);
 app.use('/tasks', tasksRouter);
 app.use('/subscribers', subscribersRouter);
+app.use('/contacts', contactsRouter);
+app.use('/caisses', caissesRouter);
 
 // CORS HEADERS MIDDELWARE 
 app.use(function(req, res, next) {

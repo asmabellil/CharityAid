@@ -4,6 +4,7 @@ var Member = require('../models/Member');
 var User = require('../models/User');
 var bcrypt = require("bcrypt");
 var multer = require("multer");
+const { cloudinary } = require("../utils/cloudinary");
 
 var Storage = multer.diskStorage({
     destination: "./public/uploads/",
@@ -34,6 +35,22 @@ router.get('/:id', function(req, res, next) {
 //Add Member    
 router.post("/", upload, async function (req, res, next) {
     const obj = JSON.parse(JSON.stringify(req.body));
+    var Picture =
+    "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"; //a logo default
+
+    try {
+      const fileStr = req.body.Avatar;
+      await cloudinary.uploader
+        .upload(fileStr, {
+          upload_preset: "supporter",
+        })
+        .then((res) => {
+          Avatar = res.url;
+          console.log("photo added");
+        });
+    } catch (error) {
+      console.log(error);
+    }
   
     const hashedPassword = await bcrypt.hash(obj.Password, 10);
     const member = {
@@ -46,6 +63,7 @@ router.post("/", upload, async function (req, res, next) {
       Association: obj.Association,
       Role_Association: obj.Role_Association,
       IdAssociation: obj.IdAssociation,
+      Picture: obj.Picture
     };
     var ids;
   

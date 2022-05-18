@@ -36,6 +36,7 @@ export class ListAssociationsComponent implements AfterViewInit {
   config: any;
   showFilter: Boolean;
   returnedAssociation: Association;
+  state: Boolean;
 
   constructor(private service: AssociationsService, private modalService: BsModalService, public dialog: MatDialog) {
     this.listAssociations = new Array;
@@ -80,17 +81,22 @@ export class ListAssociationsComponent implements AfterViewInit {
     this.show = ! this.show;
      this.val = "Add Association"; 
     this.action= true;
+    this.state = false;
 
     const dialogRef = this.dialog.open(AssociationFormComponent, {
       data: {
         val1: this.val,
         action1: this.action,
-        returnedAssociation: this.returnedAssociation },
+        returnedAssociation: this.returnedAssociation,
+        state: this.state },
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.dataSource.data.push(result.returnedAssociation)
-      this.dataSource.data = this.dataSource.data
+      if(result.state === true){
+        this.dataSource.data.push(result.returnedAssociation)
+        this.dataSource.data = this.dataSource.data
+      }
+      
       console.log("Added successfully", result) 
     });
    

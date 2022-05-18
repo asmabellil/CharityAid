@@ -4,11 +4,19 @@
 <div class="card">
   <h1>Tasks</h1>
   <div *ngFor = 'let e of listEvents' >
-    <details class="warning">
-      <summary>{{e.Title}}</summary>
-      <div >
+    <mat-accordion class="mb-3">
+      <mat-expansion-panel (opened)="panelOpenState = true"
+                           (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{e.Title}}
+          </mat-panel-title>
+          <mat-panel-description>
+            <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
+          </mat-panel-description>
+        </mat-expansion-panel-header>
         <app-single-task [event]="e"></app-single-task>
-      </div>
-    </details>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
-</div>
+</div> 

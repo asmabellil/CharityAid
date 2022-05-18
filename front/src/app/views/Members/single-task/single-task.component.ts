@@ -39,7 +39,7 @@ export class SingleTaskComponent implements OnInit {
 
   update (event){
     this.show = ! this.show;
-    this.val = "Update Event";
+    this.val = "Update Task";
     this.taskToUpdate = event;
     this.action =false;
 

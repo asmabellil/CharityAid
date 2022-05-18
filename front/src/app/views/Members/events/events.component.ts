@@ -33,6 +33,7 @@ export class EventsComponent implements AfterViewInit {
   modalRef: BsModalRef;
   val1: String;
   returnedEvent: Eventt;
+  state: Boolean;
 
   constructor(private service: EventsService, private modalService: BsModalService, public dialog: MatDialog) { 
     this.listEvents = new Array;
@@ -63,7 +64,7 @@ export class EventsComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(EventFormComponent, {
       data: { eventToUpdate : this.eventToUpdate,
         val1: this.val,
-        action1: this.action },
+        action1: this.action},
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -76,17 +77,22 @@ export class EventsComponent implements AfterViewInit {
     this.show = ! this.show;
     this.val = "Add Event";
     this.action= true;
+    this.state = false;
 
     const dialogRef = this.dialog.open(EventFormComponent, {
       data: {
         val1: this.val,
         action1: this.action,
-        returnedEvent: this.returnedEvent },
+        returnedEvent: this.returnedEvent,
+        state: this.state  },
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.dataSource.data.push(result.returnedEvent)
-      this.dataSource.data = this.dataSource.data
+      if (result.state === true ){
+        this.dataSource.data.push(result.returnedEvent)
+        this.dataSource.data = this.dataSource.data
+      }
+      
       console.log("Added successfully", result) 
     });
   }

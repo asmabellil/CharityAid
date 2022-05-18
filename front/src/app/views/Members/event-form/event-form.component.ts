@@ -22,10 +22,11 @@ export class EventFormComponent implements OnInit {
   val1;
   returnedEvent : Eventt;
   modalRef: BsModalRef;
+  state: Boolean;
 
   constructor(private service: EventsService, public bsModalRef: BsModalRef, private modalService: BsModalService, public dialogRef: MatDialogRef<EventFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {eventToUpdate : Eventt, val1: String , action1: boolean, returnedEvent: Eventt}) {
-      this.eventToUpdate = data.eventToUpdate, this.val1 = data.val1, this.action1 = data.action1, this.returnedEvent =data.returnedEvent
+    @Inject(MAT_DIALOG_DATA) public data: {eventToUpdate : Eventt, val1: String , action1: boolean, returnedEvent: Eventt, state: Boolean}) {
+      this.eventToUpdate = data.eventToUpdate, this.val1 = data.val1, this.action1 = data.action1, this.returnedEvent =data.returnedEvent, this.state = data.state
      }
 
   ngOnInit(): void {
@@ -56,6 +57,7 @@ export class EventFormComponent implements OnInit {
         this.service.addEvent(this.eventToAdd).subscribe(
           (data) => {
             console.log("add", data)
+            this.data.state = true;
             this.data.returnedEvent = data
             this.dialogRef.close(this.data);
           });

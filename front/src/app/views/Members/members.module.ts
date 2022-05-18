@@ -19,12 +19,14 @@ import { TaskFormComponent } from './task-form/task-form.component';
 import { SingleTaskComponent } from './single-task/single-task.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatExpansionModule} from '@angular/material/expansion';
 
   import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ListSubscribersComponent } from './list-subscribers/list-subscribers.component';
 import { SubscriberFormComponent } from './subscriber-form/subscriber-form.component';
-
-
+import {MatSelectModule} from '@angular/material/select';
+import { ListContactsComponent } from './list-contacts/list-contacts.component';
+import { ContactFormComponent } from './contact-form/contact-form.component';
 
 // Components Routing
 
@@ -44,7 +46,9 @@ import { SubscriberFormComponent } from './subscriber-form/subscriber-form.compo
     MatSortModule,
     MatAutocompleteModule, 
     MatFormFieldModule,
-    MatDialogModule
+    MatDialogModule,
+    MatExpansionModule,
+    MatSelectModule
 
   ],
   declarations: [
@@ -56,7 +60,9 @@ import { SubscriberFormComponent } from './subscriber-form/subscriber-form.compo
     TaskFormComponent,
     SingleTaskComponent,
     ListSubscribersComponent,
-    SubscriberFormComponent
+    SubscriberFormComponent,
+    ListContactsComponent,
+    ContactFormComponent
   ],
   providers: [
     BsModalRef,

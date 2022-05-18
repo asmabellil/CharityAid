@@ -14,7 +14,7 @@
       
         <label for="file-upload" id="file-drag">
           <div id="start">
-            <span id="file-upload-btn" class="btn btn-primary">Select an EXCEL file</span>
+            <span id="file-upload-btn" class="btn btn-primary">Upload an EXCEL file</span>
           </div>
         </label>
       </form>
@@ -38,7 +38,7 @@
         <!-- Fruit Column -->
         <ng-container matColumnDef="DOB">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Of Birth </th>
-          <td mat-cell *matCellDef="let row"> {{row.DOB.substring(1,11)}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.DOB}} </td>
         </ng-container>
   
         <!-- Fruit Column -->

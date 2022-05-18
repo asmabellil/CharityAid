@@ -22,6 +22,8 @@ export class TasksComponent implements OnInit {
   show: Boolean;
   val: String;
   action: boolean;
+  panelOpenState = false;
+  state: Boolean;
 
   constructor(private service : EventsService, private serviceTask: TasksService, private modalService: BsModalService, public dialog: MatDialog) { }
 
@@ -43,15 +45,27 @@ export class TasksComponent implements OnInit {
     this.show = ! this.show;
     this.val = "Add Task";
     this.action= true;
+    this.state = false;
 
     const dialogRef = this.dialog.open(TaskFormComponent,{
+      width: "30%",
       data: {
         val1: this.val,
         action1: this.action,
-        event: e
+        event: e,
+        state: this.state
         }
     }
     );
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.state === true ){
+        this.listTasks.push(result.returnedEvent)
+        this.listTasks = [...this.listTasks, result.returnedEvent]
+      }
+      
+      console.log("Added successfully", result) 
+    });
   }
 
 }

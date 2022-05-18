@@ -16,25 +16,26 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 })
 export class TaskFormComponent implements OnInit {
   registerForm: FormGroup;
-  @Input() taskToUpdate: Task;
-  @Input() val1;
-  @Input() action1;
-  @Input() event;
+  taskToUpdate: Task;
+  val1;
+  action1;
+  event;
   task: Task;
   taskToAdd: Task;
-  @Output() actAdd = new EventEmitter<Task>();
-  @Output() returnedEvent = new EventEmitter<Task>();
+  returnedEvent: Task;
   modalRef: BsModalRef;
   listEvents: Eventt[];
   filteredOptions: Observable<Eventt[]>;
   options: string[];
+  state: Boolean
   
   constructor(private service: TasksService, private serviceEvent: EventsService, public bsModalRef: BsModalRef, private modalService: BsModalService, public dialogRef: MatDialogRef<TaskFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
-      this.taskToUpdate = data.taskToUpdate, this.val1 = data.val1, this.action1 = data.action1
+      this.taskToUpdate = data.taskToUpdate, this.val1 = data.val1, this.action1 = data.action1, this.state = data.state
     }
 
   ngOnInit(): void {
+    this.dialogRef.beforeClosed().subscribe(() => this.dialogRef.close(this.data));
     this.serviceEvent.getEvents().subscribe(
       (data: Eventt[]) => {
         this.listEvents = data.filter(event => event.IdAssociation === JSON.parse(localStorage.getItem("User")).IdAssociation)
@@ -59,8 +60,9 @@ export class TaskFormComponent implements OnInit {
       this.taskToAdd = {... this.taskToUpdate, "Archive": "No", "Progress": "ToDo", "MemberName":  JSON.parse(localStorage.getItem("User")).FirstName + " " + JSON.parse(localStorage.getItem("User")).LastName}
       this.service.addTask(this.taskToAdd).subscribe(
         (data) => {
+            this.data.state = true;
+            this.data.returnedEvent = data
           console.log("add" + this.taskToAdd)
-          this.actAdd.emit(data)
     });
   }else
     {
@@ -68,15 +70,14 @@ export class TaskFormComponent implements OnInit {
     this.task = {...this.taskToUpdate}
     this.service.updateTask(this.task).subscribe((data) =>{
       console.log(data + "modified")
-      this.returnedEvent.emit(data)
     })  
   }
   this.modalRef.hide();
   }
 
   openModal(template: TemplateRef<any>) {
+    this.dialogRef.close();
     this.modalRef = this.modalService.show(template);
-    this.dialogRef.close(this.data)
   }
 
 }

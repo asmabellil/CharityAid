@@ -8,6 +8,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { 
   MatGridListModule
 } from '@angular/material/grid-list';
+import {MatSelectModule} from '@angular/material/select';
 
 // Components Routing
 import { AuthentificationRoutingModule } from './authentification.routing';
@@ -19,6 +20,14 @@ import { RegitrationPageComponent } from './regitration-page/regitration-page.co
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
+  declarations: [
+    LoginComponent,
+    RegistrationFormComponent,
+    ResetComponent,
+    ResetPasswordComponent,
+    RegitrationPageComponent
+
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -27,15 +36,8 @@ import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
     MatNativeDateModule,
     MatDatepickerModule,
     MatGridListModule,
-    ModalModule.forRoot()
-
-  ],
-  declarations: [
-    LoginComponent,
-    RegistrationFormComponent,
-    ResetComponent,
-    ResetPasswordComponent,
-    RegitrationPageComponent
+    ModalModule.forRoot(),
+    MatSelectModule
 
   ],
   exports: [

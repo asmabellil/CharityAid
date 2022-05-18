@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Inject, Injector, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Inject, Injector, Input, NgZone, OnInit, Output, TemplateRef } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Member } from '../../../models/Member';
 import { MembersService } from '../../../services/members.service';
@@ -29,13 +29,16 @@ export class RegistrationFormComponent implements OnInit {
   modalRef: BsModalRef;
   testRole: Boolean;
   association: String;
+  idAssociation: String;
+  state: Boolean;
 
   constructor(private service: MembersService, private serviceAssociation: AssociationsService, private datePipe: DatePipe, private router : Router, public bsModalRef: BsModalRef, private modalService: BsModalService, public dialogRef: MatDialogRef<RegistrationFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {memberToUpdate2 : Member, val1: String , action1: boolean, returnedMember: Member}) {
+    @Inject(MAT_DIALOG_DATA) public data: {memberToUpdate2 : Member, val1: String , action1: boolean, returnedMember: Member, state: Boolean}) {
       this.memberToUpdate2 = data.memberToUpdate2, this.val1 = data.val1, this.action1 = data.action1, this.returnedMember =data.returnedMember
      }
 
   ngOnInit(): void {
+
     this.registerForm= new FormGroup({
       FirstName: new FormControl('',[Validators.required,Validators.minLength(2)]),
       LastName: new FormControl('',[Validators.required,Validators.minLength(2)]),
@@ -48,6 +51,9 @@ export class RegistrationFormComponent implements OnInit {
       Password: new FormControl('',[Validators.required,Validators.minLength(6),Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{6,50}')]),
       ConfirmPassword: new FormControl('',Validators.required),
       });
+
+      this.state = false;
+      this.dialogRef.beforeClosed().subscribe(() => this.dialogRef.close(this.data));
 
       this.service.getMembers().subscribe(
         (data: Member[]) => this.listMembers = data
@@ -69,6 +75,7 @@ export class RegistrationFormComponent implements OnInit {
       }else{
         this.testRole = false;
         this.association = JSON.parse(localStorage.getItem("User")).Association
+        this.idAssociation = JSON.parse(localStorage.getItem("User")).IdAssociation
       }
   
       /* if (JSON.parse(localStorage.getItem("User")).Role === "superadmin" ){
@@ -108,18 +115,19 @@ export class RegistrationFormComponent implements OnInit {
         (data) => {
           console.log("add");
           this.data.returnedMember = data
-            this.dialogRef.close(this.data);
+          this.dialogRef.close(this.data);
     })
     console.log(this.memberToUpdate2);
     console.log(this.listMembers);        
       }
       else {
-          this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Association: this.association}
+          this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Association: this.association, IdAssociation: this.idAssociation}
           this.service.addMember(this.memberToAdd).subscribe(
             (data) => {
               console.log("add")
               this.data.returnedMember = data
-            this.dialogRef.close(this.data);
+              this.data.state = true;
+              this.dialogRef.close(this.data);
         })        
     }
 
@@ -129,7 +137,7 @@ export class RegistrationFormComponent implements OnInit {
     this.service.updateMember(this.member).subscribe((data) =>{
       console.log(data + "modified")
     })  
-    this.dialogRef.close(this.data);
+    this.dialogRef.close();
   }
   this.modalRef.hide()
   }
@@ -137,4 +145,5 @@ export class RegistrationFormComponent implements OnInit {
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
+
 }

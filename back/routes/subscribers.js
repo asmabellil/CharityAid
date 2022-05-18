@@ -56,4 +56,11 @@ router.delete('/:id',function(req, res, next) {
     .catch(err => res.status(400).json({ error: err }))
 })
 
+//Delete all
+router.delete("/", function(req, res, next){
+  Subscriber.deleteMany()
+  .then(() => res.status(200).json({msg: "All subscribers deleted"}))
+  .catch(err => res.status(400).json({ error: err }))
+})
+
 module.exports = router;

@@ -28,7 +28,6 @@ export class ListUsersComponent implements AfterViewInit {
   user: User;
   listMembers: Member[];
   listUsers: User[];
-  show: boolean;
   val: string;
   memberToUpdate: Member;
   returnedMember: Member;
@@ -39,7 +38,7 @@ export class ListUsersComponent implements AfterViewInit {
   reverse: Boolean = false;
   p: number =1;
   modalRef: BsModalRef;
-  config: any;
+  state: Boolean;
 
   constructor(private service: MembersService, private serviceUser: UsersService, private modalService: BsModalService, public dialog: MatDialog) {
     this.listComplete = new Array;
@@ -65,28 +64,22 @@ export class ListUsersComponent implements AfterViewInit {
               this.dataSource.sort = this.sort;
             }
           }
-          
         );    
       }     
     );
     
-    console.log(this.dataSource);
-    this.show = false;
     this.memberToUpdate = new Member;
     this.action = true;
-    this.config= {class: 'gray modal-lg'};
     this.showFilter = false;
    }
 
   ngAfterViewInit(): void {
-    //this.listComplete = [{_id: "", Password: "", ConfirmPassword: "", Email: "", Role: "", FirstName: "", LastName: "", Picture: "", DOB: "", Adress: "", Phone: 0 , Role_Association: ""}]
 
   }
 
   
 
   onUpdate (member){
-    this.show = ! this.show;
     this.val = "Update member";
     this.memberToUpdate = member;
     this.action =false;
@@ -105,21 +98,24 @@ export class ListUsersComponent implements AfterViewInit {
 
   onAdd (member){
     this.memberToUpdate = new Member;
-    this.show = ! this.show;
     this.val = "Add member";
     this.action= true;
+    this.state = false;
 
     const dialogRef = this.dialog.open(RegistrationFormComponent, {
       data: {
         val1: this.val,
         action1: this.action,
-        returnedMember: this.returnedMember },
+        returnedMember: this.returnedMember,
+        state: this.state },
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.dataSource.data.push(result.returnedMember)
-      this.dataSource.data = this.dataSource.data
-      console.log("Added successfully", result) 
+      console.log("Added successfully", result)
+      if(result.state === true){
+        this.dataSource.data.push(result.returnedMember)
+        this.dataSource.data = this.dataSource.data        
+      } 
     });
 
   }

@@ -8,23 +8,24 @@
         </div>
         <input class="form-control" type="text" name="Title" placeholder="Title" [(ngModel)]="taskToUpdate.Title" formControlName="Title">
       </div>
-      <div class="alert alert-danger col-md-6" *ngIf="Title.errors && Title.touched">
+      <div class="alert alert-danger col-md-12" *ngIf="Title.errors && Title.touched">
         <div *ngIf="Title.errors.required">This field is required</div>
         <div *ngIf="Title.errors.minlength">Your title should have at leaset two charcters</div>
       </div>  
 
-      <div class="input-group col-md-12 form-group role">
-        <tr class="label">Event:</tr>
-        <tr >
-          <td><select autocomplete="on" class="form-control " style="width:100% " 
-              name="event"
-              [(ngModel)]="taskToUpdate.IdEvent"
-              formControlName="IdEvent">
-              <option selected disabled >Event</option>
-                <option *ngFor="let a of listEvents" [value]="a._id">{{a.Title}}</option>  
-          </select></td>
-      </tr>
-    </div>
+      <div class="input-group form-group role">
+        <mat-form-field appearance="fill">
+        <mat-label>Event</mat-label>
+        <mat-select required
+            name="event"
+            [(ngModel)]="taskToUpdate.IdEvent"
+            formControlName="IdEvent">
+          <mat-option *ngFor="let a of listEvents" [value]="a._id" [value]="a._id">
+            {{a.Title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>    
 
       <div class="mb-3 mat-calander " >
         <tr class="label">Deadline:</tr>

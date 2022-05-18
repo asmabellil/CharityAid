@@ -14,6 +14,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatSelectModule} from '@angular/material/select';
 
 // Components Routing
 import { ListUsersComponent } from './list-users/list-users.component';
@@ -22,7 +23,6 @@ import { AuthentificationModule } from '../Authentification/authentification.mod
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { AssociationFormComponent } from './association-form/association-form.component';
 import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
 
 
 @NgModule({
@@ -44,7 +44,8 @@ import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angu
     MatPaginatorModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule
 
   ],
   declarations: [

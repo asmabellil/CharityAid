@@ -65,7 +65,7 @@ export const navItems = {
   },
   {
     name: 'Contact',
-    url: '/main/allassociations',
+    url: '/members/allcontacts',
     icon: 'cil-contact'
   },
   ],
@@ -106,7 +106,7 @@ export const navItems = {
   },
   {
     name: 'Contact',
-    url: '/main/allassociations',
+    url: '/members/allcontacts',
     icon: 'cil-contact'
   }],
   "Treasurer" :
@@ -146,7 +146,7 @@ export const navItems = {
   },
   {
     name: 'Contact',
-    url: '/main/allassociations',
+    url: '/members/allcontacts',
     icon: 'cil-contact'
   }],
   "General Secretary" :
@@ -186,7 +186,7 @@ export const navItems = {
   },
   {
     name: 'Contact',
-    url: '/main/allassociations',
+    url: '/members/allcontacts',
     icon: 'cil-contact'
   }]
 };

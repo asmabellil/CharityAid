@@ -7,6 +7,7 @@ import { TasksComponent } from './tasks/tasks.component';
 import { SingleTaskComponent } from './single-task/single-task.component'
 import { ListSubscribersComponent } from './list-subscribers/list-subscribers.component';
 import { SubscriberFormComponent } from './subscriber-form/subscriber-form.component';
+import { ListContactsComponent } from './list-contacts/list-contacts.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,13 @@ const routes: Routes = [
         component: SubscriberFormComponent,
         data: {
           title: 'subscribers'
+        }
+      },
+      {
+        path: 'allcontacts',
+        component: ListContactsComponent,
+        data: {
+          title: 'All contacts'
         }
       },
     ]

@@ -24,11 +24,12 @@ export class AssociationFormComponent implements OnInit {
   listAssociations: Association[];
 
   constructor(private service: AssociationsService, public bsModalRef: BsModalRef, private modalService: BsModalService,public dialogRef: MatDialogRef<AssociationFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {associationToUpdate : Association, val1: String , action1: boolean, returnedAssociation: Association}) { 
+    @Inject(MAT_DIALOG_DATA) public data: {associationToUpdate : Association, val1: String , action1: boolean, returnedAssociation: Association, state: Boolean}) { 
       this.associationToUpdate = data.associationToUpdate, this.val1 = data.val1, this.action1 = data.action1, this.returnedAssociation =data.returnedAssociation
     }
 
   ngOnInit(): void {
+    this.dialogRef.beforeClosed().subscribe(() => this.dialogRef.close(this.data));
 
     console.log(this.val1)
 
@@ -68,6 +69,7 @@ export class AssociationFormComponent implements OnInit {
       this.service.addAssociation(this.associationToAdd).subscribe(
         (data) => {
           console.log("add")
+          this.data.state = true
           this.data.returnedAssociation = data
           this.dialogRef.close(this.data);
     });
