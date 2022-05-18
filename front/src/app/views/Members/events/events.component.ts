@@ -1,11 +1,12 @@
 import { Component, AfterViewInit, ViewChild, TemplateRef } from '@angular/core';
 import { EventsService } from '../../../services/events.service'
 import { Eventt } from '../../../models/Event'
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EventFormComponent } from '../event-form/event-form.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-events',
@@ -14,9 +15,10 @@ import { EventFormComponent } from '../event-form/event-form.component';
 })
 export class EventsComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['Picture', 'Title', 'Start_date', 'End_date', 'Place', 'Number_Participants', 'Cout', 'Actions'];
+  displayedColumns: string[] = ['Picture', 'Title', 'Start_date', 'End_date', 'Place', 'Number_Participants', 'Cout', 'MemberName', 'Actions'];
   dataSource: MatTableDataSource<Eventt>;
 
+  @ViewChild(MatTable) table: MatTable<Eventt>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort; 
 
@@ -30,8 +32,9 @@ export class EventsComponent implements AfterViewInit {
   bsModalRef: BsModalRef; 
   modalRef: BsModalRef;
   val1: String;
+  returnedEvent: Eventt;
 
-  constructor(private service: EventsService, private modalService: BsModalService) { 
+  constructor(private service: EventsService, private modalService: BsModalService, public dialog: MatDialog) { 
     this.listEvents = new Array;
     
     this.service.getEvents().subscribe(
@@ -56,14 +59,16 @@ export class EventsComponent implements AfterViewInit {
     this.val = "Update Event";
     this.eventToUpdate = event;
     this.action =false;
-    
-    this.bsModalRef = this.modalService.show(EventFormComponent, {
-      initialState :  {
-        eventToUpdate : this.eventToUpdate,
+
+    const dialogRef = this.dialog.open(EventFormComponent, {
+      data: { eventToUpdate : this.eventToUpdate,
         val1: this.val,
-        action1: this.action
-      }
-    }); 
+        action1: this.action },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed', result);
+    });
   }
 
   onAdd (member){
@@ -72,19 +77,26 @@ export class EventsComponent implements AfterViewInit {
     this.val = "Add Event";
     this.action= true;
 
-    this.bsModalRef = this.modalService.show(EventFormComponent,{
-      initialState: {
+    const dialogRef = this.dialog.open(EventFormComponent, {
+      data: {
         val1: this.val,
-        action1: this.action
-      }   
-    }); 
+        action1: this.action,
+        returnedEvent: this.returnedEvent },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.dataSource.data.push(result.returnedEvent)
+      this.dataSource.data = this.dataSource.data
+      console.log("Added successfully", result) 
+    });
   }
 
   deletEvent(association){
     let i= this.listEvents.indexOf(association);
     this.service.deleteEvent(this.listEvents[i]._id).subscribe(
       () => {this.listEvents = this.listEvents.filter(association => association._id != this.listEvents[i]._id),
-      this.dataSource = new MatTableDataSource(this.listEvents)}
+      this.dataSource = new MatTableDataSource(this.listEvents),
+      this.dataSource.paginator = this.paginator}
     );
     this.modalRef.hide(); 
   }

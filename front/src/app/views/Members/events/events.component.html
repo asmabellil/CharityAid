@@ -7,12 +7,12 @@
   </div>
     
     <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="dataSource" matSort>
+      <table #table mat-table [dataSource]="dataSource" matSort>
     
         <!-- Picture Column -->
         <ng-container matColumnDef="Picture">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Picture </th>
-          <td mat-cell *matCellDef="let row"> <img class="img-avatar" src="{{row.Picture}}"/> </td>
+          <td mat-cell *matCellDef="let row"> <img class="avatar-rounded-circle" src="{{row.Picture}}"/> </td>
         </ng-container>
     
         <!-- Title Column -->
@@ -50,6 +50,12 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Coût </th>
             <td mat-cell *matCellDef="let row"> {{row.Cout}} </td>
           </ng-container>
+
+        <!-- MemberName Column -->
+        <ng-container matColumnDef="MemberName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Added by </th>
+          <td mat-cell *matCellDef="let row"> {{row.MemberName}} </td>
+        </ng-container>
   
         <ng-container matColumnDef="Actions">
           <th mat-header-cell  *matHeaderCellDef > Actions </th>

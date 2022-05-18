@@ -14,3 +14,13 @@
   tr:nth-child(even) {
     background-color: #dddddd;
   }
+
+.uploader {
+  display: block;
+  clear: both;
+}
+
+.uploader input[type=file] {
+  display: none;
+}
+

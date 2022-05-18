@@ -35,6 +35,7 @@ export class ListAssociationsComponent implements AfterViewInit {
   modalRef: BsModalRef;
   config: any;
   showFilter: Boolean;
+  returnedAssociation: Association;
 
   constructor(private service: AssociationsService, private modalService: BsModalService, public dialog: MatDialog) {
     this.listAssociations = new Array;
@@ -53,49 +54,44 @@ export class ListAssociationsComponent implements AfterViewInit {
    }
 
    ngAfterViewInit(): void {
-     this.val = "Open"
+     
 
   }
 
    onUpdate (association){
     this.show = ! this.show;
-    /* this.val = "Update Association"; */
+    this.val = "Update Association"; 
     this.associationToUpdate2 = association;
     this.action =false;
     console.log(this.associationToUpdate2)
     
-    /*const dialogRef = this.dialog.open(AssociationFormComponent, {
+    const dialogRef = this.dialog.open(AssociationFormComponent, {
        data: {
         associationToUpdate : this.associationToUpdate2,
         val1: this.val,
         action1: this.action
         } 
     }
-    );*/
+    );
   } 
 
   onAdd(member): void {
     this.associationToUpdate2 = new Association;
-    /*this.show = ! this.show;
+    this.show = ! this.show;
      this.val = "Add Association"; 
-    this.action= true;*/
+    this.action= true;
 
     const dialogRef = this.dialog.open(AssociationFormComponent, {
-      
       data: {
-        val1: this.val
-        /* action1: this.action */},
-    }); 
-
-    dialogRef.beforeClosed().subscribe(result => {
-      console.log('The dialog was open' + this.val);
-     
+        val1: this.val,
+        action1: this.action,
+        returnedAssociation: this.returnedAssociation },
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed' + this.val);
-      console.log('result '+ result)
-     
+      this.dataSource.data.push(result.returnedAssociation)
+      this.dataSource.data = this.dataSource.data
+      console.log("Added successfully", result) 
     });
    
   }
@@ -104,25 +100,11 @@ export class ListAssociationsComponent implements AfterViewInit {
     let i= this.listAssociations.indexOf(association);
     this.service.deleteAssociation(this.listAssociations[i]._id).subscribe(
       () => {this.listAssociations = this.listAssociations.filter(association => association._id != this.listAssociations[i]._id),
-      this.dataSource = new MatTableDataSource(this.listAssociations)}
+        this.dataSource = new MatTableDataSource(this.listAssociations),
+        this.dataSource.paginator = this.paginator}
     );
     this.modalRef.hide(); 
   }
-
-  /* Search(){
-    if (this.firstname === ""){
-      this.ngAfterViewInit();
-    }
-    else{
-      this.listAssociations = this.listAssociations.filter(res => {
-        return (res.Name.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) || res.Phone.toString().match(this.firstname) || res.Adress.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) || res.Email.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) )
-      })
-    }
-  }
-  sortt(key){
-    this.key = key;
-    this.reverse = !this.reverse;
-  } */
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);

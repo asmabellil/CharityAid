@@ -9,6 +9,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-list-users',
@@ -30,6 +31,7 @@ export class ListUsersComponent implements AfterViewInit {
   show: boolean;
   val: string;
   memberToUpdate: Member;
+  returnedMember: Member;
   listComplete: Member[];
   bsModalRef: BsModalRef;
   firstname: any;
@@ -39,7 +41,7 @@ export class ListUsersComponent implements AfterViewInit {
   modalRef: BsModalRef;
   config: any;
 
-  constructor(private service: MembersService, private serviceUser: UsersService, private modalService: BsModalService) {
+  constructor(private service: MembersService, private serviceUser: UsersService, private modalService: BsModalService, public dialog: MatDialog) {
     this.listComplete = new Array;
     
     this.service.getMembers().subscribe(
@@ -88,13 +90,15 @@ export class ListUsersComponent implements AfterViewInit {
     this.val = "Update member";
     this.memberToUpdate = member;
     this.action =false;
-    
-    this.bsModalRef = this.modalService.show(RegistrationFormComponent, {
-      initialState :  {
-        memberToUpdate2 : this.memberToUpdate,
+
+    const dialogRef = this.dialog.open(RegistrationFormComponent, {
+      data: { memberToUpdate2 : this.memberToUpdate,
         val1: this.val,
-        action1: this.action
-      },
+        action1: this.action },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed', result);
     });
     
   }
@@ -105,57 +109,31 @@ export class ListUsersComponent implements AfterViewInit {
     this.val = "Add member";
     this.action= true;
 
-    this.bsModalRef = this.modalService.show(RegistrationFormComponent ,{
-      initialState: {
+    const dialogRef = this.dialog.open(RegistrationFormComponent, {
+      data: {
         val1: this.val,
-        action1: this.action
-      } 
-    }
-    );
+        action1: this.action,
+        returnedMember: this.returnedMember },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.dataSource.data.push(result.returnedMember)
+      this.dataSource.data = this.dataSource.data
+      console.log("Added successfully", result) 
+    });
+
   }
 
   deletMember(member: Member){
     let i= this.listComplete.indexOf(member);
     this.service.deleteMember(this.listComplete[i]._id).subscribe(
       () => {this.listComplete = this.listComplete.filter(member => member._id != this.listComplete[i]._id),
-        this.dataSource = new MatTableDataSource(this.listComplete)
+        this.dataSource = new MatTableDataSource(this.listComplete),
+      this.dataSource.paginator = this.paginator
     }
     ); 
     
     this.modalRef.hide(); 
-  }
-
-  updateList(m : Member){
-    this.listComplete = [
-      ...this.listComplete
-    ]
-    console.log("modified and showed")
-    this.show = false;
-    this.memberToUpdate = new Member;
-  }
-
-  afterAdd(m: Member){
-    this.listComplete = [
-       ...this.listComplete, m 
-    ]
-    //this.listMembers.push(this.member));
-    this.show = false;
-    this.memberToUpdate = new Member;
-  }
-
-  Search(){
-    if (this.firstname === ""){
-      this.ngAfterViewInit();
-    }
-    else{
-      this.listComplete = this.listComplete.filter(res => {
-        return (res.FirstName.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) || res.Phone.toString().match(this.firstname) || res.LastName.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) || res.Email.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) )
-      })
-    }
-  }
-  sortt(key){
-    this.key = key;
-    this.reverse = !this.reverse;
   }
 
   openModal(template: TemplateRef<any>) {
@@ -175,4 +153,20 @@ export class ListUsersComponent implements AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  /* Search(){
+    if (this.firstname === ""){
+      this.ngAfterViewInit();
+    }
+    else{
+      this.listComplete = this.listComplete.filter(res => {
+        return (res.FirstName.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) || res.Phone.toString().match(this.firstname) || res.LastName.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) || res.Email.toLocaleLowerCase().match(this.firstname.toLocaleLowerCase()) )
+      })
+    }
+  }
+  sortt(key){
+    this.key = key;
+    this.reverse = !this.reverse;
+  } */
+
 }

@@ -5,6 +5,7 @@ import { TasksService } from 'src/app/services/tasks.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { reduce } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-single-task',
@@ -24,7 +25,7 @@ export class SingleTaskComponent implements OnInit {
   action: boolean;
   color: string;
 
-  constructor(private serviceTask: TasksService, private modalService: BsModalService) { }
+  constructor(private serviceTask: TasksService, private modalService: BsModalService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.serviceTask.getTasks().subscribe(
@@ -41,14 +42,18 @@ export class SingleTaskComponent implements OnInit {
     this.val = "Update Event";
     this.taskToUpdate = event;
     this.action =false;
-    
-    this.bsModalRef = this.modalService.show(TaskFormComponent, {
-      initialState :  {
+
+    const dialogRef = this.dialog.open(TaskFormComponent, {
+      width: '30%',
+      data: {
         taskToUpdate : this.taskToUpdate,
         val1: this.val,
-        action1: this.action
-      }
-    }); 
+        action1: this.action },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("Result", result) 
+    });
   }
 
   delete(task){
@@ -79,14 +84,18 @@ export class SingleTaskComponent implements OnInit {
     this.serviceTask.updateTask(task).subscribe((data) =>{
       console.log(data + "modified")
   })
+  this.listTasks = [...this.listTasks]
   this.modalRef.hide(); 
   }
 
   updateT(t){
+    let i= this.listTasks.indexOf(t);
     const task = {...t, "Archive" : "Yes"}
     this.serviceTask.updateTask(task).subscribe((data) =>{
       console.log(data + "modified")
+      this.listTasks = this.listTasks.filter(task => task._id != this.listTasks[i]._id)
   })
+  this.listTasks = [...this.listTasks]
   this.modalRef.hide(); 
   }
 }

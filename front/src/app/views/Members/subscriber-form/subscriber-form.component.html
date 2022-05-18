@@ -1,21 +1,92 @@
-<!-- Upload  -->
-<form id="file-upload-form" class="uploader">
-  <input id="file-upload" type="file"
-  (change)="fileUpload($event)" name="fileUpload" accept=".xls,.xlsx" />
+<div class="card-body p-4">
+  <form method="post" [formGroup]="registerForm">
+    <p class="text-muted"> Update Subscriber </p>
 
-  <label for="file-upload" id="file-drag">
-    <img id="file-image" src="#" alt="Preview" class="hidden">
-    <div id="start">
-      <i class="fa fa-download" aria-hidden="true"></i>
-      <div>Select a file or drag here</div>
-      <div id="notimage" class="hidden">Please select an image</div>
-      <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+    <div class="row mt-2">
+    <div class="input-group mb-3 col-md-6">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="icon-user"></i></span>
+      </div>
+      <input class="form-control" type="text" name="FirstName" placeholder="FirstName" [(ngModel)]="subscriberToUpdate.FirstName" formControlName="FirstName">
     </div>
-    <div id="response" class="hidden">
-      <div id="messages"></div>
-      <progress class="progress" id="file-progress" value="0">
-        <span>0</span>%
-      </progress>
+
+    <div class="input-group mb-3 col-md-6">
+      <div class="input-group-prepend">
+        <span class="input-group-text">@</span>
+      </div>
+      <input class="form-control" type="text" name="LastName" placeholder="LastName" [(ngModel)]="subscriberToUpdate.LastName" formControlName="LastName">
     </div>
-  </label>
-</form>
+  </div>
+  
+  <div class="row mt-2">
+    <div class="alert alert-danger col-md-6" *ngIf="FirstName.errors && FirstName.touched">
+      <div *ngIf="FirstName.errors.required">This field is required</div>
+      <div *ngIf="FirstName.errors.minlength">Your name should have at leaset two charcters</div>
+  </div>
+
+    <div class="alert alert-danger col-md-6" *ngIf="LastName.errors && LastName.touched">
+      <div *ngIf="LastName.errors.required">This field is required</div>
+  </div>
+  </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="cil-home"></i></span>
+      </div>
+      <input class="form-control" type="text" name="DOB" placeholder="Date of birth" [(ngModel)]="subscriberToUpdate.DOB" formControlName="DOB">
+    </div>
+    <div class="alert alert-danger" *ngIf="DOB.errors && DOB.touched">
+      <div *ngIf="DOB.errors.required">This field is required</div>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="cil-home"></i></span>
+      </div>
+      <input class="form-control" type="text" name="address" placeholder="Enter your address" [(ngModel)]="subscriberToUpdate.Adress" formControlName="Adress">
+    </div>
+    <div class="alert alert-danger" *ngIf="Adress.errors && Adress.touched">
+      <div *ngIf="Adress.errors.required">This field is required</div>
+      <div *ngIf="Adress.errors.minlength">Your adress should have at leaset three charcters</div>
+  </div>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text"><i class="cil-phone"></i></span>
+    </div>
+    <input class="form-control" type="number" name="phone" placeholder="Enter your phone number" [(ngModel)]="subscriberToUpdate.Phone" formControlName="Phone">
+  </div>
+  <div class="alert alert-danger" *ngIf="Phone.errors && Phone.touched">
+    <div *ngIf="Phone.errors.required">This field is required</div>
+    <div *ngIf="Phone.errors.pattern">Your phone number should have exactly 8 numbers</div>
+</div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="cil-phone"></i></span>
+      </div>
+      <input class="form-control" type="email" name="email" placeholder="Email" [(ngModel)]="subscriberToUpdate.Email" formControlName="Email">
+    </div>
+
+  <div class="alert alert-danger" *ngIf="Email.errors && Email.touched">
+    <div *ngIf="Email.errors.required">This field is required</div>
+    <div *ngIf="Email.errors.pattern">Your email should have this form test@test.com</div>
+</div>
+  
+    <button type="button" class="btn btn-block btn-success" (click)="openModal(template)">Update Subscriber</button>
+  </form>
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body text-center">
+    <p>Do you want to confirm ?</p>
+    <button type="button" class="btn btn-primary" (click)="update()" >Yes</button>
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()" >No</button>
+  </div>
+</ng-template>
+</div>

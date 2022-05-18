@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Injector, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, HostListener, Inject, Injector, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Eventt } from '../../../models/Event';
 import { EventsService } from '../../../services/events.service';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-event-form',
@@ -16,16 +17,19 @@ export class EventFormComponent implements OnInit {
   registerForm: FormGroup;
   event: Eventt;
   eventToAdd: Eventt;
-  @Input() eventToUpdate: Eventt;
-  @Input() action1 = true;
-  @Input() val1;
-  @Output() actAdd = new EventEmitter<Eventt>();
-  @Output() returnedEvent = new EventEmitter<Eventt>();
+  eventToUpdate: Eventt;
+  action1 = true;
+  val1;
+  returnedEvent : Eventt;
   modalRef: BsModalRef;
 
-  constructor(private service: EventsService, public bsModalRef: BsModalRef, private modalService: BsModalService) { }
+  constructor(private service: EventsService, public bsModalRef: BsModalRef, private modalService: BsModalService, public dialogRef: MatDialogRef<EventFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {eventToUpdate : Eventt, val1: String , action1: boolean, returnedEvent: Eventt}) {
+      this.eventToUpdate = data.eventToUpdate, this.val1 = data.val1, this.action1 = data.action1, this.returnedEvent =data.returnedEvent
+     }
 
   ngOnInit(): void {
+    this.dialogRef.beforeClosed().subscribe(() => this.dialogRef.close(this.data));
     this.registerForm= new FormGroup({
       Title: new FormControl('',[Validators.required,Validators.minLength(2)]),
       Description: new FormControl('',[Validators.required,Validators.minLength(10)]),
@@ -48,27 +52,29 @@ export class EventFormComponent implements OnInit {
 
     update(){
       if (this.action1){
-        this.eventToAdd = {... this.eventToUpdate, "IdAssociation": JSON.parse(localStorage.getItem("User")).IdAssociation, "MemberName": JSON.parse(localStorage.getItem("User")).FirstName + " " + JSON.parse(localStorage.getItem("User")).LastName}
+        this.eventToAdd = {... this.eventToUpdate, "IdAssociation": JSON.parse(localStorage.getItem("User")).IdAssociation, "MemberName": JSON.parse(localStorage.getItem("User")).FirstName + " " + JSON.parse(localStorage.getItem("User")).LastName, "Picture":"http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
         this.service.addEvent(this.eventToAdd).subscribe(
           (data) => {
-            console.log("add")
-            this.actAdd.emit(data)
-      });
-    }else
-      {
-      console.log("entred")
-      this.event = {...this.eventToUpdate}
-      this.service.updateEvent(this.event).subscribe((data) =>{
-        console.log(data + "modified")
-        this.returnedEvent.emit(data)
-      })  
-    }
-    this.modalRef.hide();
+            console.log("add", data)
+            this.data.returnedEvent = data
+            this.dialogRef.close(this.data);
+          });
+      }else
+        {
+        console.log("entred")
+        this.event = {...this.eventToUpdate}
+        this.service.updateEvent(this.event).subscribe((data) =>{
+          console.log(data + "modified")
+          this.eventToUpdate = data
+        })  
+        this.dialogRef.close(this.data);
+      }
+    this.modalRef.hide()
+    
     }
   
     openModal(template: TemplateRef<any>) {
       this.modalRef = this.modalService.show(template);
-      this.bsModalRef.hide()
     }
 
 }

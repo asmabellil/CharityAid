@@ -3,17 +3,25 @@
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input onchange="onChangeFilter()">
     </mat-form-field>
-      <mat-button  class="ml-auto btn btn-primary mb-3 ml-5" (click)="onAdd(1)">Enter Excel file</mat-button>
-  </div>
+    <!-- <form class="ml-auto">
+        <input id="file-upload" type="file"
+        (change)="fileUpload($event)" name="fileUpload" accept=".xls,.xlsx" />
+      <mat-button  class="ml-auto btn btn-primary mb-3 ml-5">Enter Excel file</mat-button>
+    </form> -->
+    <form  class="uploader ml-auto">
+        <input id="file-upload" type="file"
+        (change)="fileUpload($event)" name="fileUpload" accept=".xls,.xlsx" />
+      
+        <label for="file-upload" id="file-drag">
+          <div id="start">
+            <span id="file-upload-btn" class="btn btn-primary">Select an EXCEL file</span>
+          </div>
+        </label>
+      </form>
+</div>
     
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource" matSort>
-    
-        <!-- Picture Column -->
-        <ng-container matColumnDef="Picture">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Picture </th>
-          <td mat-cell *matCellDef="let row"> <img class="img-avatar" src="{{row.Picture}}"/> </td>
-        </ng-container>
     
         <!-- FirstName Column -->
         <ng-container matColumnDef="FirstName">
@@ -30,7 +38,7 @@
         <!-- Fruit Column -->
         <ng-container matColumnDef="DOB">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Of Birth </th>
-          <td mat-cell *matCellDef="let row"> {{row.DOB}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.DOB.substring(1,11)}} </td>
         </ng-container>
   
         <!-- Fruit Column -->

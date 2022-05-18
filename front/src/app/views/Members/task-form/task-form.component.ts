@@ -30,7 +30,9 @@ export class TaskFormComponent implements OnInit {
   options: string[];
   
   constructor(private service: TasksService, private serviceEvent: EventsService, public bsModalRef: BsModalRef, private modalService: BsModalService, public dialogRef: MatDialogRef<TaskFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { 
+      this.taskToUpdate = data.taskToUpdate, this.val1 = data.val1, this.action1 = data.action1
+    }
 
   ngOnInit(): void {
     this.serviceEvent.getEvents().subscribe(
@@ -74,7 +76,7 @@ export class TaskFormComponent implements OnInit {
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
-    this.bsModalRef.hide()
+    this.dialogRef.close(this.data)
   }
 
 }

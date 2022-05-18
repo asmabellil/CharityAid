@@ -33,7 +33,7 @@ router.post('/', async function(req,res,next){
   // Add JSON 
   router.post('/addJSON', function(req, res) {
     // Insert JSON straight into MongoDB
-    db.collection("subscribers").insertMany(req.body, function (err, result) {
+    Subscriber.insertMany(req.body, function (err, result) {
         if (err)
           res.send('Error');
         else

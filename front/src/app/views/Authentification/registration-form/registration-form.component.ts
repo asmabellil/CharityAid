@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Injector, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Inject, Injector, Input, OnInit, Output, TemplateRef } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Member } from '../../../models/Member';
 import { MembersService } from '../../../services/members.service';
@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AssociationsService } from 'src/app/services/associations.service';
 import { Association } from 'src/app/models/Association';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-registration-form',
@@ -19,20 +20,20 @@ export class RegistrationFormComponent implements OnInit {
   memberToAdd: Member;
   member: Member;
   listAssociations: Association[];
-  @Input() val1 = "Create an account";
-  @Input() memberToUpdate2: Member;
-  @Input() action1 = true;
-  @Output() returnedMember = new EventEmitter<Member>();
-  @Output() actAdd = new EventEmitter<Member>();
+  val1 : String = "Create an account";
+  memberToUpdate2: Member;
+  action1 = true;
+  returnedMember : Member;
   registerPage : boolean;
   closeBtnName: string;
   modalRef: BsModalRef;
   testRole: Boolean;
   association: String;
 
-  constructor(private service: MembersService, private serviceAssociation: AssociationsService, private datePipe: DatePipe, private router : Router, public bsModalRef: BsModalRef, private modalService: BsModalService) {
-
-   }
+  constructor(private service: MembersService, private serviceAssociation: AssociationsService, private datePipe: DatePipe, private router : Router, public bsModalRef: BsModalRef, private modalService: BsModalService, public dialogRef: MatDialogRef<RegistrationFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {memberToUpdate2 : Member, val1: String , action1: boolean, returnedMember: Member}) {
+      this.memberToUpdate2 = data.memberToUpdate2, this.val1 = data.val1, this.action1 = data.action1, this.returnedMember =data.returnedMember
+     }
 
   ngOnInit(): void {
     this.registerForm= new FormGroup({
@@ -58,9 +59,6 @@ export class RegistrationFormComponent implements OnInit {
 
       this.serviceAssociation.getAssociations().subscribe(
         (data: Association[]) => {
-        /* for (let i = 0; i < data.length; i++) {
-          this.listAssociations[i] = data[i].Name  
-        } */
         this.listAssociations = data
       }
       )
@@ -102,28 +100,16 @@ export class RegistrationFormComponent implements OnInit {
     }
   }
 
-  save(){
-    this.memberToAdd = {... this.memberToUpdate2,  Role: "member"}
-    this.service.addMember(this.memberToAdd).subscribe(
-      (data) => {
-        console.log("add")
-        this.actAdd.emit(data)
-    })
-    this.router.navigate(['/allusers'])
-      console.log(this.memberToUpdate2);
-      console.log(this.listMembers);
-  }
-
   update(){
     if (this.action1){
       if(JSON.parse(localStorage.getItem("User")).Role === "superadmin"){
       this.memberToAdd = {... this.memberToUpdate2,  Role: "member"}
       this.service.addMember(this.memberToAdd).subscribe(
         (data) => {
-          console.log("add")
-          this.actAdd.emit(data)
+          console.log("add");
+          this.data.returnedMember = data
+            this.dialogRef.close(this.data);
     })
-
     console.log(this.memberToUpdate2);
     console.log(this.listMembers);        
       }
@@ -132,7 +118,8 @@ export class RegistrationFormComponent implements OnInit {
           this.service.addMember(this.memberToAdd).subscribe(
             (data) => {
               console.log("add")
-              this.actAdd.emit(data)
+              this.data.returnedMember = data
+            this.dialogRef.close(this.data);
         })        
     }
 
@@ -141,14 +128,13 @@ export class RegistrationFormComponent implements OnInit {
     this.member = {...this.memberToUpdate2}
     this.service.updateMember(this.member).subscribe((data) =>{
       console.log(data + "modified")
-      this.returnedMember.emit(data)
     })  
+    this.dialogRef.close(this.data);
   }
-  this.modalRef.hide();
+  this.modalRef.hide()
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
-    this.bsModalRef.hide() //hedhi feha mochkol
   }
 }

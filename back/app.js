@@ -15,16 +15,6 @@ var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient
 var db;
 
-MongoClient.connect('mongodb+srv://asma_bellil:193JFT4536@cluster0.qapag.mongodb.net/End-Of-Studies?retryWrites=true&w=majority', function (err, database) {
-   if (err) 
-   	throw err
-   else
-   {
-	db = database;
-	console.log('Connected to MongoDB' + database);
-   }
- });
-
 
 // import mongoDB
 var mongoose = require("mongoose");

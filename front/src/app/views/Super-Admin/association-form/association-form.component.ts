@@ -19,13 +19,14 @@ export class AssociationFormComponent implements OnInit {
   @Input() associationToUpdate: Association;
   @Input() action1 = true;
   val1;
-  @Output() actAdd = new EventEmitter<Association>();
-  @Output() returnedAssociation = new EventEmitter<Association>();
+  returnedAssociation: Association
   modalRef: BsModalRef;
   listAssociations: Association[];
 
   constructor(private service: AssociationsService, public bsModalRef: BsModalRef, private modalService: BsModalService,public dialogRef: MatDialogRef<AssociationFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: {associationToUpdate : Association, val1: String , action1: boolean, returnedAssociation: Association}) { 
+      this.associationToUpdate = data.associationToUpdate, this.val1 = data.val1, this.action1 = data.action1, this.returnedAssociation =data.returnedAssociation
+    }
 
   ngOnInit(): void {
 
@@ -67,29 +68,24 @@ export class AssociationFormComponent implements OnInit {
       this.service.addAssociation(this.associationToAdd).subscribe(
         (data) => {
           console.log("add")
-          this.actAdd.emit(data)
+          this.data.returnedAssociation = data
+          this.dialogRef.close(this.data);
     });
-    this.dialogRef.close();
   }else
     {
     console.log("entred")
     this.association = {...this.associationToUpdate}
     this.service.updateAssociation(this.association).subscribe((data) =>{
       console.log(data + "modified")
-      this.returnedAssociation.emit(data)
+      this.associationToUpdate = data
     })  
-    this.dialogRef.close();
+    this.dialogRef.close(this.data);
   }
   this.modalRef.hide();
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
-    this.dialogRef.close()
-    this.dialogRef.afterClosed().subscribe((result)=>{
-      /* this.listAssociations ={...this.listAssociations, result}  */
-      console.log("uhjbmkl" + result)
-    })
   }
 
 }
