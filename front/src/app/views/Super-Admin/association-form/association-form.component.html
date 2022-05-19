@@ -1,4 +1,4 @@
-<div mat-dialog-content>
+<div mat-dialog-content class="all">
     <form method="post" [formGroup]="registerForm">
       <p class="text-muted"> {{val1}} </p>
 
@@ -28,6 +28,15 @@
   </div>
     </div>
 
+    <div class="mb-3">
+    <ngx-dropzone (change)="onSelect($event)">
+      <ngx-dropzone-label>Drop the logo</ngx-dropzone-label>
+      <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"  [removable]="true" (removed)="onRemove(f)" >
+        <ngx-dropzone-label>({{ f.type }})</ngx-dropzone-label>
+      </ngx-dropzone-image-preview>
+    </ngx-dropzone>
+  </div>
+
     <div class="mb-3 mat-calander" >
     <mat-label>Foundation date:</mat-label>
     <div class="row mt-2">
@@ -37,7 +46,7 @@
   </div>
   </div>
 
-    <div class="input-group col-md-12">
+    <div class="input-group  ">
       <mat-form-field appearance="fill">
       <mat-label>Type</mat-label>
       <mat-select required
@@ -120,3 +129,4 @@
     </div>
   </ng-template>
 </div> 
+<mat-spinner *ngIf = "loading"></mat-spinner>

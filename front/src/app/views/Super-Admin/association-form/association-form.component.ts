@@ -3,14 +3,17 @@ import { Inject, Component, EventEmitter, Injector, Input, OnInit, Output, Templ
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Association } from '../../../models/Association';
 import { AssociationsService } from '../../../services/associations.service';
+import { UploadService } from '../../../services/upload.service'
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-association-form',
   templateUrl: './association-form.component.html',
-  styleUrls: ['./association-form.component.scss']
+  styleUrls: ['./association-form.component.scss'],
+  providers: [ UploadService ]
 })
 export class AssociationFormComponent implements OnInit {
   registerForm: FormGroup;
@@ -22,15 +25,19 @@ export class AssociationFormComponent implements OnInit {
   returnedAssociation: Association
   modalRef: BsModalRef;
   listAssociations: Association[];
+  PreviewSource;
+  fileVal;
+  files: File[] = [];
+  loading : Boolean;
 
-  constructor(private service: AssociationsService, public bsModalRef: BsModalRef, private modalService: BsModalService,public dialogRef: MatDialogRef<AssociationFormComponent>,
+  constructor(private service: AssociationsService,private service2 : UploadService, public bsModalRef: BsModalRef, private modalService: BsModalService,public dialogRef: MatDialogRef<AssociationFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {associationToUpdate : Association, val1: String , action1: boolean, returnedAssociation: Association, state: Boolean}) { 
       this.associationToUpdate = data.associationToUpdate, this.val1 = data.val1, this.action1 = data.action1, this.returnedAssociation =data.returnedAssociation
     }
 
   ngOnInit(): void {
     this.dialogRef.beforeClosed().subscribe(() => this.dialogRef.close(this.data));
-
+    
     console.log(this.val1)
 
     this.service.getAssociations().subscribe(
@@ -46,6 +53,7 @@ export class AssociationFormComponent implements OnInit {
       Phone: new FormControl('',[Validators.required,Validators.pattern('[0-9]{8}')]),
       Siret_Number: new FormControl('',[Validators.required,Validators.pattern('[0-9]{9}')]),
       Type: new FormControl('',Validators.required),
+      Picture: new FormControl('',Validators.required),
       Responsible: new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$")]),
       Username: new FormControl('',Validators.required),
       Email: new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$")]),
@@ -62,26 +70,89 @@ export class AssociationFormComponent implements OnInit {
   get Responsible() {return this.registerForm.get('Responsible')};
   get Username() {return this.registerForm.get('Username')};
   get Email() {return this.registerForm.get('Email')};
+  get Picture() {return this.registerForm.get('Picture')};
 
   update(){
-    if (this.action1){
-      this.associationToAdd = {... this.associationToUpdate}
-      this.service.addAssociation(this.associationToAdd).subscribe(
-        (data) => {
-          console.log("add")
-          this.data.state = true
-          this.data.returnedAssociation = data
-          this.dialogRef.close(this.data);
-    });
+      if (this.action1){
+        const file_data = this.files[0]
+      const data = new FormData();
+      data.append('file', file_data)
+      data.append('upload_preset', 'bv24fzos')
+      data.append('cloud_name', 'dkqbdhbrp')
+ 
+      if(file_data){
+        this.loading = true;
+        this.service2.uploadImage(data).subscribe((response)=>{
+        if(response){
+          console.log("response " + response.secure_url);
+          this.associationToAdd = {... this.associationToUpdate, Picture : response.secure_url}
+          this.service.addAssociation(this.associationToAdd).subscribe(
+            (data) => {
+              console.log("add")
+              this.data.state = true
+              this.data.returnedAssociation = data
+              this.dialogRef.close(this.data); 
+        },
+        (err) => {
+          this.loading = false
+          console.log(err)
+        });        
+        }
+        })
+      }else{
+        const loading = true;
+        this.associationToAdd = {... this.associationToUpdate, Picture : "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
+        this.service.addAssociation(this.associationToAdd).subscribe(
+          (data) => {
+            console.log("add")
+            this.data.state = true
+            this.data.returnedAssociation = data
+            this.dialogRef.close(this.data); 
+      });        
+      }
+
+      
   }else
     {
     console.log("entred")
-    this.association = {...this.associationToUpdate}
-    this.service.updateAssociation(this.association).subscribe((data) =>{
-      console.log(data + "modified")
-      this.associationToUpdate = data
-    })  
-    this.dialogRef.close(this.data);
+    const file_data = this.files[0]
+      const data = new FormData();
+      data.append('file', file_data)
+      data.append('upload_preset', 'bv24fzos')
+      data.append('cloud_name', 'dkqbdhbrp')
+ 
+      if(file_data){
+        this.loading = true;
+        this.service2.uploadImage(data).subscribe((response)=>{
+        if(response){
+          console.log("response " + response.secure_url);
+          this.association = {...this.associationToUpdate, Picture : response.secure_url}
+          this.service.updateAssociation(this.association).subscribe((data) =>{
+            console.log(data + "modified")
+            this.data.state = true
+            this.data.associationToUpdate = data
+            this.dialogRef.close(this.data);
+          },
+        (err) => {
+          this.loading = false
+          console.log(err)
+        });        
+        }
+        })
+      }else{
+        var  loading = true;
+        this.association = {...this.associationToUpdate, Picture : "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
+        this.service.updateAssociation(this.association).subscribe((data) =>{
+          console.log(data + "modified")
+          this.data.state = true
+          this.data.associationToUpdate = data
+          this.dialogRef.close(this.data)
+        },
+      (err) => {
+        this.loading = false
+        console.log(err)
+      });   
+      }
   }
   this.modalRef.hide();
   }
@@ -89,5 +160,49 @@ export class AssociationFormComponent implements OnInit {
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
+
+  /* onFileChange(){
+    
+    console.log("this.fileVal")
+  }
+
+  previewFile(file){
+    const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => {
+          this.PreviewSource = reader.result
+      }
+  }
+
+  async uploadImage(base64EncodedImage, association){
+    console.log(base64EncodedImage)
+      association.Picture = base64EncodedImage
+  } */
+
+onSelect(event) {
+  console.log(event);
+  this.files.push(...event.addedFiles); 
+
+}
+
+onRemove(event) {
+  console.log(event);
+  this.files.splice(this.files.indexOf(event), 1);
+}
+
+onUpload(){
+  const file_data = this.files[0]
+  const data = new FormData();
+  data.append('file', file_data)
+  data.append('upload_preset', 'ml_default')
+  data.append('cloud_name', 'dkqbdhbrp')
+
+  this.service2.uploadImage(data).subscribe((response)=>{
+    if(response){
+      console.log(response);
+    }
+    
+  })
+}
 
 }

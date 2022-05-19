@@ -63,7 +63,7 @@ import { ChartsModule } from 'ng2-charts';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NoopAnimationsModule,
+    
     IconSetModule.forRoot(),
   ],
   schemas: [

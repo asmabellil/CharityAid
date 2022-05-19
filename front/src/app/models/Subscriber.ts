@@ -7,4 +7,5 @@ export class Subscriber{
     Adress: String;
     Phone: String;
     Email: String;
+    IdAssociation: String;
 }

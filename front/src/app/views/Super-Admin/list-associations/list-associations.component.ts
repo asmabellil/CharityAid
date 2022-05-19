@@ -47,7 +47,9 @@ export class ListAssociationsComponent implements AfterViewInit {
         this.dataSource = new MatTableDataSource(this.listAssociations);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      })
+      },
+      (err) =>{}
+      )
     this.associationToUpdate2 = new Association;
     this.config= {class: 'gray modal-lg'};
     this.showFilter = false;
@@ -74,6 +76,17 @@ export class ListAssociationsComponent implements AfterViewInit {
         } 
     }
     );
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.state === true){
+        let i= this.listAssociations.indexOf(this.associationToUpdate2);
+        console.log("i " +i)
+        this.dataSource.data.splice(i, 1, result.associationToUpdate);
+        this.dataSource.data = this.dataSource.data
+      }
+      
+      console.log("Added successfully", result) 
+    });
   } 
 
   onAdd(member): void {

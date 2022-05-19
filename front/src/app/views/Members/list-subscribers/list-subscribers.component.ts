@@ -34,7 +34,7 @@ export class ListSubscribersComponent implements AfterViewInit {
   constructor(private service: SubscribersService, private modalService: BsModalService, public dialog: MatDialog) { 
      this.service.getSubscribers().subscribe(
       (data : Subscriber[]) => {
-        this.listSubscribers = data
+        this.listSubscribers = data.filter(subscriber => subscriber.IdAssociation === JSON.parse(localStorage.getItem("User")).IdAssociation)
         this.dataSource = new MatTableDataSource(this.listSubscribers);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -67,7 +67,11 @@ export class ListSubscribersComponent implements AfterViewInit {
       let binaryData = event.target.result;
       let workbook = XLSX.read(binaryData, {type: 'binary'});
       workbook.SheetNames.forEach(sheet=>{
-        const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
+        const data : Subscriber[] = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
+        console.log(data)
+        for(let i=0; i<data.length; i++){
+          data[i] = {...data[i],  IdAssociation : JSON.parse(localStorage.getItem("User")).IdAssociation}
+        }
         //this.convertedJson = JSON.stringify(data,undefined,4);
         this.service.addSubscribersJSON(data).subscribe((result : Subscriber[])=>{
           for(let i=0; i<result.length;i++){

@@ -10,7 +10,8 @@ var Subscriber = new Schema(
     DOB: String,
     Adress: String,
     Phone: String,
-    Email: String
+    Email: String,
+    IdAssociation: String
   },
   { timestamps: true }
 );

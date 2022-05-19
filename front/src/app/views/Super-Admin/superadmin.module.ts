@@ -15,6 +15,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatSelectModule} from '@angular/material/select';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 // Components Routing
 import { ListUsersComponent } from './list-users/list-users.component';
@@ -23,7 +24,6 @@ import { AuthentificationModule } from '../Authentification/authentification.mod
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { AssociationFormComponent } from './association-form/association-form.component';
 import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
 
 @NgModule({
   imports: [
@@ -45,7 +45,8 @@ import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angu
     MatSortModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    NgxDropzoneModule,
 
   ],
   declarations: [
