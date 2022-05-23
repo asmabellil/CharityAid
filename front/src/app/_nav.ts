@@ -46,7 +46,7 @@ export const navItems = {
   },
   {
     name: 'Tasks',
-    url: '/members/alltasks',
+    url: '/members/calander',
     icon: 'cil-list-rich',
     /* badge: {
       variant: 'success',
@@ -87,7 +87,7 @@ export const navItems = {
   },
   {
     name: 'Tasks',
-    url: '/main/alltasks',
+    url: '/members/calander',
     icon: 'cil-list-rich',
     /* badge: {
       variant: 'success',
@@ -127,7 +127,7 @@ export const navItems = {
   },
   {
     name: 'Tasks',
-    url: '/main/alltasks',
+    url: '/members/calander',
     icon: 'cil-list-rich',
     /* badge: {
       variant: 'success',
@@ -167,7 +167,7 @@ export const navItems = {
   },
   {
     name: 'Tasks',
-    url: '/main/alltasks',
+    url: '/members/calander',
     icon: 'cil-list-rich',
     /* badge: {
       variant: 'success',

@@ -4,11 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { 
   MatGridListModule
 } from '@angular/material/grid-list';
 import {MatSelectModule} from '@angular/material/select';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 // Components Routing
 import { AuthentificationRoutingModule } from './authentification.routing';
@@ -18,6 +18,7 @@ import { ResetComponent } from './reset/reset.component'
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RegitrationPageComponent } from './regitration-page/regitration-page.component';
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
     RegistrationFormComponent,
     ResetComponent,
     ResetPasswordComponent,
-    RegitrationPageComponent
+    RegitrationPageComponent,
+
 
   ],
   imports: [
@@ -37,11 +39,13 @@ import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
     MatDatepickerModule,
     MatGridListModule,
     ModalModule.forRoot(),
-    MatSelectModule
+    MatSelectModule,
+    NgxDropzoneModule,
+    MatProgressSpinnerModule
 
   ],
   exports: [
-    RegistrationFormComponent
+   
   ],
   providers: [
     BsModalRef

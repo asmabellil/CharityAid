@@ -1,5 +1,4 @@
-
-<div mat-dialog-content>
+<div mat-dialog-content class="all">
   <form method="post" [formGroup]="registerForm">
     <p class="text-muted"> {{val1}} </p>
 
@@ -28,6 +27,18 @@
         <div *ngIf="LastName.errors.required">This field is required</div>
         <div *ngIf="LastName.errors.minlength">Your last name should have at leaset two charcters</div>
       </div>
+    </div>
+
+    <div class="mb-3">
+      <ngx-dropzone (change)="onSelect($event)" [accept]="'image/png,image/jpeg,image/jpg'" >
+        <ngx-dropzone-label>{{text}}</ngx-dropzone-label>
+        <!-- <div *ngIf="update2">
+          <img class="imgSelect" [src]="memberToUpdate2.Picture" [ngModelOptions]="{standalone: true}" />
+        </div>  -->
+        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"  [removable]="true" (removed)="onRemove(f)" >
+          <ngx-dropzone-label>({{ f.type }})</ngx-dropzone-label>
+        </ngx-dropzone-image-preview>
+      </ngx-dropzone>
     </div>
 
     <div class="row mt-2">
@@ -152,3 +163,4 @@
   </div>
 </ng-template>
 </div>
+<mat-spinner *ngIf="loading"></mat-spinner>

@@ -8,6 +8,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AssociationsService } from 'src/app/services/associations.service';
 import { Association } from 'src/app/models/Association';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UploadService } from 'src/app/services/upload.service';
 
 @Component({
   selector: 'app-registration-form',
@@ -25,16 +26,20 @@ export class RegistrationFormComponent implements OnInit {
   action1 = true;
   returnedMember : Member;
   registerPage : boolean;
-  closeBtnName: string;
   modalRef: BsModalRef;
   testRole: Boolean;
   association: String;
   idAssociation: String;
   state: Boolean;
+  files: File[] = [];
+  loading : Boolean;
+  update2: Boolean;
+  picture: String;
+  text: string ;
 
-  constructor(private service: MembersService, private serviceAssociation: AssociationsService, private datePipe: DatePipe, private router : Router, public bsModalRef: BsModalRef, private modalService: BsModalService, public dialogRef: MatDialogRef<RegistrationFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {memberToUpdate2 : Member, val1: String , action1: boolean, returnedMember: Member, state: Boolean}) {
-      this.memberToUpdate2 = data.memberToUpdate2, this.val1 = data.val1, this.action1 = data.action1, this.returnedMember =data.returnedMember
+  constructor(private service: MembersService,private service2 : UploadService, private serviceAssociation: AssociationsService, private datePipe: DatePipe, private router : Router, public bsModalRef: BsModalRef, private modalService: BsModalService, public dialogRef: MatDialogRef<RegistrationFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: {memberToUpdate2 : Member, val1: String , action1: boolean, returnedMember: Member, state: Boolean, update: Boolean, text : string}) {
+      this.memberToUpdate2 = data.memberToUpdate2, this.val1 = data.val1, this.action1 = data.action1, this.returnedMember =data.returnedMember, this.update2 = data.update, this.text = data.text
      }
 
   ngOnInit(): void {
@@ -77,14 +82,8 @@ export class RegistrationFormComponent implements OnInit {
         this.association = JSON.parse(localStorage.getItem("User")).Association
         this.idAssociation = JSON.parse(localStorage.getItem("User")).IdAssociation
       }
-  
-      /* if (JSON.parse(localStorage.getItem("User")).Role === "superadmin" ){
-        this.testRole = "1";
-      }else if (JSON.parse(localStorage.getItem("User")).Role_Association === "Chair" ){
-        this.testRole = "2";
-      }else {
-        this.testRole="3"
-      } */
+      this.loading = false;
+      this.picture = "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"
   }
 
   get FirstName() {return this.registerForm.get('FirstName')};
@@ -108,11 +107,69 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   update(){
+    this.loading = true;
+    const file_data = this.files[0]
+    const data = new FormData();
+    data.append('file', file_data)
+    data.append('upload_preset', 'bv24fzos')
+    data.append('cloud_name', 'dkqbdhbrp')
+    if(file_data){
+      
+    this.service2.uploadImage(data).subscribe((response)=>{
+    if(response){
+      console.log("response " + response.secure_url);
+      this.picture = response.secure_url;
+    }
+  
+      if (this.action1){
+        if(JSON.parse(localStorage.getItem("User")).Role === "superadmin"){
+        this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Picture: response.secure_url}
+        this.service.addMember(this.memberToAdd).subscribe(
+          (data) => {
+            console.log("add");
+            this.data.state = true;
+            this.data.returnedMember = data
+            this.dialogRef.close(this.data);
+      })
+      console.log(this.memberToUpdate2);
+      console.log(this.listMembers);        
+        }
+        else {
+            this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Association: this.association, IdAssociation: this.idAssociation, Picture : response.secure_url}
+            this.service.addMember(this.memberToAdd).subscribe(
+              (data) => {
+                this.data.state = true;
+                console.log("add")
+                this.data.returnedMember = data
+                this.data.state = true;
+                this.dialogRef.close(this.data);
+                if(data._id === JSON.parse(localStorage.getItem('User'))._id){
+                    localStorage.setItem('User', JSON.stringify(data))
+                }
+          })        
+      }
+    }else{
+      console.log("entred")
+      this.member = {...this.memberToUpdate2, Picture: response.secure_url}
+      this.service.updateMember(this.member).subscribe((data) =>{
+        this.data.state = true;
+        this.data.memberToUpdate2 =data 
+        console.log(data + "modified")
+        this.dialogRef.close();
+        if(this.memberToUpdate2._id === JSON.parse(localStorage.getItem('User'))._id){
+          localStorage.setItem("User", JSON.stringify({...data, token: JSON.parse(localStorage.getItem('User')).token}))
+          window.location.reload()
+        }
+      })  
+    }
+  })
+    } else{
     if (this.action1){
       if(JSON.parse(localStorage.getItem("User")).Role === "superadmin"){
-      this.memberToAdd = {... this.memberToUpdate2,  Role: "member"}
+      this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Picture : "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
       this.service.addMember(this.memberToAdd).subscribe(
         (data) => {
+          this.data.state = true;
           console.log("add");
           this.data.returnedMember = data
           this.dialogRef.close(this.data);
@@ -121,9 +178,10 @@ export class RegistrationFormComponent implements OnInit {
     console.log(this.listMembers);        
       }
       else {
-          this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Association: this.association, IdAssociation: this.idAssociation}
+          this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Association: this.association, IdAssociation: this.idAssociation, Picture : "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
           this.service.addMember(this.memberToAdd).subscribe(
             (data) => {
+              this.data.state = true;
               console.log("add")
               this.data.returnedMember = data
               this.data.state = true;
@@ -135,15 +193,49 @@ export class RegistrationFormComponent implements OnInit {
     console.log("entred")
     this.member = {...this.memberToUpdate2}
     this.service.updateMember(this.member).subscribe((data) =>{
+      this.data.state = true;
+      this.data.memberToUpdate2 =data
+      this.dialogRef.close();
       console.log(data + "modified")
+      if(this.memberToUpdate2._id === JSON.parse(localStorage.getItem('User'))._id){
+        localStorage.setItem("User", JSON.stringify({...data, token: JSON.parse(localStorage.getItem('User')).token}))
+        window.location.reload()
+      }
     })  
-    this.dialogRef.close();
   }
-  this.modalRef.hide()
+}
+  this.modalRef.hide() 
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
 
+  onSelect(event) {
+    console.log(event);
+    this.files.push(...event.addedFiles); 
+    this.update2 = false;
+  
+  }
+  
+  onRemove(event) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+    this.update2 = true;
+  }
+  
+  onUpload(){
+    const file_data = this.files[0]
+    const data = new FormData();
+    data.append('file', file_data)
+    data.append('upload_preset', 'ml_default')
+    data.append('cloud_name', 'dkqbdhbrp')
+  
+    this.service2.uploadImage(data).subscribe((response)=>{
+      if(response){
+        console.log(response);
+      }
+      
+    })
+  }
 }

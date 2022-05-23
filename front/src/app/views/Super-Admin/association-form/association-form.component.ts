@@ -7,6 +7,7 @@ import { UploadService } from '../../../services/upload.service'
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { ThemeService } from 'ng2-charts';
 
 
 @Component({
@@ -19,8 +20,8 @@ export class AssociationFormComponent implements OnInit {
   registerForm: FormGroup;
   association: Association;
   associationToAdd: Association;
-  @Input() associationToUpdate: Association;
-  @Input() action1 = true;
+  associationToUpdate: Association;
+  action1 = true;
   val1;
   returnedAssociation: Association
   modalRef: BsModalRef;
@@ -29,10 +30,11 @@ export class AssociationFormComponent implements OnInit {
   fileVal;
   files: File[] = [];
   loading : Boolean;
+  update2: Boolean;
 
   constructor(private service: AssociationsService,private service2 : UploadService, public bsModalRef: BsModalRef, private modalService: BsModalService,public dialogRef: MatDialogRef<AssociationFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {associationToUpdate : Association, val1: String , action1: boolean, returnedAssociation: Association, state: Boolean}) { 
-      this.associationToUpdate = data.associationToUpdate, this.val1 = data.val1, this.action1 = data.action1, this.returnedAssociation =data.returnedAssociation
+    @Inject(MAT_DIALOG_DATA) public data: {associationToUpdate : Association, val1: String , action1: boolean, returnedAssociation: Association, state: Boolean, update : Boolean}) { 
+      this.associationToUpdate = data.associationToUpdate, this.val1 = data.val1, this.action1 = data.action1, this.returnedAssociation =data.returnedAssociation, this.update2 = data.update
     }
 
   ngOnInit(): void {
@@ -100,7 +102,7 @@ export class AssociationFormComponent implements OnInit {
         }
         })
       }else{
-        const loading = true;
+        this.loading  = true;
         this.associationToAdd = {... this.associationToUpdate, Picture : "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
         this.service.addAssociation(this.associationToAdd).subscribe(
           (data) => {
@@ -140,7 +142,7 @@ export class AssociationFormComponent implements OnInit {
         }
         })
       }else{
-        var  loading = true;
+        this.loading = true;
         this.association = {...this.associationToUpdate, Picture : "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
         this.service.updateAssociation(this.association).subscribe((data) =>{
           console.log(data + "modified")
@@ -161,48 +163,32 @@ export class AssociationFormComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
-  /* onFileChange(){
-    
-    console.log("this.fileVal")
+  onSelect(event) {
+    console.log(event);
+    this.files.push(...event.addedFiles); 
+    this.update2 = false;
+
   }
 
-  previewFile(file){
-    const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = () => {
-          this.PreviewSource = reader.result
+  onRemove(event) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+    this.update2 = true;
+  }
+
+  onUpload(){
+    const file_data = this.files[0]
+    const data = new FormData();
+    data.append('file', file_data)
+    data.append('upload_preset', 'ml_default')
+    data.append('cloud_name', 'dkqbdhbrp')
+
+    this.service2.uploadImage(data).subscribe((response)=>{
+      if(response){
+        console.log(response);
       }
+      
+    })
   }
-
-  async uploadImage(base64EncodedImage, association){
-    console.log(base64EncodedImage)
-      association.Picture = base64EncodedImage
-  } */
-
-onSelect(event) {
-  console.log(event);
-  this.files.push(...event.addedFiles); 
-
-}
-
-onRemove(event) {
-  console.log(event);
-  this.files.splice(this.files.indexOf(event), 1);
-}
-
-onUpload(){
-  const file_data = this.files[0]
-  const data = new FormData();
-  data.append('file', file_data)
-  data.append('upload_preset', 'ml_default')
-  data.append('cloud_name', 'dkqbdhbrp')
-
-  this.service2.uploadImage(data).subscribe((response)=>{
-    if(response){
-      console.log(response);
-    }
-    
-  })
-}
 
 }

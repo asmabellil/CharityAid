@@ -15,7 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class EventsComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['Picture', 'Title', 'Start_date', 'End_date', 'Place', 'Number_Participants', 'Cout', 'MemberName', 'Actions'];
+  displayedColumns: string[] = [ 'Title', 'Start_date', 'End_date', 'Place', 'Number_Participants', 'Cout', 'MemberName', 'Actions'];
   dataSource: MatTableDataSource<Eventt>;
 
   @ViewChild(MatTable) table: MatTable<Eventt>;

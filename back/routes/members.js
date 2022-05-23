@@ -60,8 +60,15 @@ router.post("/", upload, async function (req, res, next) {
         Email: obj.Email,
         Role: obj.Role,
       });
+
+    res.send(
+      {
+        Id: d._id,
+        ...req.body
+      }
+    );      
     });
-    res.send(req.body);
+
   });
 
 // Modify Member

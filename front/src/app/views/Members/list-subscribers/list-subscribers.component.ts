@@ -30,6 +30,7 @@ export class ListSubscribersComponent implements AfterViewInit {
   modalRef: BsModalRef;
   subscriberToUpdate: Subscriber;
   convertedJson!: string;
+  loading : Boolean;
 
   constructor(private service: SubscribersService, private modalService: BsModalService, public dialog: MatDialog) { 
      this.service.getSubscribers().subscribe(
@@ -43,6 +44,7 @@ export class ListSubscribersComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.loading = false
    
   }
 
@@ -60,6 +62,7 @@ export class ListSubscribersComponent implements AfterViewInit {
   }
 
   fileUpload(event){
+    this.loading = true
     const selectedFile = event.target.files[0];
     const fileReader = new FileReader();
     fileReader.readAsBinaryString(selectedFile);
@@ -74,6 +77,7 @@ export class ListSubscribersComponent implements AfterViewInit {
         }
         //this.convertedJson = JSON.stringify(data,undefined,4);
         this.service.addSubscribersJSON(data).subscribe((result : Subscriber[])=>{
+          this.loading = false
           for(let i=0; i<result.length;i++){
             this.dataSource.data.push(result[i])
           };

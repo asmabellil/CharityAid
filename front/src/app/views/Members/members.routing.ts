@@ -9,6 +9,7 @@ import { ListSubscribersComponent } from './list-subscribers/list-subscribers.co
 import { SubscriberFormComponent } from './subscriber-form/subscriber-form.component';
 import { ListContactsComponent } from './list-contacts/list-contacts.component';
 import { CaisseComponent } from './caisse/caisse.component';
+import { CalanderEventComponent } from './calander-event/calander-event.component';
 
 const routes: Routes = [
   {
@@ -75,6 +76,13 @@ const routes: Routes = [
         component: CaisseComponent,
         data: {
           title: 'Caisse'
+        }
+      },
+      {
+        path: 'calander',
+        component: CalanderEventComponent,
+        data: {
+          title: 'All Tasks'
         }
       },
     ]

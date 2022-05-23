@@ -1,15 +1,15 @@
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild, ɵɵInheritDefinitionFeature } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Member } from '../../../models/Member';
 import { User } from '../../../models/User';
 import { MembersService } from '../../../services/members.service';
 import { UsersService } from '../../../services/users.service';
-import { RegistrationFormComponent } from '../../Authentification/registration-form/registration-form.component';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { RegistrationFormComponent } from '../../Authentification/registration-form/registration-form.component';
 
 @Component({
   selector: 'app-list-users',
@@ -39,6 +39,7 @@ export class ListUsersComponent implements AfterViewInit {
   p: number =1;
   modalRef: BsModalRef;
   state: Boolean;
+  update : Boolean;
 
   constructor(private service: MembersService, private serviceUser: UsersService, private modalService: BsModalService, public dialog: MatDialog) {
     this.listComplete = new Array;
@@ -83,15 +84,27 @@ export class ListUsersComponent implements AfterViewInit {
     this.val = "Update member";
     this.memberToUpdate = member;
     this.action =false;
+    this.update = true
+    this.state =false
 
     const dialogRef = this.dialog.open(RegistrationFormComponent, {
+      maxHeight: '500px',
       data: { memberToUpdate2 : this.memberToUpdate,
         val1: this.val,
-        action1: this.action },
+        action1: this.action,
+        update: this.update,
+        text : 'Update picture',
+        state: this.state },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
+      if(result.state === true){
+        let i= this.listComplete.indexOf(this.memberToUpdate);
+        console.log("i " +i)
+        this.dataSource.data.splice(i, 1, result.memberToUpdate2);
+        this.dataSource.data = this.dataSource.data
+      }
+      console.log("Added successfully", result) 
     });
     
   }
@@ -103,18 +116,23 @@ export class ListUsersComponent implements AfterViewInit {
     this.state = false;
 
     const dialogRef = this.dialog.open(RegistrationFormComponent, {
+      maxHeight: '500px',
       data: {
         val1: this.val,
         action1: this.action,
         returnedMember: this.returnedMember,
-        state: this.state },
+        state: this.state,
+        text : 'Drop a picture' },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log("Added successfully", result)
       if(result.state === true){
-        this.dataSource.data.push(result.returnedMember)
-        this.dataSource.data = this.dataSource.data        
+        this.listComplete.push(result.returnedMember)
+        this.dataSource = new MatTableDataSource(this.listComplete);  
+        console.log(this.listComplete)
+        console.log(this.dataSource.data)
+        //window.location.reload()
       } 
     });
 

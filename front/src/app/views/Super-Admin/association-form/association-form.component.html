@@ -2,20 +2,20 @@
     <form method="post" [formGroup]="registerForm">
       <p class="text-muted"> {{val1}} </p>
 
-      <div class="row mt-2">
+    <div class="row mt-2">
+    <div class="input-group mb-3 col-md-6">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class="icon-user"></i></span>
+      </div>
+      <input class="form-control" type="text" name="name" placeholder="Name" [(ngModel)]="associationToUpdate.Name" formControlName="Name">
+    </div>
       <div class="input-group mb-3 col-md-6">
         <div class="input-group-prepend">
           <span class="input-group-text"><i class="icon-user"></i></span>
         </div>
-        <input class="form-control" type="text" name="name" placeholder="Name" [(ngModel)]="associationToUpdate.Name" formControlName="Name">
+        <input class="form-control" type="number" name="Siret_Number" placeholder="Siret_Number" [(ngModel)]="associationToUpdate.Siret_Number" formControlName="Siret_Number">
       </div>
-        <div class="input-group mb-3 col-md-6">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><i class="icon-user"></i></span>
-          </div>
-          <input class="form-control" type="number" name="Siret_Number" placeholder="Siret_Number" [(ngModel)]="associationToUpdate.Siret_Number" formControlName="Siret_Number">
-        </div>
-      </div>
+    </div>
     
     <div class="row mt-2">
       <div class="alert alert-danger col-md-6" *ngIf="Name.errors && Name.touched">
@@ -25,17 +25,20 @@
     <div class="alert alert-danger col-md-6" *ngIf="Siret_Number.errors && Siret_Number.touched">
       <div *ngIf="Siret_Number.errors.required">This field is required</div>
       <div *ngIf="Siret_Number.errors.pattern">Your siret number should contain exactly 9 charcters</div>
-  </div>
+    </div>
     </div>
 
     <div class="mb-3">
-    <ngx-dropzone (change)="onSelect($event)">
+    <ngx-dropzone (change)="onSelect($event)" [accept]="'image/png,image/jpeg,image/jpg'" >
       <ngx-dropzone-label>Drop the logo</ngx-dropzone-label>
+      <div *ngIf="update2">
+        <img class="imgSelect" [src]="associationToUpdate.Picture" [ngModelOptions]="{standalone: true}" />
+      </div> 
       <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"  [removable]="true" (removed)="onRemove(f)" >
         <ngx-dropzone-label>({{ f.type }})</ngx-dropzone-label>
       </ngx-dropzone-image-preview>
     </ngx-dropzone>
-  </div>
+    </div>
 
     <div class="mb-3 mat-calander" >
     <mat-label>Foundation date:</mat-label>
@@ -43,8 +46,8 @@
       <mat-datepicker-toggle matSuffix [for]="picker" class="col-md-2"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
       <input class="form-control col-md-6" matInput [matDatepicker]="picker" [(ngModel)]="associationToUpdate.Foundation_date" formControlName="Foundation_date">
-  </div>
-  </div>
+    </div>
+    </div>
 
     <div class="input-group  ">
       <mat-form-field appearance="fill">
@@ -61,18 +64,18 @@
         <mat-option value="International NGOs"> International NGOs </mat-option>
         <mat-option value="volvo"> Other </mat-option>
       </mat-select>
-    </mat-form-field>
+      </mat-form-field>
     </div>   
   
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
           <span class="input-group-text"><i class="cil-home"></i></span>
-        </div>
-        <input class="form-control" type="text" name="address" placeholder="Enter your address" [(ngModel)]="associationToUpdate.Adress" formControlName="Adress">
       </div>
-      <div class="alert alert-danger" *ngIf="Adress.errors && Adress.touched">
-        <div *ngIf="Adress.errors.required">This field is required</div>
-        <div *ngIf="Adress.errors.minlength">Your adress should have at leaset three charcters</div>
+        <input class="form-control" type="text" name="address" placeholder="Enter your address" [(ngModel)]="associationToUpdate.Adress" formControlName="Adress">
+    </div>
+    <div class="alert alert-danger" *ngIf="Adress.errors && Adress.touched">
+      <div *ngIf="Adress.errors.required">This field is required</div>
+      <div *ngIf="Adress.errors.minlength">Your adress should have at leaset three charcters</div>
     </div>
   
     <div class="input-group mb-3">
@@ -84,36 +87,37 @@
     <div class="alert alert-danger" *ngIf="Phone.errors && Phone.touched">
       <div *ngIf="Phone.errors.required">This field is required</div>
       <div *ngIf="Phone.errors.pattern">Your phone number should have exactly 8 numbers</div>
-  </div>
-  <div class="row mt-2">
-    <div class="input-group mb-3 col-md-6">
-      <div class="input-group-prepend">
-        <span class="input-group-text">@</span>
-      </div>
-      <input class="form-control" type="email" name="email" placeholder="Association email" [(ngModel)]="associationToUpdate.Email" formControlName="Email">
-      </div>
-
-    <div class="input-group mb-3 col-md-6">
-      <div class="input-group-prepend">
-        <span class="input-group-text"><i class="icon-user"></i></span>
-      </div>
-      <input class="form-control" type="text" name="Responsible" placeholder="Responsible email" [(ngModel)]="associationToUpdate.Responsible" formControlName="Responsible">
     </div>
-  </div>
 
-  <div class="row mt-2">
-    <div class="alert alert-danger col-md-6" *ngIf="Email.errors && Email.touched">
-      <div *ngIf="Email.errors.required">This field is required</div>
-      <div *ngIf="Email.errors.pattern">Your email should have this form test@test.com</div>
-  </div>
+    <div class="row mt-2">
+      <div class="input-group mb-3 col-md-6">
+        <div class="input-group-prepend">
+          <span class="input-group-text">@</span>
+        </div>
+        <input class="form-control" type="email" name="email" placeholder="Association email" [(ngModel)]="associationToUpdate.Email" formControlName="Email">
+      </div>
 
-    <div class="alert alert-danger col-md-6" *ngIf="Responsible.errors && Responsible.touched">
-      <div *ngIf="Responsible.errors.required">This field is required</div>
-      <div *ngIf="Responsible.errors.pattern">This email should have this form test@test.com</div>
-  </div>
-  </div>
+      <div class="input-group mb-3 col-md-6">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="icon-user"></i></span>
+        </div>
+        <input class="form-control" type="text" name="Responsible" placeholder="Responsible email" [(ngModel)]="associationToUpdate.Responsible" formControlName="Responsible">
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="alert alert-danger col-md-6" *ngIf="Email.errors && Email.touched">
+        <div *ngIf="Email.errors.required">This field is required</div>
+        <div *ngIf="Email.errors.pattern">Your email should have this form test@test.com</div>
+    </div>
+
+      <div class="alert alert-danger col-md-6" *ngIf="Responsible.errors && Responsible.touched">
+        <div *ngIf="Responsible.errors.required">This field is required</div>
+        <div *ngIf="Responsible.errors.pattern">This email should have this form test@test.com</div>
+    </div>
+    </div>
     
-      <button type="button" class="btn btn-block btn-success" (click)="openModal(template)">{{val1}}</button>
+    <button type="button" class="btn btn-block btn-success" (click)="openModal(template)">{{val1}}</button>
     </form>
  
   <ng-template #template>

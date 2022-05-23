@@ -16,7 +16,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 })
 export class ListAssociationsComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['Picture', 'Name', 'Foundation_date', 'Adress', 'Email', 'Phone', 'Actions'];
+  displayedColumns: string[] = ['Picture', 'Name', 'Foundation_date', 'Siret_Number','Responsible', 'Adress', 'Email', 'Phone', 'Actions'];
   dataSource: MatTableDataSource<Association>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -37,10 +37,11 @@ export class ListAssociationsComponent implements AfterViewInit {
   showFilter: Boolean;
   returnedAssociation: Association;
   state: Boolean;
+  update: Boolean;
 
   constructor(private service: AssociationsService, private modalService: BsModalService, public dialog: MatDialog) {
     this.listAssociations = new Array;
-    
+ 
     this.service.getAssociations().subscribe(
       (data: Association[]) => {
         this.listAssociations = data,
@@ -53,7 +54,6 @@ export class ListAssociationsComponent implements AfterViewInit {
     this.associationToUpdate2 = new Association;
     this.config= {class: 'gray modal-lg'};
     this.showFilter = false;
-    
    }
 
    ngAfterViewInit(): void {
@@ -62,17 +62,18 @@ export class ListAssociationsComponent implements AfterViewInit {
   }
 
    onUpdate (association){
-    this.show = ! this.show;
     this.val = "Update Association"; 
     this.associationToUpdate2 = association;
     this.action =false;
+    this.update = true
     console.log(this.associationToUpdate2)
     
     const dialogRef = this.dialog.open(AssociationFormComponent, {
        data: {
         associationToUpdate : this.associationToUpdate2,
         val1: this.val,
-        action1: this.action
+        action1: this.action,
+        update: this.update
         } 
     }
     );
@@ -91,7 +92,6 @@ export class ListAssociationsComponent implements AfterViewInit {
 
   onAdd(member): void {
     this.associationToUpdate2 = new Association;
-    this.show = ! this.show;
      this.val = "Add Association"; 
     this.action= true;
     this.state = false;
@@ -106,10 +106,9 @@ export class ListAssociationsComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result.state === true){
-        this.dataSource.data.push(result.returnedAssociation)
-        this.dataSource.data = this.dataSource.data
+        this.listAssociations.push(result.returnedAssociation)
+        this.dataSource = new MatTableDataSource(this.listAssociations);
       }
-      
       console.log("Added successfully", result) 
     });
    

@@ -52,15 +52,12 @@ import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angu
   declarations: [
     ListUsersComponent,
     ListAssociationsComponent,
-    AssociationFormComponent
+    AssociationFormComponent,
   ],
   providers: [
     DatePipe,
     BsModalRef,
-    MatDialog,
-    {provide:MatDialogRef , useValue:{} },
-
-    { provide: MAT_DIALOG_DATA, useValue: {} }
+    MatDialog
   ],
 
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

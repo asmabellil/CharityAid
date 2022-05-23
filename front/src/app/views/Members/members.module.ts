@@ -20,6 +20,9 @@ import { SingleTaskComponent } from './single-task/single-task.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 
   import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ListSubscribersComponent } from './list-subscribers/list-subscribers.component';
@@ -29,6 +32,13 @@ import { ListContactsComponent } from './list-contacts/list-contacts.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { CaisseComponent } from './caisse/caisse.component';
 import { CaisseFormComponent } from './caisse-form/caisse-form.component';
+import { CalanderEventComponent } from './calander-event/calander-event.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 // Components Routing
 
@@ -50,7 +60,9 @@ import { CaisseFormComponent } from './caisse-form/caisse-form.component';
     MatFormFieldModule,
     MatDialogModule,
     MatExpansionModule,
-    MatSelectModule
+    MatSelectModule,
+    FullCalendarModule,
+    MatProgressSpinnerModule,
 
   ],
   declarations: [
@@ -66,7 +78,8 @@ import { CaisseFormComponent } from './caisse-form/caisse-form.component';
     ListContactsComponent,
     ContactFormComponent,
     CaisseComponent,
-    CaisseFormComponent
+    CaisseFormComponent,
+    CalanderEventComponent
   ],
   providers: [
     BsModalRef,

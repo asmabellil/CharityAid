@@ -44,7 +44,9 @@ export class ProfileComponent implements OnInit {
   editProfile(member){
     this.service.updateMember(member).subscribe((data) =>{
       console.log(data + "modified")
+      console.log(data)
       localStorage.setItem("User", JSON.stringify(data))
+      window.location.reload()
     })
     this.member = {... member}
     this.modalRef.hide();

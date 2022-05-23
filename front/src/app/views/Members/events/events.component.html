@@ -9,12 +9,6 @@
     <div class="mat-elevation-z8">
       <table #table mat-table [dataSource]="dataSource" matSort>
     
-        <!-- Picture Column -->
-        <ng-container matColumnDef="Picture">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Picture </th>
-          <td mat-cell *matCellDef="let row"> <img class="avatar-rounded-circle" src="{{row.Picture}}"/> </td>
-        </ng-container>
-    
         <!-- Title Column -->
         <ng-container matColumnDef="Title">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
