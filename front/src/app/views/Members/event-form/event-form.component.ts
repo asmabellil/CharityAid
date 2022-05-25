@@ -23,10 +23,12 @@ export class EventFormComponent implements OnInit {
   returnedEvent : Eventt;
   modalRef: BsModalRef;
   state: Boolean;
+  start : Date;
+  fromCalandar : boolean;
 
   constructor(private service: EventsService, public bsModalRef: BsModalRef, private modalService: BsModalService, public dialogRef: MatDialogRef<EventFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {eventToUpdate : Eventt, val1: String , action1: boolean, returnedEvent: Eventt, state: Boolean}) {
-      this.eventToUpdate = data.eventToUpdate, this.val1 = data.val1, this.action1 = data.action1, this.returnedEvent =data.returnedEvent, this.state = data.state
+    @Inject(MAT_DIALOG_DATA) public data: {eventToUpdate : Eventt, val1: String , action1: boolean, returnedEvent: Eventt, state: Boolean, start : Date, fromCalandar: boolean}) {
+      this.eventToUpdate = data.eventToUpdate, this.val1 = data.val1, this.action1 = data.action1, this.returnedEvent =data.returnedEvent, this.state = data.state, this.start =data.start, this.fromCalandar = data.fromCalandar
      }
 
   ngOnInit(): void {
@@ -52,11 +54,21 @@ export class EventFormComponent implements OnInit {
     get Cout() {return this.registerForm.get('Cout')};
 
     update(){
-      if (this.action1){
-        this.eventToAdd = {... this.eventToUpdate, "IdAssociation": JSON.parse(localStorage.getItem("User")).IdAssociation, "MemberName": JSON.parse(localStorage.getItem("User")).FirstName + " " + JSON.parse(localStorage.getItem("User")).LastName, "Picture":"http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
+      if (this.fromCalandar){
+        this.eventToAdd = {... this.eventToUpdate ,"IdAssociation": JSON.parse(localStorage.getItem("User")).IdAssociation, "MemberName": JSON.parse(localStorage.getItem("User")).FirstName + " " + JSON.parse(localStorage.getItem("User")).LastName}
+        console.log("event "+ JSON.stringify(this.eventToAdd.Start_date ).substring(1,11))
         this.service.addEvent(this.eventToAdd).subscribe(
           (data) => {
-            console.log("add", data)
+            this.data.state = true;
+            this.data.returnedEvent = data
+            this.dialogRef.close(this.data);
+          });
+      }else{
+       if (this.action1){
+        this.eventToAdd = {... this.eventToUpdate,"IdAssociation": JSON.parse(localStorage.getItem("User")).IdAssociation, "MemberName": JSON.parse(localStorage.getItem("User")).FirstName + " " + JSON.parse(localStorage.getItem("User")).LastName}
+        console.log("event "+ JSON.stringify(this.eventToAdd.Start_date ).substring(1,11))
+        this.service.addEvent(this.eventToAdd).subscribe(
+          (data) => {
             this.data.state = true;
             this.data.returnedEvent = data
             this.dialogRef.close(this.data);
@@ -66,10 +78,12 @@ export class EventFormComponent implements OnInit {
         console.log("entred")
         this.event = {...this.eventToUpdate}
         this.service.updateEvent(this.event).subscribe((data) =>{
+          this.data.state = true;
           console.log(data + "modified")
           this.eventToUpdate = data
+          this.dialogRef.close(this.data);
         })  
-        this.dialogRef.close(this.data);
+      }
       }
     this.modalRef.hide()
     

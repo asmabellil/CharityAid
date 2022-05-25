@@ -24,7 +24,7 @@ export class EventsService {
   }
 
   searchEvent(id){
-    return this.http.get(this.url + id);
+    return this.http.get<Eventt>(this.url + id);
   }
 
   updateEvent (e: Eventt){

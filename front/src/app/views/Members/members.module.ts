@@ -6,7 +6,7 @@ import { MembersRoutingModule } from './members.routing';
 import { ProfileComponent } from './profile/profile.component'
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -85,7 +85,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     BsModalRef,
     {provide:MatDialogRef , useValue:{} },
 
-    { provide: MAT_DIALOG_DATA, useValue: {} }
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    {provide: MAT_DATE_LOCALE, useValue: { useUtc: true }},
 ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
