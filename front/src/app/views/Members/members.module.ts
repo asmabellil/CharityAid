@@ -34,6 +34,7 @@ import { CaisseComponent } from './caisse/caisse.component';
 import { CaisseFormComponent } from './caisse-form/caisse-form.component';
 import { CalanderEventComponent } from './calander-event/calander-event.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { EventDescriptionComponent } from './event-description/event-description.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -79,7 +80,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     ContactFormComponent,
     CaisseComponent,
     CaisseFormComponent,
-    CalanderEventComponent
+    CalanderEventComponent,
+    EventDescriptionComponent
   ],
   providers: [
     BsModalRef,
