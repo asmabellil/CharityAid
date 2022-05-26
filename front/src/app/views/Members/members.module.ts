@@ -64,6 +64,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatSelectModule,
     FullCalendarModule,
     MatProgressSpinnerModule,
+    
 
   ],
   declarations: [

@@ -8,6 +8,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ContactFormComponent } from '../contact-form/contact-form.component';
+import {  MatSnackBar,  MatSnackBarHorizontalPosition,  MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list-contacts',
@@ -21,6 +22,8 @@ export class ListContactsComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort; 
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
   contactToUpdate2: Contact;
   listContacts: Contact[];
@@ -38,7 +41,7 @@ export class ListContactsComponent implements AfterViewInit {
   returnedContact: Contact;
   state: Boolean;
 
-  constructor(private service: ContactsService, private modalService: BsModalService, public dialog: MatDialog) { 
+  constructor(private service: ContactsService, private _snackBar: MatSnackBar, private modalService: BsModalService, public dialog: MatDialog) { 
     this.listContacts = new Array;
     
     this.service.getcontacts().subscribe(
@@ -70,6 +73,15 @@ export class ListContactsComponent implements AfterViewInit {
         } 
     }
     ); 
+
+    dialogRef.afterClosed().subscribe(result =>{
+      this._snackBar.open('Your contact was updated successfully!', 'close', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration : 1500,
+        panelClass :['background']
+      });
+    })
   } 
 
   onAdd(member): void {
@@ -91,6 +103,12 @@ export class ListContactsComponent implements AfterViewInit {
       if(result.state === true){
         this.dataSource.data.push(result.returnedContact)
         this.dataSource.data = this.dataSource.data
+        this._snackBar.open('Your contact was added successfully!', 'close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration : 1500,
+          panelClass :['background']
+        });
       }
       
       console.log("Added successfully", result) 
@@ -103,7 +121,24 @@ export class ListContactsComponent implements AfterViewInit {
     this.service.deletecontact(this.listContacts[i]._id).subscribe(
       () => {this.listContacts = this.listContacts.filter(contact => contact._id != this.listContacts[i]._id),
         this.dataSource = new MatTableDataSource(this.listContacts),
-        this.dataSource.paginator = this.paginator}
+        this.dataSource.paginator = this.paginator},
+      (error) =>{
+        this._snackBar.open('Something went wrong', 'close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration : 1500,
+          panelClass :['alert']
+        });
+      }, 
+      () =>{
+        this._snackBar.open('Your contact was deleted successfully!', 'close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration : 1500,
+          panelClass :['background']
+        });
+      }
+      
     );
     this.modalRef.hide(); 
   }

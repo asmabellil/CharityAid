@@ -7,6 +7,7 @@ import { EventFormComponent } from '../event-form/event-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Calendar } from '@fullcalendar/core';
 import { EventDescriptionComponent } from '../event-description/event-description.component';
+import {  MatSnackBar,  MatSnackBarHorizontalPosition,  MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-calander-event',
@@ -14,6 +15,8 @@ import { EventDescriptionComponent } from '../event-description/event-descriptio
   styleUrls: ['./calander-event.component.scss']
 })
 export class CalanderEventComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   listEvents: Eventt[];
   list: EventCalendar[];
   eventToAdd : EventCalendar;
@@ -32,7 +35,7 @@ export class CalanderEventComponent implements OnInit {
   today0: Date;
   d1 :any;
 
-  constructor(private service: EventsService, public dialog: MatDialog) { }
+  constructor(private service: EventsService, public dialog: MatDialog, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.eventToAdd = new EventCalendar;
@@ -97,7 +100,7 @@ export class CalanderEventComponent implements OnInit {
 
   handleEventSelect(selectionInfo) {
     if(JSON.parse(localStorage.getItem('User')).Role_Association === "Chair"){
-  const d = selectionInfo.endStr.split("-")
+      const d = selectionInfo.endStr.split("-")
       this.d1 =  new Date(d[0], (parseInt(d[1]) -1 ), (parseInt(d[2]) -1 ))
       this.eventToUpdate = new Eventt;
       this.eventToUpdate = {...this.eventToUpdate, Start_date: selectionInfo.start, End_date : this.d1}
@@ -118,9 +121,13 @@ export class CalanderEventComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result.state === true ){
-          window.location.reload()
-        }
-        
+            this._snackBar.open('Your event was updated successfully!', 'close', {
+              horizontalPosition: this.horizontalPosition,
+              verticalPosition: this.verticalPosition,
+              duration : 10000,
+              panelClass :['background']
+            });
+          }
         console.log("Added successfully", result) 
       });
       
@@ -146,7 +153,12 @@ export class CalanderEventComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe(result => {
       if (result.state === true ){
-        window.location.reload()
+        this._snackBar.open('Your event was updated successfully!', 'close', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration : 10000,
+            panelClass :['background']
+          });  
       }
       
       console.log("Added successfully", result) 

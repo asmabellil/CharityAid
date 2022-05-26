@@ -8,6 +8,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {  MatSnackBar,  MatSnackBarHorizontalPosition,  MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list-associations',
@@ -21,6 +22,8 @@ export class ListAssociationsComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort; 
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
   associationToUpdate2: Association;
   listAssociations: Association[];
@@ -39,7 +42,7 @@ export class ListAssociationsComponent implements AfterViewInit {
   state: Boolean;
   update: Boolean;
 
-  constructor(private service: AssociationsService, private modalService: BsModalService, public dialog: MatDialog) {
+  constructor(private service: AssociationsService, private _snackBar: MatSnackBar, private modalService: BsModalService, public dialog: MatDialog) {
     this.listAssociations = new Array;
  
     this.service.getAssociations().subscribe(
@@ -84,6 +87,12 @@ export class ListAssociationsComponent implements AfterViewInit {
         console.log("i " +i)
         this.dataSource.data.splice(i, 1, result.associationToUpdate);
         this.dataSource.data = this.dataSource.data
+        this._snackBar.open('Your assocciation was updated successfully!', 'close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration : 1500,
+          panelClass :['background']
+        });
       }
       
       console.log("Added successfully", result) 
@@ -108,6 +117,12 @@ export class ListAssociationsComponent implements AfterViewInit {
       if(result.state === true){
         this.listAssociations.push(result.returnedAssociation)
         this.dataSource = new MatTableDataSource(this.listAssociations);
+        this._snackBar.open('Your association was added successfully!', 'close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration : 1500,
+          panelClass :['background']
+        });
       }
       console.log("Added successfully", result) 
     });
@@ -119,7 +134,18 @@ export class ListAssociationsComponent implements AfterViewInit {
     this.service.deleteAssociation(this.listAssociations[i]._id).subscribe(
       () => {this.listAssociations = this.listAssociations.filter(association => association._id != this.listAssociations[i]._id),
         this.dataSource = new MatTableDataSource(this.listAssociations),
-        this.dataSource.paginator = this.paginator}
+        this.dataSource.paginator = this.paginator},
+      (error) =>{
+        console.log(error)
+      },
+      () =>{
+        this._snackBar.open('Your association was deleted successfully!', 'close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration : 10000,
+          panelClass :['background']
+        });
+      }
     );
     this.modalRef.hide(); 
   }

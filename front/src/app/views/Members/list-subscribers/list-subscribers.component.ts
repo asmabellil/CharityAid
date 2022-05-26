@@ -12,6 +12,7 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { SubscriberFormComponent } from '../subscriber-form/subscriber-form.component';
+import {  MatSnackBar,  MatSnackBarHorizontalPosition,  MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list-subscribers',
@@ -21,6 +22,8 @@ import { SubscriberFormComponent } from '../subscriber-form/subscriber-form.comp
 export class ListSubscribersComponent implements AfterViewInit {
   displayedColumns: string[] = [ 'FirstName', 'LastName', 'DOB', 'Adress', 'Email', 'Phone', 'Actions'];
   dataSource: MatTableDataSource<Subscriber>;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -32,7 +35,7 @@ export class ListSubscribersComponent implements AfterViewInit {
   convertedJson!: string;
   loading : Boolean;
 
-  constructor(private service: SubscribersService, private modalService: BsModalService, public dialog: MatDialog) { 
+  constructor(private service: SubscribersService, private modalService: BsModalService, public dialog: MatDialog, private _snackBar: MatSnackBar) { 
      this.service.getSubscribers().subscribe(
       (data : Subscriber[]) => {
         this.listSubscribers = data.filter(subscriber => subscriber.IdAssociation === JSON.parse(localStorage.getItem("User")).IdAssociation)
@@ -41,10 +44,10 @@ export class ListSubscribersComponent implements AfterViewInit {
         this.dataSource.sort = this.sort;
       }
     )
+    this.loading = false
   }
 
   ngAfterViewInit(): void {
-    this.loading = false
    
   }
 
@@ -82,6 +85,23 @@ export class ListSubscribersComponent implements AfterViewInit {
             this.dataSource.data.push(result[i])
           };
           this.dataSource.data = this.dataSource.data
+        },
+        (error) => {
+          console.log(error)
+          this._snackBar.open('There an error', 'close', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration : 10000,
+            panelClass :['background']
+          });
+        },
+        () =>{
+          this._snackBar.open('Your subscribers were added successfully!', 'close', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration : 10000,
+            panelClass :['background']
+          });
         })
       })
       console.log(workbook);

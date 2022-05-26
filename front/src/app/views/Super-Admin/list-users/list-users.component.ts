@@ -10,6 +10,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { RegistrationFormComponent } from '../../Authentification/registration-form/registration-form.component';
+import {  MatSnackBar,  MatSnackBarHorizontalPosition,  MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list-users',
@@ -40,8 +41,10 @@ export class ListUsersComponent implements AfterViewInit {
   modalRef: BsModalRef;
   state: Boolean;
   update : Boolean;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  constructor(private service: MembersService, private serviceUser: UsersService, private modalService: BsModalService, public dialog: MatDialog) {
+  constructor(private service: MembersService, private serviceUser: UsersService, private modalService: BsModalService, public dialog: MatDialog, private _snackBar: MatSnackBar) {
     this.listComplete = new Array;
     
     this.service.getMembers().subscribe(
@@ -103,6 +106,12 @@ export class ListUsersComponent implements AfterViewInit {
         console.log("i " +i)
         this.dataSource.data.splice(i, 1, result.memberToUpdate2);
         this.dataSource.data = this.dataSource.data
+        this._snackBar.open('Your member was updated successfully!', 'close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration : 10000,
+          panelClass :['background']
+        });
       }
       console.log("Added successfully", result) 
     });
@@ -132,7 +141,12 @@ export class ListUsersComponent implements AfterViewInit {
         this.dataSource = new MatTableDataSource(this.listComplete);  
         console.log(this.listComplete)
         console.log(this.dataSource.data)
-        //window.location.reload()
+        this._snackBar.open('Your member was added successfully!', 'close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration : 1500,
+          panelClass :['background']
+        });
       } 
     });
 
@@ -144,6 +158,17 @@ export class ListUsersComponent implements AfterViewInit {
       () => {this.listComplete = this.listComplete.filter(member => member._id != this.listComplete[i]._id),
         this.dataSource = new MatTableDataSource(this.listComplete),
       this.dataSource.paginator = this.paginator
+    },
+    (error) =>{
+
+    },
+    () =>{
+      this._snackBar.open('Your member was deleted successfully!', 'close', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration : 1500,
+        panelClass :['background']
+      });
     }
     ); 
     

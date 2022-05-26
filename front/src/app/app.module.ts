@@ -11,6 +11,8 @@ import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -63,7 +65,7 @@ import { ChartsModule } from 'ng2-charts';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    
+    MatSnackBarModule,
     IconSetModule.forRoot(),
   ],
   schemas: [

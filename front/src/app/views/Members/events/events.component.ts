@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EventFormComponent } from '../event-form/event-form.component';
 import { MatDialog } from '@angular/material/dialog';
+import {  MatSnackBar,  MatSnackBarHorizontalPosition,  MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-events',
@@ -14,7 +15,8 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements AfterViewInit {
-
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   displayedColumns: string[] = [ 'Title', 'Start_date', 'End_date', 'Place', 'Number_Participants', 'Cout', 'MemberName', 'Actions'];
   dataSource: MatTableDataSource<Eventt>;
 
@@ -35,7 +37,7 @@ export class EventsComponent implements AfterViewInit {
   returnedEvent: Eventt;
   state: Boolean;
 
-  constructor(private service: EventsService, private modalService: BsModalService, public dialog: MatDialog) { 
+  constructor(private service: EventsService, private modalService: BsModalService, public dialog: MatDialog, private _snackBar: MatSnackBar) { 
     this.listEvents = new Array;
     
     this.service.getEvents().subscribe(
@@ -64,11 +66,20 @@ export class EventsComponent implements AfterViewInit {
     const dialogRef = this.dialog.open(EventFormComponent, {
       data: { eventToUpdate : this.eventToUpdate,
         val1: this.val,
-        action1: this.action},
+        action1: this.action,
+        state :false},
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed', result);
+      if (result.state === true){
+      this._snackBar.open('Your event was updated successfully!', 'close', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration : 10000,
+        panelClass :['background']
+      });
+    }
     });
   }
 
@@ -91,6 +102,12 @@ export class EventsComponent implements AfterViewInit {
       if (result.state === true ){
         this.dataSource.data.push(result.returnedEvent)
         this.dataSource.data = this.dataSource.data
+        this._snackBar.open('Your event was added successfully!', 'close', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration : 10000,
+        panelClass :['background']
+        });
       }
       
       console.log("Added successfully", result) 
@@ -102,9 +119,20 @@ export class EventsComponent implements AfterViewInit {
     this.service.deleteEvent(this.listEvents[i]._id).subscribe(
       () => {this.listEvents = this.listEvents.filter(association => association._id != this.listEvents[i]._id),
       this.dataSource = new MatTableDataSource(this.listEvents),
-      this.dataSource.paginator = this.paginator}
-    );
-    this.modalRef.hide(); 
+      this.dataSource.paginator = this.paginator},
+      (error) =>{
+        console.log(error)
+      },
+      () =>{
+      this.modalRef.hide(); 
+      this._snackBar.open('Your event was deleted successfully!', 'close', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration : 10000,
+      panelClass :['background']
+    });
+      }
+    ); 
   }
 
   openModal(template: TemplateRef<any>) {

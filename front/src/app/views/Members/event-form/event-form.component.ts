@@ -1,11 +1,10 @@
-import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, HostListener, Inject, Injector, Input, OnInit, Output, TemplateRef } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component,  Inject,  OnInit, TemplateRef } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Eventt } from '../../../models/Event';
 import { EventsService } from '../../../services/events.service';
-import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {  MatSnackBar,  MatSnackBarHorizontalPosition,  MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-event-form',
@@ -13,7 +12,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./event-form.component.scss']
 })
 export class EventFormComponent implements OnInit {
-
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   registerForm: FormGroup;
   event: Eventt;
   eventToAdd: Eventt;
@@ -26,7 +26,7 @@ export class EventFormComponent implements OnInit {
   start : Date;
   fromCalandar : boolean;
 
-  constructor(private service: EventsService, public bsModalRef: BsModalRef, private modalService: BsModalService, public dialogRef: MatDialogRef<EventFormComponent>,
+  constructor(private service: EventsService, public bsModalRef: BsModalRef, private modalService: BsModalService, private _snackBar: MatSnackBar , public dialogRef: MatDialogRef<EventFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {eventToUpdate : Eventt, val1: String , action1: boolean, returnedEvent: Eventt, state: Boolean, start : Date, fromCalandar: boolean}) {
       this.eventToUpdate = data.eventToUpdate, this.val1 = data.val1, this.action1 = data.action1, this.returnedEvent =data.returnedEvent, this.state = data.state, this.start =data.start, this.fromCalandar = data.fromCalandar
      }
@@ -63,6 +63,7 @@ export class EventFormComponent implements OnInit {
             this.data.returnedEvent = data
             this.dialogRef.close(this.data);
           });
+          this.modalRef.hide()
       }else{
        if (this.action1){
         this.eventToAdd = {... this.eventToUpdate,"IdAssociation": JSON.parse(localStorage.getItem("User")).IdAssociation, "MemberName": JSON.parse(localStorage.getItem("User")).FirstName + " " + JSON.parse(localStorage.getItem("User")).LastName}
@@ -73,6 +74,9 @@ export class EventFormComponent implements OnInit {
             this.data.returnedEvent = data
             this.dialogRef.close(this.data);
           });
+          this.modalRef.hide()
+          
+          
       }else
         {
         console.log("entred")
@@ -83,9 +87,10 @@ export class EventFormComponent implements OnInit {
           this.eventToUpdate = data
           this.dialogRef.close(this.data);
         })  
+        this.modalRef.hide()
+       
       }
       }
-    this.modalRef.hide()
     
     }
   

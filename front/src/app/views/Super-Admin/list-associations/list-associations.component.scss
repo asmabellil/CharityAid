@@ -14,3 +14,11 @@ table {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+::ng-deep .background{
+  background:#4BB543;
+  color: black;
+  .mat-simple-snackbar-action {
+      color: black !important;
+  }
+}

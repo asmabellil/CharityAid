@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Member } from 'src/app/models/Member';
 import { MembersService } from 'src/app/services/members.service';
+import {  MatSnackBar,  MatSnackBarHorizontalPosition,  MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-profile',
@@ -14,8 +15,10 @@ export class ProfileComponent implements OnInit {
   registerForm: FormGroup;
   modalRef: BsModalRef;
   content : String = "Change picture";
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  constructor(private service: MembersService, public bsModalRef: BsModalRef, private modalService: BsModalService) { }
+  constructor(private service: MembersService, private _snackBar: MatSnackBar, public bsModalRef: BsModalRef, private modalService: BsModalService) { }
 
   ngOnInit(): void {
    this.member = JSON.parse(localStorage.getItem("User"));
@@ -46,7 +49,15 @@ export class ProfileComponent implements OnInit {
       console.log(data + "modified")
       console.log(data)
       localStorage.setItem("User", JSON.stringify(data))
-      window.location.reload()
+      let snack = this._snackBar.open('Your information was updated successfully!', 'close', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration : 1500,
+        panelClass :['background']
+      } );
+      snack.afterDismissed().subscribe(() => {
+        window.location.reload()
+      })
     })
     this.member = {... member}
     this.modalRef.hide();
