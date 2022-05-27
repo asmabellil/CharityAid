@@ -38,7 +38,7 @@
         <!-- Fruit Column -->
         <ng-container matColumnDef="DOB">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Of Birth </th>
-          <td mat-cell *matCellDef="let row"> {{row.DOB}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.DOB | date:'mediumDate'}} </td>
         </ng-container>
   
         <!-- Fruit Column -->

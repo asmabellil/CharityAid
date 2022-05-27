@@ -25,9 +25,16 @@ router.post('/', async function(req,res,next){
         ...SubscriberObject
     }); 
 
-    subscriber.save()
-      .then(() => res.send(req.body))
-        .catch(err => res.status(400).json({ error: err }))
+    Subscriber.create(subscriber).then((d) => {
+      (ids = d._id), console.log(ids);
+
+    res.send(
+      {
+        _id: d._id,
+        ...req.body
+      }
+    );      
+    });
   });
 
   // Add JSON 

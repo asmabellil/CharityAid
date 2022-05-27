@@ -15,8 +15,8 @@
         <div *ngIf="Montant.errors.minlength">Your name should have at leaset two charcters</div>
     </div>
 
-    <div class="input-group ">
-      <mat-form-field appearance="fill">
+    <div class="input-group">
+      <!-- <mat-form-field appearance="fill">
       <mat-label>Type</mat-label>
       <mat-select required
           name="type"
@@ -25,7 +25,16 @@
         <mat-option value="Income"> Income </mat-option>
         <mat-option value="Expenses"> Expenses </mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
+
+    <section class="example-section">
+      <label class="label">Type:</label>
+      <mat-radio-group name="type" [(ngModel)]="caisseToUpdate.Type" formControlName="Type">
+        <mat-radio-button class="example-margin" value="Income">Income</mat-radio-button>
+        <mat-radio-button class="example-margin" value="Expenses">Expenses</mat-radio-button>
+      </mat-radio-group>
+    </section>
+
     </div>   
   
       <div class="input-group mb-3">

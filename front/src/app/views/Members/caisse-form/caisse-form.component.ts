@@ -65,13 +65,15 @@ export class CaisseFormComponent implements OnInit {
     });
   }else
     {
-    console.log("entred")
-    this.caisse = {...this.caisseToUpdate}
-    this.service.updateCaisse(this.caisse).subscribe((data) =>{
-      console.log(data + "modified")
-      this.caisseToUpdate = data
+        console.log("entred")
+        this.caisse = {...this.caisseToUpdate}
+        this.service.updateCaisse(this.caisse).subscribe((data) =>{
+          console.log(data + "modified")
+          this.data.caisseToUpdate = data
+          this.data.state = true
+          this.dialogRef.close(this.data);
     })  
-    this.dialogRef.close(this.data);
+    
   }
   this.modalRef.hide();
   }

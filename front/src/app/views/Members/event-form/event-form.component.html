@@ -21,13 +21,17 @@
     </div>    
 
     <div class="row mt-2">
-        <div class="alert alert-danger col-md-6" *ngIf="Title.errors && Title.touched">
+      <div class="col-md-6 px-3">
+        <div class="alert alert-danger " *ngIf="Title.errors && Title.touched">
             <div *ngIf="Title.errors.required">This field is required</div>
             <div *ngIf="Title.errors.minlength">Your title should have at leaset two charcters</div>
         </div>
+        </div>
 
-        <div class="alert alert-danger col-md-6" *ngIf="Cout.errors && Cout.touched">
+        <div class="col-md-6 px-3">
+        <div class="alert alert-danger " *ngIf="Cout.errors && Cout.touched">
             <div *ngIf="Cout.errors.required">This field is required</div>
+        </div>
         </div>
     </div>
 
@@ -63,12 +67,16 @@
     </div>
 
     <div class="row mt-2">
-        <div class="alert alert-danger col-md-6" *ngIf="Place.errors && Place.touched">
+      <div class="col-md-6 px-3">
+        <div class="alert alert-danger " *ngIf="Place.errors && Place.touched">
             <div *ngIf="Place.errors.required">This field is required</div>
         </div>
+      </div>
 
-    <div class="alert alert-danger col-md-6" *ngIf="Number_Participants.errors && Number_Participants.touched">
+    <div class="col-md-6 px-3">
+    <div class="alert alert-danger " *ngIf="Number_Participants.errors && Number_Participants.touched">
         <div *ngIf="Number_Participants.errors.required">This field is required</div>
+    </div>
     </div>
 </div>
 

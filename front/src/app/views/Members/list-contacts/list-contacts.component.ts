@@ -127,7 +127,7 @@ export class ListContactsComponent implements AfterViewInit {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
           duration : 1500,
-          panelClass :['alert']
+          panelClass :['backgroundAlert']
         });
       }, 
       () =>{

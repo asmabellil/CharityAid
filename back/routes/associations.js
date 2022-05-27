@@ -25,9 +25,16 @@ router.post('/', async function(req,res,next){
         ...AssociationObject
     }); 
 
-      association.save()
-      .then(() => res.send(req.body))
-        .catch(err => res.status(400).json({ error: err }))
+    Association.create(association).then((d) => {
+      (ids = d._id), console.log(ids);
+
+    res.send(
+      {
+        _id: d._id,
+        ...req.body
+      }
+    );      
+    });
   });
 
 // Modify Association

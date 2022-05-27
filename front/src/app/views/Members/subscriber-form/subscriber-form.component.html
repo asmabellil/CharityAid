@@ -19,24 +19,27 @@
   </div>
   
   <div class="row mt-2">
-    <div class="alert alert-danger col-md-6" *ngIf="FirstName.errors && FirstName.touched">
+    <div class="col-md-6 px-3">
+    <div class="alert alert-danger " *ngIf="FirstName.errors && FirstName.touched">
       <div *ngIf="FirstName.errors.required">This field is required</div>
       <div *ngIf="FirstName.errors.minlength">Your name should have at leaset two charcters</div>
   </div>
+  </div>
 
-    <div class="alert alert-danger col-md-6" *ngIf="LastName.errors && LastName.touched">
+  <div class="col-md-6 px-3">
+    <div class="alert alert-danger " *ngIf="LastName.errors && LastName.touched">
       <div *ngIf="LastName.errors.required">This field is required</div>
   </div>
   </div>
+  </div>
 
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text"><i class="cil-calendar"></i></span>
+    <div class="mb-3">
+      <mat-label>Date of birth:</mat-label>
+        <div class="row mt-2">
+        <mat-datepicker-toggle matSuffix [for]="picker" class="col-md-2"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <input class="form-control col-md-8"  matInput [matDatepicker]="picker" [(ngModel)]="subscriberToUpdate.DOB" formControlName="DOB">
       </div>
-      <input class="form-control" type="text" name="DOB" placeholder="Date of birth" [(ngModel)]="subscriberToUpdate.DOB" formControlName="DOB">
-    </div>
-    <div class="alert alert-danger" *ngIf="DOB.errors && DOB.touched">
-      <div *ngIf="DOB.errors.required">This field is required</div>
     </div>
 
     <div class="input-group mb-3">

@@ -35,6 +35,8 @@ import { CaisseFormComponent } from './caisse-form/caisse-form.component';
 import { CalanderEventComponent } from './calander-event/calander-event.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EventDescriptionComponent } from './event-description/event-description.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -64,7 +66,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatSelectModule,
     FullCalendarModule,
     MatProgressSpinnerModule,
-    
+    MatCheckboxModule,
+    MatRadioModule
 
   ],
   declarations: [

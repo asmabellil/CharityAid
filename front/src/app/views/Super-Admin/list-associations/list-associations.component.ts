@@ -115,6 +115,7 @@ export class ListAssociationsComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result.state === true){
+        console.log(result.returnedAssociation)
         this.listAssociations.push(result.returnedAssociation)
         this.dataSource = new MatTableDataSource(this.listAssociations);
         this._snackBar.open('Your association was added successfully!', 'close', {
@@ -126,11 +127,11 @@ export class ListAssociationsComponent implements AfterViewInit {
       }
       console.log("Added successfully", result) 
     });
-   
   }
 
   deletMember(association){
     let i= this.listAssociations.indexOf(association);
+    console.log(this.listAssociations[i], this.listAssociations[i]._id)
     this.service.deleteAssociation(this.listAssociations[i]._id).subscribe(
       () => {this.listAssociations = this.listAssociations.filter(association => association._id != this.listAssociations[i]._id),
         this.dataSource = new MatTableDataSource(this.listAssociations),

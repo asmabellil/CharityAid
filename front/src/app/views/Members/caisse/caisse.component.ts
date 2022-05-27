@@ -75,12 +75,14 @@ export class CaisseComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result =>{
-      this._snackBar.open('Your action was updated successfully!', 'close', {
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-        duration : 1500,
-        panelClass :['background']
-      });
+      if (result.state === true){
+        this._snackBar.open('Your action was updated successfully!', 'close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration : 1500,
+          panelClass :['background']
+        });        
+      }
     })
   } 
 

@@ -149,9 +149,13 @@ User.find(
         }
         const token = jwt.sign(payload, secret, {expiresIn: '5min'})
         const link = `http://localhost:4200/#/reset-password/${data[0]._id}/${token}`
-        console.log(link)
-        res.send(link)
-        SendResetPasswordEmail(data[0].Email, data[0].Email, data[0]._id, link);
+        try {
+          SendResetPasswordEmail(data[0].Email, data[0].Email, data[0]._id, link)
+          res.status(200).send(link) 
+        } catch (error) {
+          console.log(error)
+          res.send(error)
+        }
 
       }
     })

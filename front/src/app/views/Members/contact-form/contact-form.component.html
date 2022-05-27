@@ -2,23 +2,20 @@
     <form method="post" [formGroup]="registerForm">
       <p class="text-muted"> {{val1}} </p>
 
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
+      <div class="row mt-2">
+        <div class="input-group mb-3 col-md-6">
+          <div class="input-group-prepend">
           <span class="input-group-text"><i class="icon-user"></i></span>
         </div>
         <input class="form-control" type="text" name="name" placeholder="Name" [(ngModel)]="contactToUpdate.Name" formControlName="Name">
-      </div>
-    
-      <div class="alert alert-danger" *ngIf="Name.errors && Name.touched">
-        <div *ngIf="Name.errors.required">This field is required</div>
-        <div *ngIf="Name.errors.minlength">Your name should have at leaset two charcters</div>
-    </div>
+    </div> 
 
-    <div class="input-group select">
-      <mat-form-field appearance="fill">
+
+    <div class="input-group col-md-6">
+      <mat-form-field appearance="fill" >
       <mat-label>Type</mat-label>
       <mat-select required
-          name="type"
+          name="type" 
           [(ngModel)]="contactToUpdate.Type"
           formControlName="Type">
         <mat-option value="Person"> Person </mat-option>
@@ -27,7 +24,15 @@
         <mat-option value="volvo"> Other </mat-option>
       </mat-select>
     </mat-form-field>
-    </div>   
+    </div> 
+    </div>
+  
+  <div class="col-md-6 px-3">
+  <div class="alert alert-danger" *ngIf="Name.errors && Name.touched">
+    <div *ngIf="Name.errors.required">This field is required</div>
+    <div *ngIf="Name.errors.minlength">Your name should have at leaset two charcters</div>
+</div>
+</div>
   
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -67,14 +72,18 @@
   </div>
 
   <div class="row mt-2">
-    <div class="alert alert-danger col-md-6" *ngIf="Email.errors && Email.touched">
+    <div class="col-md-6 px-3">
+    <div class="alert alert-danger " *ngIf="Email.errors && Email.touched">
       <div *ngIf="Email.errors.required">This field is required</div>
       <div *ngIf="Email.errors.pattern">Your email should have this form test@test.com</div>
   </div>
+  </div>
 
-    <div class="alert alert-danger col-md-6" *ngIf="Responsible.errors && Responsible.touched">
+  <div class="col-md-6 px-3">
+    <div class="alert alert-danger " *ngIf="Responsible.errors && Responsible.touched">
       <div *ngIf="Responsible.errors.required">This field is required</div>
       <div *ngIf="Responsible.errors.minlength">This field should contain at leaset 2 characters</div>
+  </div>
   </div>
   </div>
     

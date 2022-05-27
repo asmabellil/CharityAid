@@ -18,14 +18,18 @@
     </div>
     
     <div class="row mt-2">
-      <div class="alert alert-danger col-md-6" *ngIf="Name.errors && Name.touched">
-        <div *ngIf="Name.errors.required">This field is required</div>
-        <div *ngIf="Name.errors.minlength">Your name should have at leaset two charcters</div>
-    </div>
-    <div class="alert alert-danger col-md-6" *ngIf="Siret_Number.errors && Siret_Number.touched">
-      <div *ngIf="Siret_Number.errors.required">This field is required</div>
-      <div *ngIf="Siret_Number.errors.pattern">Your siret number should contain exactly 9 charcters</div>
-    </div>
+      <div class="col-md-6 px-3">
+        <div class="alert alert-danger" *ngIf="Name.errors && Name.touched">
+          <div *ngIf="Name.errors.required">This field is required</div>
+          <div *ngIf="Name.errors.minlength">Your name should have at leaset two charcters</div>
+        </div>
+      </div>
+      <div class="col-md-6 px-3">
+        <div class="alert alert-danger" *ngIf="Siret_Number.errors && Siret_Number.touched">
+          <div *ngIf="Siret_Number.errors.required">This field is required</div>
+          <div *ngIf="Siret_Number.errors.pattern">Your siret number should contain exactly 9 charcters</div>
+        </div>
+      </div>
     </div>
 
     <div class="mb-3">
@@ -41,15 +45,16 @@
     </div>
 
     <div class="mb-3 mat-calander" >
-    <mat-label>Foundation date:</mat-label>
+    <mat-label class="dateLabel">Foundation date:</mat-label>
     <div class="row mt-2">
       <mat-datepicker-toggle matSuffix [for]="picker" class="col-md-2"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
-      <input class="form-control col-md-6" matInput [matDatepicker]="picker" [(ngModel)]="associationToUpdate.Foundation_date" formControlName="Foundation_date">
+      <input class="inputDatePicker form-control col-md-6" matInput [matDatepicker]="picker" [(ngModel)]="associationToUpdate.Foundation_date" formControlName="Foundation_date">
     </div>
     </div>
+  
 
-    <div class="input-group  ">
+    <div class="input-group ">
       <mat-form-field appearance="fill">
       <mat-label>Type</mat-label>
       <mat-select required
@@ -106,14 +111,18 @@
     </div>
 
     <div class="row mt-2">
-      <div class="alert alert-danger col-md-6" *ngIf="Email.errors && Email.touched">
+      <div class="col-md-6 px-3">
+      <div class="alert alert-danger" *ngIf="Email.errors && Email.touched">
         <div *ngIf="Email.errors.required">This field is required</div>
         <div *ngIf="Email.errors.pattern">Your email should have this form test@test.com</div>
+      </div>
     </div>
 
-      <div class="alert alert-danger col-md-6" *ngIf="Responsible.errors && Responsible.touched">
+    <div class="col-md-6 px-3">
+      <div class="alert alert-danger" *ngIf="Responsible.errors && Responsible.touched">
         <div *ngIf="Responsible.errors.required">This field is required</div>
         <div *ngIf="Responsible.errors.pattern">This email should have this form test@test.com</div>
+    </div>
     </div>
     </div>
     

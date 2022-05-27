@@ -25,9 +25,16 @@ router.post('/', async function(req,res,next){
         ...EventObject
     }); 
 
-    event.save()
-      .then(() => res.send(req.body))
-        .catch(err => res.status(400).json({ error: err }))
+    Event.create(event).then((d) => {
+      (ids = d._id), console.log(ids);
+
+    res.send(
+      {
+        _id: d._id,
+        ...req.body
+      }
+    );      
+    });
   });
 
 // Modify Event

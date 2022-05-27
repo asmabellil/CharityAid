@@ -1,40 +1,6 @@
 const nodemailer = require('nodemailer');
 const xoauth2 = require('xoauth2');
 
- /*function sendEmail(message) {
-  return new Promise(async (res, rej) => {
-      const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-              user: 'asma.bellil1@esprit.tn',
-              pass: '193JFT4536'
-          }
-      })
-    })
-
-      transporter.sendMail(message, function(err, info) {
-          if (err) {
-              rej(err)
-          } else {
-              res(info)
-          }
-      })
-      let testAccount = await nodemailer.createTestAccount();
-
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    name: "smtp",
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: testAccount.user, // generated ethereal user
-      pass: testAccount.pass, // generated ethereal password
-    },
-  });
-  })
-} */
-
 function sendEmail(message) {
   return new Promise((res, rej) => {
       const transporter = nodemailer.createTransport({
@@ -57,7 +23,7 @@ function sendEmail(message) {
 
 exports.SendResetPasswordEmail = (Email ,Firstname, id,link) => {
     const message = {
-        from: "asma.bellil@hotmail.com",
+        from: "association369@outlook.fr",
         to: Email,
         subject: 'Reset Password',
         html: `
@@ -65,7 +31,6 @@ exports.SendResetPasswordEmail = (Email ,Firstname, id,link) => {
       <body>
       <h3>Hello ${Firstname} </h3>
       <p>Reset your password here: <strong>${link}</strong></p>
-      <p>Cheers,</p>
       <p>Our  Team</p>
       </body>
       </html>

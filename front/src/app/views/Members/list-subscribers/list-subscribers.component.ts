@@ -76,7 +76,7 @@ export class ListSubscribersComponent implements AfterViewInit {
         const data : Subscriber[] = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
         console.log(data)
         for(let i=0; i<data.length; i++){
-          data[i] = {...data[i],  IdAssociation : JSON.parse(localStorage.getItem("User")).IdAssociation}
+          data[i] = {...data[i], IdAssociation : JSON.parse(localStorage.getItem("User")).IdAssociation}
         }
         //this.convertedJson = JSON.stringify(data,undefined,4);
         this.service.addSubscribersJSON(data).subscribe((result : Subscriber[])=>{
@@ -87,15 +87,17 @@ export class ListSubscribersComponent implements AfterViewInit {
           this.dataSource.data = this.dataSource.data
         },
         (error) => {
+          this.loading = false
           console.log(error)
           this._snackBar.open('There an error', 'close', {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
-            duration : 10000,
-            panelClass :['background']
+            duration : 1500,
+            panelClass :['backgroundAlert']
           });
         },
         () =>{
+          this.loading = false
           this._snackBar.open('Your subscribers were added successfully!', 'close', {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
