@@ -19,6 +19,7 @@ export class EventsComponent implements AfterViewInit {
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   displayedColumns: string[] = [ 'Title', 'Start_date', 'End_date', 'Place', 'Number_Participants', 'Cout', 'MemberName', 'Actions'];
   dataSource: MatTableDataSource<Eventt>;
+  loading : Boolean;
 
   @ViewChild(MatTable) table: MatTable<Eventt>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -39,6 +40,7 @@ export class EventsComponent implements AfterViewInit {
 
   constructor(private service: EventsService, private modalService: BsModalService, public dialog: MatDialog, private _snackBar: MatSnackBar) { 
     this.listEvents = new Array;
+    this.loading = true;
     
     this.service.getEvents().subscribe(
       (data: Eventt[]) => {
@@ -46,6 +48,12 @@ export class EventsComponent implements AfterViewInit {
         this.dataSource = new MatTableDataSource(this.listEvents);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+      },
+      (err) =>{
+        console.log(err)
+      },
+      () =>{
+        this.loading = false;
       })
     this.eventToUpdate = new Eventt;
     this.config= {class: 'gray modal-lg'};

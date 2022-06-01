@@ -1,0 +1,23 @@
+<button class="btn btn-primary" (click)="makePDF()"> Download Report</button>
+<div class="contain" id="content" #content>
+    <!-- <div class="container" *ngFor="let event of listEvents">
+        <h5>{{event.Title}}</h5>
+        <p><u>Start date:</u> {{event.Start_date | date:'mediumDate'}}</p>
+        <p><u>End date:</u> {{event.End_date | date:'mediumDate'}}</p>
+        <p><u>Place:</u> {{event.Place}}</p>
+        <p><u>Number of participants:</u> {{event.Number_Participants}}</p>
+        <p><u>Description:</u> {{event.Description}}</p>
+        <p><u>Added by:</u> {{event.MemberName}}</p>
+    </div>    -->
+    <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+        <div class="card mb-5">
+            <div class="card-body p-sm-5" style="border-style: solid;">
+            
+            <img src="https://res.cloudinary.com/dkqbdhbrp/image/upload/v1653996936/vd2jhxdni5omjzsnkb3e.jpg" class="picture">
+            <h5 >Annuel Report</h5>
+            <h4 >{{association.Name}}</h4>
+            <h1 style="font-size: 14.52px;text-align: right;margin-top: 23px;margin-bottom: -15px;">Year: 2022</h1>
+            </div>
+        </div>
+    </div>
+</div> 

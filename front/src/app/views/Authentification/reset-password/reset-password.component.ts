@@ -17,7 +17,7 @@ export class ResetPasswordComponent implements OnInit {
   message1 : any;
   show: Boolean;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   constructor(private service: UsersService, private _snackBar: MatSnackBar, private router : Router) { }
 

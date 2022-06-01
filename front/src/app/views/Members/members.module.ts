@@ -37,6 +37,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EventDescriptionComponent } from './event-description/event-description.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
+import { PDFsComponent } from './pdfs/pdfs.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -85,7 +86,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     CaisseComponent,
     CaisseFormComponent,
     CalanderEventComponent,
-    EventDescriptionComponent
+    EventDescriptionComponent,
+    PDFsComponent
   ],
   providers: [
     BsModalRef,

@@ -74,8 +74,10 @@ export class ContactFormComponent implements OnInit {
     this.service.updatecontact(this.contact).subscribe((data) =>{
       console.log(data + "modified")
       this.contactToUpdate = data
+      this.data.state =true;
+      this.dialogRef.close(this.data);
     })  
-    this.dialogRef.close(this.data);
+    
   }
   this.modalRef.hide();
   }

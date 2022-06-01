@@ -35,42 +35,42 @@
     <div class="mb-3">
     <ngx-dropzone (change)="onSelect($event)" [accept]="'image/png,image/jpeg,image/jpg'" >
       <ngx-dropzone-label>Drop the logo</ngx-dropzone-label>
-      <div *ngIf="update2">
+      <!-- <div *ngIf="update2">
         <img class="imgSelect" [src]="associationToUpdate.Picture" [ngModelOptions]="{standalone: true}" />
-      </div> 
+      </div>  -->
       <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"  [removable]="true" (removed)="onRemove(f)" >
         <ngx-dropzone-label>({{ f.type }})</ngx-dropzone-label>
       </ngx-dropzone-image-preview>
     </ngx-dropzone>
     </div>
 
-    <div class="mb-3 mat-calander" >
-    <mat-label class="dateLabel">Foundation date:</mat-label>
     <div class="row mt-2">
-      <mat-datepicker-toggle matSuffix [for]="picker" class="col-md-2"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <input class="inputDatePicker form-control col-md-6" matInput [matDatepicker]="picker" [(ngModel)]="associationToUpdate.Foundation_date" formControlName="Foundation_date">
-    </div>
-    </div>
+      <div class="mb-3 mat-calander col-md-6" >
+        <div class="row mt-2">
+          <mat-datepicker-toggle matSuffix [for]="picker" class="col-md-3"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <input class="inputDatePicker form-control col-md-8" placeholder="   Foundation Date" matInput [matDatepicker]="picker" [(ngModel)]="associationToUpdate.Foundation_date" formControlName="Foundation_date">
+        </div>
+        </div>
   
-
-    <div class="input-group ">
-      <mat-form-field appearance="fill">
-      <mat-label>Type</mat-label>
-      <mat-select required
-          name="type"
-          [(ngModel)]="associationToUpdate.Type"
-          formControlName="Type">
-        <mat-option value="Educationnal"> Educationnal </mat-option>
-        <mat-option value="Health"> Health </mat-option>
-        <mat-option value="Environmental"> Environmental </mat-option>
-        <mat-option value="Animal"> Animal </mat-option>
-        <mat-option value="Art and Culture"> Art and Culture </mat-option>
-        <mat-option value="International NGOs"> International NGOs </mat-option>
-        <mat-option value="volvo"> Other </mat-option>
-      </mat-select>
-      </mat-form-field>
-    </div>   
+      <div class="input-group col-md-6">
+        <mat-form-field appearance="fill">
+        <mat-label>Type</mat-label>
+        <mat-select required
+            name="type"
+            [(ngModel)]="associationToUpdate.Type"
+            formControlName="Type">
+          <mat-option value="Educationnal"> Educationnal </mat-option>
+          <mat-option value="Health"> Health </mat-option>
+          <mat-option value="Environmental"> Environmental </mat-option>
+          <mat-option value="Animal"> Animal </mat-option>
+          <mat-option value="Art and Culture"> Art and Culture </mat-option>
+          <mat-option value="International NGOs"> International NGOs </mat-option>
+          <mat-option value="volvo"> Other </mat-option>
+        </mat-select>
+        </mat-form-field>
+      </div>   
+    </div>
   
     <div class="input-group mb-3">
       <div class="input-group-prepend">

@@ -40,17 +40,21 @@ export class ListContactsComponent implements AfterViewInit {
   showFilter: Boolean;
   returnedContact: Contact;
   state: Boolean;
+  loading : Boolean;
 
   constructor(private service: ContactsService, private _snackBar: MatSnackBar, private modalService: BsModalService, public dialog: MatDialog) { 
     this.listContacts = new Array;
-    
+    this.loading = true;
+
     this.service.getcontacts().subscribe(
       (data: Contact[]) => {
         this.listContacts = data.filter(contact => contact.IdAssociation === JSON.parse(localStorage.getItem("User")).IdAssociation),
         this.dataSource = new MatTableDataSource(this.listContacts);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      })
+      },
+      (err) => {},
+      () => {this.loading = false;})
     this.contactToUpdate2 = new Contact;
     this.showFilter = false;
   }
@@ -63,24 +67,28 @@ export class ListContactsComponent implements AfterViewInit {
     this.val = "Update Contact"; 
     this.contactToUpdate2 = contact;
     this.action =false;
+    this.state = false;
     console.log(this.contactToUpdate2)
     
     const dialogRef = this.dialog.open(ContactFormComponent, {
        data: {
         contactToUpdate : this.contactToUpdate2,
         val1: this.val,
-        action1: this.action
+        action1: this.action,
+        state : this.state
         } 
     }
     ); 
 
     dialogRef.afterClosed().subscribe(result =>{
-      this._snackBar.open('Your contact was updated successfully!', 'close', {
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-        duration : 1500,
-        panelClass :['background']
-      });
+      if (result.state === true){
+        this._snackBar.open('Your contact was updated successfully!', 'close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration : 1500,
+          panelClass :['background']
+        });        
+      }
     })
   } 
 

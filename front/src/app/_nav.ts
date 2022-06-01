@@ -55,7 +55,7 @@ export const navItems = {
   },
   {
     name: 'Reports',
-    url: '/main/allassociations',
+    url: '/members/reports',
     icon: 'cil-description'
   },
   {
@@ -96,7 +96,7 @@ export const navItems = {
   },
   {
     name: 'Reports',
-    url: '/main/allassociations',
+    url: '/members/reports',
     icon: 'cil-description'
   },
   {
@@ -136,7 +136,7 @@ export const navItems = {
   },
   {
     name: 'Reports',
-    url: '/main/allassociations',
+    url: '/members/reports',
     icon: 'cil-description'
   },
   {
@@ -176,7 +176,7 @@ export const navItems = {
   },
   {
     name: 'Reports',
-    url: '/main/allassociations',
+    url: '/members/reports',
     icon: 'cil-description'
   },
   {

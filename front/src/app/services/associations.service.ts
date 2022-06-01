@@ -25,7 +25,7 @@ export class AssociationsService {
   }
 
   searchAssociation(id){
-    return this.http.get(this.url + id);
+    return this.http.get<Association>(this.url + id);
   }
 
   updateAssociation (a: Association){

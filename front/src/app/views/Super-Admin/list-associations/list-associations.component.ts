@@ -41,10 +41,12 @@ export class ListAssociationsComponent implements AfterViewInit {
   returnedAssociation: Association;
   state: Boolean;
   update: Boolean;
+  loading : Boolean;
 
   constructor(private service: AssociationsService, private _snackBar: MatSnackBar, private modalService: BsModalService, public dialog: MatDialog) {
     this.listAssociations = new Array;
- 
+    this.loading = true;
+
     this.service.getAssociations().subscribe(
       (data: Association[]) => {
         this.listAssociations = data,
@@ -52,7 +54,8 @@ export class ListAssociationsComponent implements AfterViewInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      (err) =>{}
+      (err) =>{},
+      () => { this.loading = false }
       )
     this.associationToUpdate2 = new Association;
     this.config= {class: 'gray modal-lg'};

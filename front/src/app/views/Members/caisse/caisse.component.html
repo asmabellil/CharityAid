@@ -1,4 +1,4 @@
-<div class="d-flex flex-row">
+<div class="d-flex flex-row all">
     <mat-form-field>
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input onchange="onChangeFilter()">
@@ -68,5 +68,5 @@
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
     </div>
     
-
+    <mat-spinner *ngIf = "loading"></mat-spinner>
 

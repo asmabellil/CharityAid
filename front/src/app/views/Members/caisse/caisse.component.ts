@@ -23,6 +23,7 @@ export class CaisseComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort; 
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  loading : Boolean;
 
   caisseToUpdate2: Caisse;
   listCaisses: Caisse[];
@@ -42,6 +43,7 @@ export class CaisseComponent implements AfterViewInit {
 
   constructor(private service: CaissesService, private _snackBar: MatSnackBar, private modalService: BsModalService, public dialog: MatDialog) { 
     this.listCaisses = new Array;
+    this.loading = true;
     
     this.service.getCaisses().subscribe(
       (data: Caisse[]) => {
@@ -49,7 +51,9 @@ export class CaisseComponent implements AfterViewInit {
         this.dataSource = new MatTableDataSource(this.listCaisses);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      })
+      },
+      (err) => {},
+      ( ) =>{this.loading = false;})
     this.caisseToUpdate2 = new Caisse;
     this.config= {class: 'gray modal-lg'};
     this.showFilter = false;

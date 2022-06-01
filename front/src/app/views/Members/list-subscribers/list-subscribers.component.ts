@@ -42,9 +42,16 @@ export class ListSubscribersComponent implements AfterViewInit {
         this.dataSource = new MatTableDataSource(this.listSubscribers);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+      },
+      (err) =>{
+        console.log(err)
+      },
+      () =>{
+        this.loading = false
       }
+      
     )
-    this.loading = false
+    this.loading = true
   }
 
   ngAfterViewInit(): void {

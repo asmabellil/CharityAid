@@ -10,6 +10,7 @@ import { SubscriberFormComponent } from './subscriber-form/subscriber-form.compo
 import { ListContactsComponent } from './list-contacts/list-contacts.component';
 import { CaisseComponent } from './caisse/caisse.component';
 import { CalanderEventComponent } from './calander-event/calander-event.component';
+import { PDFsComponent } from './pdfs/pdfs.component'
 
 const routes: Routes = [
   {
@@ -83,6 +84,13 @@ const routes: Routes = [
         component: CalanderEventComponent,
         data: {
           title: 'All Tasks'
+        }
+      },
+      {
+        path: 'reports',
+        component: PDFsComponent,
+        data: {
+          title: 'Reports'
         }
       },
     ]

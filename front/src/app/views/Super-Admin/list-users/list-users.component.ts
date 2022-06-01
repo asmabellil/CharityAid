@@ -41,11 +41,13 @@ export class ListUsersComponent implements AfterViewInit {
   modalRef: BsModalRef;
   state: Boolean;
   update : Boolean;
+  loading : Boolean;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
   constructor(private service: MembersService, private serviceUser: UsersService, private modalService: BsModalService, public dialog: MatDialog, private _snackBar: MatSnackBar) {
     this.listComplete = new Array;
+    this.loading = true;
     
     this.service.getMembers().subscribe(
       (data: Member[]) => {
@@ -69,6 +71,12 @@ export class ListUsersComponent implements AfterViewInit {
             }
           }
         );    
+      },
+      (err) =>{
+        console.log(err)
+      },
+      () =>{
+        this.loading = false
       }     
     );
     

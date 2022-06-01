@@ -143,7 +143,7 @@ export class AssociationFormComponent implements OnInit {
         })
       }else{
         this.loading = true;
-        this.association = {...this.associationToUpdate, Picture : "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
+        this.association = {...this.associationToUpdate}
         this.service.updateAssociation(this.association).subscribe((data) =>{
           console.log(data + "modified")
           this.data.state = true
