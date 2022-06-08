@@ -59,6 +59,7 @@
     "html2canvas": "^1.4.1",
     "igniteui-angular": "^13.1.6",
     "jspdf": "^2.5.1",
+    "ng-webdatarocks": "^1.4.4",
     "ng2-charts": "^2.4.3",
     "ng2-file-upload": "^1.4.0",
     "ng2-order-pipe": "^0.1.5",

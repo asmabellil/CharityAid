@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { WebdatarocksPivotModule } from 'ng-webdatarocks';
 
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -65,6 +66,7 @@ import { ChartsModule } from 'ng2-charts';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    WebdatarocksPivotModule,
     MatSnackBarModule,
     IconSetModule.forRoot(),
   ],

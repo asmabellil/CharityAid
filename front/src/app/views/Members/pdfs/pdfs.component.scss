@@ -10,8 +10,52 @@
 .logo{
     width: 30%;
     height: 30%;
-    margin-top: -49px;
+    margin-top: -45px;
     margin-right: 0px;
     margin-left: -29px;
     margin-bottom: 6px;
+}
+
+.year{
+    font-size: 14.52px;
+    text-align: right;
+    margin-top: 23px;
+    margin-bottom: -15px;
+}
+
+.first{
+    padding: 20px;
+    margin-left: 30px;
+    height: 850px;
+}
+
+.financial{
+.table {
+  border: 1px solid #EEEEEE;
+  width: 40%;
+}
+
+.table-header {
+  display: flex;
+  background: #000;
+  padding: 18px 0;
+}
+
+.table-row {
+  display: flex;
+  padding: 18px 0;
+}
+.table-row:nth-of-type(odd) {
+  background: #EEEEEE;
+}
+
+.table-data, .header__item {
+  flex: 1 1 20%;
+  text-align: center;
+}
+
+.filter__link {
+  color: white;
+}
+
 }
