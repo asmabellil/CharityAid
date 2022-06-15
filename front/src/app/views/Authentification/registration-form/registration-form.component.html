@@ -58,10 +58,10 @@
         <tr >
           <td><select class="form-control " 
               name="etat"
-              [(ngModel)]="memberToUpdate2.Association"
+              [(ngModel)]="memberToUpdate2.IdAssociation"
               formControlName="Association">
               <option selected disabled >Association</option>
-                <option *ngFor="let a of listAssociations" [value]="a.Name">{{a.Name}}</option>  
+                <option *ngFor="let a of listAssociations" [value]="a._id">{{a.Name}}</option>  
           </select></td>
       </tr>
     </div>

@@ -6,4 +6,5 @@ export class Caisse{
     Description: String;
     Association : String;
     IdAssociation: String;
+    createdAt : string;
 }

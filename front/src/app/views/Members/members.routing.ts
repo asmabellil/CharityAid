@@ -11,6 +11,7 @@ import { ListContactsComponent } from './list-contacts/list-contacts.component';
 import { CaisseComponent } from './caisse/caisse.component';
 import { CalanderEventComponent } from './calander-event/calander-event.component';
 import { PDFsComponent } from './pdfs/pdfs.component'
+import { ReportsComponent } from './reports/reports.component';
 
 const routes: Routes = [
   {
@@ -87,8 +88,15 @@ const routes: Routes = [
         }
       },
       {
-        path: 'reports',
+        path: 'annuel',
         component: PDFsComponent,
+        data: {
+          title: 'Reports'
+        }
+      },
+      {
+        path: 'reports',
+        component: ReportsComponent,
         data: {
           title: 'Reports'
         }

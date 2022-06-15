@@ -123,16 +123,19 @@ export class RegistrationFormComponent implements OnInit {
   
       if (this.action1){
         if(JSON.parse(localStorage.getItem("User")).Role === "superadmin"){
-        this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Picture: response.secure_url}
-        this.service.addMember(this.memberToAdd).subscribe(
-          (data) => {
-            console.log("add");
-            this.data.state = true;
-            this.data.returnedMember = data
-            this.dialogRef.close(this.data);
-      })
-      console.log(this.memberToUpdate2);
-      console.log(this.listMembers);        
+          this.serviceAssociation.searchAssociation(this.memberToUpdate2.IdAssociation).subscribe(data =>{
+             this.memberToAdd = {... this.memberToUpdate2, Association : data.Name,  Role: "member", Picture: response.secure_url}
+              this.service.addMember(this.memberToAdd).subscribe(
+                (data) => {
+                console.log("add");
+                this.data.state = true;
+                this.data.returnedMember = data
+                this.dialogRef.close(this.data);
+              })
+            console.log(this.memberToUpdate2);
+            console.log(this.listMembers);  
+          })
+             
         }
         else {
             this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Association: this.association, IdAssociation: this.idAssociation, Picture : response.secure_url}
@@ -150,7 +153,8 @@ export class RegistrationFormComponent implements OnInit {
       }
     }else{
       console.log("entred")
-      this.member = {...this.memberToUpdate2, Picture: response.secure_url}
+      this.serviceAssociation.searchAssociation(this.memberToUpdate2.IdAssociation).subscribe(data =>{
+      this.member = {...this.memberToUpdate2, Association : data.Name, Picture: response.secure_url}
       this.service.updateMember(this.member).subscribe((data) =>{
         this.data.state = true;
         this.data.memberToUpdate2 =data 
@@ -160,13 +164,15 @@ export class RegistrationFormComponent implements OnInit {
           localStorage.setItem("User", JSON.stringify({...data, token: JSON.parse(localStorage.getItem('User')).token}))
           window.location.reload()
         }
-      })  
+      }) 
+    }) 
     }
   })
     } else{
     if (this.action1){
       if(JSON.parse(localStorage.getItem("User")).Role === "superadmin"){
-      this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Picture : "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
+        this.serviceAssociation.searchAssociation(this.memberToUpdate2.IdAssociation).subscribe(data =>{
+      this.memberToAdd = {... this.memberToUpdate2, Association : data.Name,  Role: "member", Picture : "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
       this.service.addMember(this.memberToAdd).subscribe(
         (data) => {
           this.data.state = true;
@@ -175,7 +181,8 @@ export class RegistrationFormComponent implements OnInit {
           this.dialogRef.close(this.data);
     })
     console.log(this.memberToUpdate2);
-    console.log(this.listMembers);        
+    console.log(this.listMembers);    
+  })    
       }
       else {
           this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Association: this.association, IdAssociation: this.idAssociation, Picture : "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
@@ -191,7 +198,8 @@ export class RegistrationFormComponent implements OnInit {
 
   }else{
     console.log("entred")
-    this.member = {...this.memberToUpdate2}
+    this.serviceAssociation.searchAssociation(this.memberToUpdate2.IdAssociation).subscribe(data =>{
+    this.member = {...this.memberToUpdate2, Association : data.Name}
     this.service.updateMember(this.member).subscribe((data) =>{
       this.data.state = true;
       this.data.memberToUpdate2 =data
@@ -202,6 +210,7 @@ export class RegistrationFormComponent implements OnInit {
         window.location.reload()
       }
     })  
+  })
   }
 }
   this.modalRef.hide() 

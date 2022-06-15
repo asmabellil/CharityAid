@@ -1,54 +1,81 @@
-<script type="text/javascript" src="libs/png_support/zlib.js"></script>
-<script type="text/javascript" src="libs/png_support/png.js"></script>
-<script type="text/javascript" src="jspdf.plugin.addimage.js"></script>
-<script type="text/javascript" src="jspdf.plugin.png_support.js"></script>
-<script type="text/javascript" src="jspdf.js"></script>
 <div class="container py-4 py-xl-5">
-    <div class="row mb-5">
-        <div class="col-md-8 col-xl-6 text-center mx-auto">
-            <h2 style="color: #20a8d8;">Reports</h2>
-        </div>
-    </div>
     <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
         <div class="col">
             <div class="card">
                 <div class="card-body p-4">
-                    <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center d-inline-block mb-3 bs-icon"><svg style="width: 10%; height: 10%" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-paperclip">
-                        <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"></path>
-                    </svg></div>
-                    <h4 class="card-title">Annuel report</h4>
-                    <h6 class="card-text">Insert your inroduction: </h6><textarea class="form-control col-md-12"></textarea>
-                    <h6 class="card-text">Insert your conclusion: </h6><textarea class="form-control col-md-12" ></textarea>
-                    <h6 class="card-text">Select the year: </h6>
-                    <mat-select required
-                        name="year" class="form-control mb-3">
-                        <mat-option value="2022"> 2022 </mat-option>
-                        <mat-option value="2021"> 2021 </mat-option>
-                        <mat-option value="2020"> 2020 </mat-option>
-                        <mat-option value="2019"> 2019 </mat-option>
-                    </mat-select>
-                    <div><button class="btn btn-primary" type="button" >Preview report</button></div>
                     
-                </div>
-            </div>
-        </div>
-        <div class="col" style="padding-left: 0px;">
-            <div class="card">
-                <div class="card-body p-4">
-                    <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center d-inline-block mb-3 bs-icon"><svg style="width: 10%; height: 10%" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-cash-coin">
-                        <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"></path>
-                        <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"></path>
-                        <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"></path>
-                        <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"></path>
-                    </svg></div>
-                    <h4 class="card-title">Financial report</h4>
-                    <p class="card-text">Erat netus est hendrerit, nullam et quis ad cras porttitor iaculis. Bibendum vulputate cras aenean.</p>
+                    <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center d-inline-block mb-3 bs-icon"><svg style="width: 5%; height: 5%" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-paperclip">
+                        <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"></path>
+                    </svg><h3>Annuel report configuration</h3></div>
+                      <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+                        <div [formGroup]="pdfForm">    
+                        <mat-step [stepControl]="Introduction">
+                            <ng-template matStepLabel>Insert your introduction</ng-template>
+                            <angular-editor class="mt-1" id="editor1" formControlName="Introduction" ></angular-editor>
+                            <div class="alert alert-danger mt-3" *ngIf="Introduction.errors && Introduction.touched">
+                                <div *ngIf="Introduction.errors.required">This field is required</div>
+                            </div>
+                            <div>
+                              <button class="btn btn-success mt-3" matStepperNext>Next</button>
+                            </div>
+                        </mat-step>
+                        <mat-step [stepControl]="Presentation">
+                            <ng-template matStepLabel>Insert your presentation</ng-template>
+                            <angular-editor class="mt-1" id="editor1" formControlName="Presentation" onchange="change()" ></angular-editor>
+                            <div class="alert alert-danger mt-3" *ngIf="Presentation.errors && Presentation.touched">
+                                <div *ngIf="Presentation.errors.required">This field is required</div>
+                            </div>
+                            <div class="mt-3">
+                            <button class="btn btn-danger mr-3" matStepperPrevious>Back</button>
+                            <button class="btn btn-success" matStepperNext>Next</button>
+                            </div>
+                        </mat-step>
+                        <mat-step [stepControl]="Conclusion">
+                            <ng-template matStepLabel>Insert your conclusion</ng-template>
+                            <angular-editor class="mt-1" id="editor1" formControlName="Conclusion" ></angular-editor>
+                            <div class="alert alert-danger mt-3" *ngIf="Conclusion.errors && Conclusion.touched">
+                                <div *ngIf="Conclusion.errors.required">This field is required</div>
+                            </div>
+                            <div class="mt-3">
+                              <button class="btn btn-danger mr-3" matStepperPrevious>Back</button>
+                              <button class="btn btn-success" matStepperNext>Next</button>
+                            </div>
+                        </mat-step>
+                        <mat-step [stepControl]="Year">
+                            <ng-template matStepLabel>Insert the year</ng-template>
+                            <mat-select required
+                            formControlName="Year"
+                                name="year" class="form-control mb-3 mt-1">
+                                <mat-option value="2022"> 2022 </mat-option>
+                                <mat-option value="2021"> 2021 </mat-option>
+                                <mat-option value="2020"> 2020 </mat-option>
+                                <mat-option value="2019"> 2019 </mat-option>
+                            </mat-select>
+                            <div>
+                            <button class="btn btn-danger mr-3" matStepperPrevious>Back</button>
+                            <button class="btn btn-success" matStepperNext>Next</button>
+                            </div>
+                        </mat-step>
+                    </div>
+                        <mat-step>
+                          <ng-template matStepLabel>Done</ng-template>
+                          <p>You are now done.</p>
+                          <div>
+                            <button class="btn btn-danger mr-3" matStepperPrevious>Back</button>
+                            <button class="btn btn-success mr-3" (click)="stepper.reset()">Reset</button>
+                            <button class="btn btn-primary" type="button" (click)="preview(template)">Preview report</button>
+                          </div>
+                        </mat-step>
+                        
+                      </mat-stepper>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<button class="btn btn-primary" (click)="makePDF()"> Download Report</button>
+
+
+<ng-template #template>
 <div class="contain" id="content" #content> 
     <br />
     <br />
@@ -59,15 +86,16 @@
             <img src="https://res.cloudinary.com/dkqbdhbrp/image/upload/v1653996936/vd2jhxdni5omjzsnkb3e.jpg" class="picture">
             <h5 >Annuel Report</h5>
             <h4 >{{association.Name}}</h4>
-            <h1 class="year">Year: 2022</h1>
+            <h1 class="year">Year: {{Year.value}}</h1>
             </div>
         </div>
     </div>
-
+    </div>
+    <div class="contain" id="contenttt" #contenttt> 
     <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4 first">
         <div class="card mb-5">
             <div class="card-body p-sm-5" style="border-style: solid;">
-            <h1 style="margin-bottom: 37px;margin-left: 100px;">Outline</h1>
+            <h1 style="margin-bottom: 37px;margin-left: 130px;">Outline</h1>
             <h4>1. Introduction</h4>
             <h4>2. Presentation</h4>
             <h4>3. Events</h4>
@@ -78,46 +106,57 @@
             </div>
         </div>
     </div>
+    </div>
+    <div class="contain" id="contentt" #contentt> 
+    <div class="col-md-6 mr-1 ml-1">
+    <div style="display: flex; justify-content: flex-end;"> {{association.Name}}  -  {{Year.value}}</div>
+    <hr style="color: grey;">
+    </div>
     <div class="container">
     <h4 class="mb-3" style="color: #20a8d8;">1. Introduction</h4>
+    <div [innerHTML]="Introduction.value"></div>
     <h4 class="mb-3" style="color: #20a8d8;">2. Presentation</h4>
+    <!-- <p>{{Presentation.value}}</p>  -->
+    <div [innerHTML]="Presentation.value"></div>
     <h4 class="mb-3" style="color: #20a8d8;">3. Events</h4>
-    <div class="container" *ngFor="let event of listEvents; let i = index">
-        <h5>{{i+1}}. {{event.Title}}:</h5>
-        <div class="container">
-            <p><u>Start date:</u> {{event.Start_date | date:'mediumDate'}}</p>
-            <p><u>End date:</u> {{event.End_date | date:'mediumDate'}}</p>
-            <p><u>Place:</u> {{event.Place}}</p>
-            <p><u>Number of participants:</u> {{event.Number_Participants}}</p>
-            <p><u>Description:</u> {{event.Description}}</p>
-            <p><u>Added by:</u> {{event.MemberName}}</p>
-        </div>
-    </div>   
-    <h4 class="mb-3" style="color: #20a8d8;">4. Financial report</h4>
-    <div class="container financial">
-        <div class="container">
-	
-            <div class="table">
-                <div class="table-header">
-                    <div class="header__item"><a id="name" class="filter__link" >TYPE</a></div>
-                    <div class="header__item"><a id="wins" class="filter__link filter__link--number">SOURCE</a></div>
-                    <div class="header__item"><a id="draws" class="filter__link filter__link--number">AMOUNT</a></div>
-                </div>
-                <div class="table-content">	
-                    <div class="table-row" *ngFor="let caisse of listCaisses;">		
-                        <div class="table-data">{{caisse.Type}}</div>
-                        <div class="table-data">{{caisse.Source}}</div>
-                        <div class="table-data">{{caisse.Montant}}</div>
-                    </div>
-                    <div class="table-header">
-                        <div class="header__item"><a id="name" class="filter__link" >Total</a></div>
-                        <div class="header__item"><a id="name" class="filter__link" ></a></div>
-                        <div class="header__item"><a id="name" class="filter__link" >{{total}}</a></div>
-                    </div>
-                </div>	
-            </div>
-        </div>
+    <table class="br-3 ml-3">
+        <tr>
+          <th>Title</th>
+          <th>Start date</th>
+          <th>End date</th>
+          <th>Place</th>
+          <th>Number of Participants</th>
+          <th>Description</th>
+          <th>Member Name</th>
+        </tr>
+        <tr *ngFor="let event of listEvents">
+            <th>{{event.Title}}</th>
+            <th>{{event.Start_date | date:'mediumDate'}}</th>
+            <th>{{event.End_date | date:'mediumDate'}}</th>
+            <th>{{event.Place}}</th>
+            <th>{{event.Number_Participants}}</th>
+            <th>{{event.Description}}</th>
+            <th>{{event.MemberName}}</th>
+        </tr>
+      </table>
+    <h4 class="mb-3" style="color: #20a8d8;">4. Partners</h4>
+    <h4 class="mb-3" style="color: #20a8d8;">5. Human ressources</h4>
+    <h4 class="mb-3" style="color: #20a8d8;">6. Financial report</h4>
+    <table class="br-3 ml-3">
+        <tr>
+          <th>TYPE</th>
+          <th>SOURCE</th>
+          <th>AMOUNT</th>
+        </tr>
+        <tr *ngFor="let caisse of listCaisses;">
+            <th>{{caisse.Type}}</th>
+            <th>{{caisse.Source}}</th>
+            <th>{{caisse.Montant}}</th>
+        </tr>
+      </table>
+    <h4 class="mb-3" style="color: #20a8d8;">7. Conclusion</h4>
+    <div [innerHTML]="Conclusion.value"></div>
     </div>
-    <h4 class="mb-3" style="color: #20a8d8;">5. Conclusion</h4>
-    </div>
-</div>  
+</div> 
+<button style="margin-left: 10%;" class="btn btn-primary col-md-3 mb-3" (click)="makePDF()"> Download Report</button>
+</ng-template>

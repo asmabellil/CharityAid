@@ -27,26 +27,34 @@
       </mat-select>
     </mat-form-field> -->
 
-    <section class="example-section">
-      <label class="label">Type:</label>
-      <mat-radio-group name="type" [(ngModel)]="caisseToUpdate.Type" formControlName="Type">
-        <mat-radio-button class="example-margin" value="Income">Income</mat-radio-button>
-        <mat-radio-button class="example-margin" value="Expenses">Expenses</mat-radio-button>
-      </mat-radio-group>
+    <section class="example-section ">
+      <mat-form-field appearance="fill">
+        <mat-label>Type</mat-label>
+        <select matNativeControl 
+        name="type"
+        [(ngModel)]="caisseToUpdate.Type"
+          formControlName="Type">
+          <optgroup label="Immobilisations">
+            <option value="Financials">Financials</option>
+            <option value="Corporals">Corporals</option>
+            <option value="Incorparalls">Incorparalls</option>
+          </optgroup>
+          <optgroup label="Circulations">
+            <option value="Receivables">Receivables</option>
+            <option value="Advance payments">Advance payments </option>
+          </optgroup>
+          <optgroup label="Debts">
+            <option value="Supplier-debt">Supplier-debt</option>
+            <option value="Borrowing">Borrowing </option>
+            <option value="Dispositions">Dispositions </option>
+            <option value="Borrowing ">Other </option>
+          </optgroup>
+          <option>Income</option>
+        </select>
+      </mat-form-field>
     </section>
 
     </div>   
-  
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text"><i class="cil-home"></i></span>
-        </div>
-        <input class="form-control" type="text" name="Source" placeholder="Source" [(ngModel)]="caisseToUpdate.Source" formControlName="Source">
-      </div>
-      <div class="alert alert-danger" *ngIf="Source.errors && Source.touched">
-        <div *ngIf="Source.errors.required">This field is required</div>
-        <div *ngIf="Source.errors.minlength">This field should have at leaset three charcters</div>
-    </div>
 
         <div class="input-group mb-3">
           <div class="input-group-prepend">

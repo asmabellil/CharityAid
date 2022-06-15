@@ -38,6 +38,10 @@ import { EventDescriptionComponent } from './event-description/event-description
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import { PDFsComponent } from './pdfs/pdfs.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { ReportsComponent } from './reports/reports.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import { AnnuelReportComponent } from './financial-report/financial-report.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -68,7 +72,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     FullCalendarModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    AngularEditorModule,
+    MatStepperModule
 
   ],
   declarations: [
@@ -87,7 +93,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     CaisseFormComponent,
     CalanderEventComponent,
     EventDescriptionComponent,
-    PDFsComponent
+    PDFsComponent,
+    ReportsComponent,
+    AnnuelReportComponent
   ],
   providers: [
     BsModalRef,
