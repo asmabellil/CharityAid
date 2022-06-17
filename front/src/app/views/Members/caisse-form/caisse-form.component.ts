@@ -42,8 +42,9 @@ export class CaisseFormComponent implements OnInit {
     this.registerForm= new FormGroup({
       Montant: new FormControl('',[Validators.required,Validators.minLength(2)]),
       Type: new FormControl('',Validators.required),
-      Source: new FormControl('',[Validators.required,Validators.minLength(3)]),
-      Description: new FormControl('',[Validators.required,Validators.minLength(10)]),
+      Category: new FormControl('',[Validators.required]),
+      SubCategory : new FormControl('', [Validators.required]),
+      Description: new FormControl('',[Validators.required,Validators.minLength(5)]),
       });
       !this.caisseToUpdate ? this.caisseToUpdate = new Caisse : console.log(this.caisseToUpdate)
   }
@@ -55,7 +56,24 @@ export class CaisseFormComponent implements OnInit {
 
   update(){
     if (this.action1){
-      this.caisseToAdd = {... this.caisseToUpdate, Association : JSON.parse(localStorage.getItem("User")).Association, IdAssociation: JSON.parse(localStorage.getItem("User")).IdAssociation}
+      if(this.caisseToUpdate.SubCategory === "Financials" || this.caisseToUpdate.SubCategory === "Corporals" || this.caisseToUpdate.SubCategory === "Incorparalls"){
+        this.caisseToAdd = {...this.caisseToUpdate, Category : "Immobilisations", Type : "Expenses", Association : JSON.parse(localStorage.getItem("User")).Association, IdAssociation: JSON.parse(localStorage.getItem("User")).IdAssociation}
+      }
+      else if(this.caisseToUpdate.SubCategory === "Advance payments" || this.caisseToUpdate.SubCategory === "Receivables"){
+        this.caisseToAdd = {...this.caisseToUpdate, Category : "Circulations", Type : "Expenses", Association : JSON.parse(localStorage.getItem("User")).Association, IdAssociation: JSON.parse(localStorage.getItem("User")).IdAssociation}
+      }
+      else if (this.caisseToUpdate.SubCategory === "Other" ||this.caisseToUpdate.SubCategory === "Supplier-debt" || this.caisseToUpdate.SubCategory === "Borrowing" || this.caisseToUpdate.SubCategory === "Dispositions" ){
+        this.caisseToAdd = {...this.caisseToUpdate, Category : "Debts", Type : "Expenses", Association : JSON.parse(localStorage.getItem("User")).Association, IdAssociation: JSON.parse(localStorage.getItem("User")).IdAssociation}
+      }
+      else if (this.caisseToUpdate.SubCategory === "Income"){
+        this.caisseToAdd = {...this.caisseToUpdate, Category : "Income", Type : "Income", Association : JSON.parse(localStorage.getItem("User")).Association, IdAssociation: JSON.parse(localStorage.getItem("User")).IdAssociation}
+      }
+      if(this.caisseToUpdate.SubCategory === "Association Project Reserve" || this.caisseToUpdate.SubCategory === "Equity"){
+        this.caisseToAdd = {...this.caisseToUpdate, Category : "Association fund", Type : "Expenses"}
+      }
+      else (
+        this.caisseToAdd = {...this.caisseToUpdate, Association : JSON.parse(localStorage.getItem("User")).Association, IdAssociation: JSON.parse(localStorage.getItem("User")).IdAssociation}
+      )
       this.service.addCaisse(this.caisseToAdd).subscribe(
         (data) => {
           console.log("add")
@@ -66,14 +84,30 @@ export class CaisseFormComponent implements OnInit {
   }else
     {
         console.log("entred")
-        this.caisse = {...this.caisseToUpdate}
+        if(this.caisseToUpdate.SubCategory === "Financials" || this.caisseToUpdate.SubCategory === "Corporals" || this.caisseToUpdate.SubCategory === "Incorparalls"){
+          this.caisse = {...this.caisseToUpdate, Category : "Immobilisations", Type : "Expenses"}
+        }
+        else if(this.caisseToUpdate.SubCategory === "Advance payments" || this.caisseToUpdate.SubCategory === "Receivables"){
+          this.caisse = {...this.caisseToUpdate, Category : "Circulations", Type : "Expenses"}
+        }
+        else if (this.caisseToUpdate.SubCategory === "Other" ||this.caisseToUpdate.SubCategory === "Supplier-debt" || this.caisseToUpdate.SubCategory === "Borrowing" || this.caisseToUpdate.SubCategory === "Dispositions" ){
+          this.caisse = {...this.caisseToUpdate, Category : "Debts", Type : "Expenses"}
+        }
+        else if (this.caisseToUpdate.SubCategory === "Income"  ){
+          this.caisse = {...this.caisseToUpdate, Category : "Income", Type : "Income"}
+        }
+        if(this.caisseToUpdate.SubCategory === "Association Project Reserve" || this.caisseToUpdate.SubCategory === "Equity"){
+          this.caisse = {...this.caisseToUpdate, Category : "Association fund", Type : "Expenses"}
+        }
+        else (
+          this.caisse = {...this.caisseToUpdate}
+        )
         this.service.updateCaisse(this.caisse).subscribe((data) =>{
           console.log(data + "modified")
           this.data.caisseToUpdate = data
           this.data.state = true
           this.dialogRef.close(this.data);
     })  
-    
   }
   this.modalRef.hide();
   }

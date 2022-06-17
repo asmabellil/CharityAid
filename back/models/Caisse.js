@@ -6,7 +6,8 @@ var Caisse = new Schema(
     Id: String,
     Montant: Number,
     Type: String,
-    Source: String,
+    Category: String,
+    SubCategory: String,
     Description: String,
     Association : String,
     IdAssociation: String

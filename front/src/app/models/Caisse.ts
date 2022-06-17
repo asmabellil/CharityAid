@@ -2,7 +2,8 @@ export class Caisse{
     _id: string;
     Montant: number;
     Type: String;
-    Source: String;
+    Category: String;
+    SubCategory: String;
     Description: String;
     Association : String;
     IdAssociation: String;

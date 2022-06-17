@@ -141,19 +141,95 @@
       </table>
     <h4 class="mb-3" style="color: #20a8d8;">4. Partners</h4>
     <h4 class="mb-3" style="color: #20a8d8;">5. Human ressources</h4>
-    <h4 class="mb-3" style="color: #20a8d8;">6. Financial report</h4>
+    <p> Our human ressources has upgraded in this year to x subscribers which we are very proud of. And here you will find our responsbles and its information</p>
     <table class="br-3 ml-3">
         <tr>
           <th>TYPE</th>
-          <th>SOURCE</th>
+          <th>Category</th>
+          <th>SubCategory</th>
           <th>AMOUNT</th>
         </tr>
         <tr *ngFor="let caisse of listCaisses;">
             <th>{{caisse.Type}}</th>
-            <th>{{caisse.Source}}</th>
+            <th>{{caisse.Category}}</th>
+            <th>{{caisse.SubCategory}}</th>
             <th>{{caisse.Montant}}</th>
         </tr>
       </table>
+    <h4 class="mb-3" style="color: #20a8d8;">6. Financial report</h4>
+      <div class="row mt-2 active">
+       <table class=" col-md-3 mb-3 mr-1 ml-3">
+        <tr>
+            <th>Active</th>
+        </tr>
+        <tr>
+            <th class="titleGrey">Immobilisations</th>
+            <th class="titleGrey"></th>
+        </tr>
+        <tr >
+            <th class="titleWhite">Financials</th>
+            <th class="titleWhite">{{Financials}}</th>
+        </tr>
+        <tr >
+            <th class="titleWhite">Corporals</th>
+            <th class="titleWhite">{{Corporals}}</th>
+        </tr>
+        <tr >
+            <th class="titleWhite">Incorparalls</th>
+            <th class="titleWhite">{{Incorparalls}}</th>
+        </tr>
+        <tr>
+            <th class="titleGrey">Circulations</th>
+            <th class="titleGrey"></th>
+        </tr>
+        <tr >
+            <th class="titleWhite">Receivables</th>
+            <th class="titleWhite">{{Receivables}}</th>
+        </tr>
+        <tr >
+            <th class="titleWhite">Advance payments</th>
+            <th class="titleWhite">{{Advance_payments}}</th>
+        </tr>
+      </table>
+      <table class=" col-md-3 mb-3">
+        <tr>
+            <th>Passive</th>
+        </tr>
+        <tr>
+            <th class="titleGrey">Debts</th>
+            <th class="titleGrey"></th>
+        </tr>
+        <tr>
+            <th class="titleWhite">Supplier-debt</th>
+            <th class="titleWhite">{{Supplier_debt}}</th>
+        </tr>
+        <tr>
+            <th class="titleWhite">Borrowing</th>
+            <th class="titleWhite">{{Borrowing}}</th>
+        </tr>
+        <tr>
+            <th class="titleWhite">Dispositions</th>
+            <th class="titleWhite">{{Dispositions}}</th>
+        </tr>
+        <tr>
+            <th class="titleWhite">Other</th>
+            <th class="titleWhite">{{Other}}</th>
+        </tr>
+        <tr>
+            <th class="titleGrey">Association fund</th>
+            <th class="titleGrey"></th>
+        </tr>
+        <tr>
+            <th class="titleWhite">Equity</th>
+            <th class="titleWhite">{{Equity}}</th>
+        </tr>
+        <tr>
+            <th class="titleWhite">Association Project Reserve</th>
+            <th class="titleWhite">{{Association_Project}}</th>
+        </tr>
+      </table>
+      </div>
+      <p style="font-size: 10px; color: grey">Figures expressed in Tunisian Dinar</p>
     <h4 class="mb-3" style="color: #20a8d8;">7. Conclusion</h4>
     <div [innerHTML]="Conclusion.value"></div>
     </div>

@@ -16,7 +16,7 @@ import {  MatSnackBar,  MatSnackBarHorizontalPosition,  MatSnackBarVerticalPosit
 })
 export class CaisseComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['Montant', 'Type', 'Source', 'Description', 'Actions'];
+  displayedColumns: string[] = ['Montant', 'Type', 'Category', 'SubCategory', 'Description', 'Actions'];
   dataSource: MatTableDataSource<Caisse>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -80,6 +80,10 @@ export class CaisseComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result =>{
       if (result.state === true){
+        let i= this.listCaisses.indexOf(this.caisseToUpdate2);
+        console.log("i " +i)
+        this.dataSource.data.splice(i, 1, result.caisseToUpdate);
+        this.dataSource.data = this.dataSource.data
         this._snackBar.open('Your action was updated successfully!', 'close', {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,

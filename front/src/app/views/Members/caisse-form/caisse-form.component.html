@@ -32,8 +32,8 @@
         <mat-label>Type</mat-label>
         <select matNativeControl 
         name="type"
-        [(ngModel)]="caisseToUpdate.Type"
-          formControlName="Type">
+        [(ngModel)]="caisseToUpdate.SubCategory"
+          formControlName="SubCategory">
           <optgroup label="Immobilisations">
             <option value="Financials">Financials</option>
             <option value="Corporals">Corporals</option>
@@ -41,13 +41,17 @@
           </optgroup>
           <optgroup label="Circulations">
             <option value="Receivables">Receivables</option>
-            <option value="Advance payments">Advance payments </option>
+            <option value="Advance payments">Advance payments</option>
           </optgroup>
           <optgroup label="Debts">
             <option value="Supplier-debt">Supplier-debt</option>
-            <option value="Borrowing">Borrowing </option>
-            <option value="Dispositions">Dispositions </option>
-            <option value="Borrowing ">Other </option>
+            <option value="Borrowing">Borrowing</option>
+            <option value="Dispositions">Dispositions</option>
+            <option value="Borrowing ">Other</option>
+          </optgroup>
+          <optgroup label="Association fund">
+            <option value="Equity">Equity</option>
+            <option value="Association Project Reserve">Association Project Reserve</option>
           </optgroup>
           <option>Income</option>
         </select>
@@ -65,7 +69,7 @@
       
         <div class="alert alert-danger" *ngIf="Description.errors && Description.touched">
           <div *ngIf="Description.errors.required">This field is required</div>
-          <div *ngIf="Description.errors.minlength">Your name should have at leaset two charcters</div>
+          <div *ngIf="Description.errors.minlength">Description should have at leaset five charcters</div>
       </div>
     
       <button type="button" class="btn btn-block btn-success" (click)="openModal(template)">{{val1}}</button>

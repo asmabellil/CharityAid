@@ -4,11 +4,12 @@ import { Association } from 'src/app/models/Association';
 import { Caisse } from 'src/app/models/Caisse';
 import { Eventt } from 'src/app/models/Event';
 import { AssociationsService } from 'src/app/services/associations.service';
+import { MembersService } from 'src/app/services/members.service';
 import { EventsService } from 'src/app/services/events.service';
 import { CaissesService } from '../../../services/caisses.service';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Validators, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Member } from 'src/app/models/Member';
 
 @Component({
   selector: 'app-pdfs',
@@ -24,14 +25,25 @@ export class PDFsComponent implements OnInit {
   listEvents: Eventt[];
   association: Association;
   listCaisses: Caisse[];
+  Financials: number = 0;
+  Corporals: number = 0;
+  Incorparalls: number = 0;
+  Receivables: number = 0;
+  Advance_payments: number = 0;
+  Supplier_debt: number = 0;
+  Borrowing: number = 0;
+  Dispositions: number = 0;
+  Other: number = 0;
+  Association_Project: number = 0;
+  Equity: number = 0;
+  listMembers: Member[];
   picture;
   total : number;
   presentation : string;
   pdfForm;
   isLinear = false;
 
-
-  constructor(private service : EventsService, private _formBuilder: FormBuilder, private serviceAssociation : AssociationsService, private serviceCaisse: CaissesService, public dialog: MatDialog) { }
+  constructor(private service : EventsService, private serviceMember : MembersService, private _formBuilder: FormBuilder, private serviceAssociation : AssociationsService, private serviceCaisse: CaissesService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.nameAssociation = JSON.parse(localStorage.getItem('User')).Association
@@ -39,6 +51,9 @@ export class PDFsComponent implements OnInit {
     this.association = new Association;
     this.total = 0;
     
+    this.serviceMember.getMembers().subscribe(data =>{
+      this.listMembers = data
+    })
     this.serviceAssociation.searchAssociation(this.idAssociation).subscribe(data =>{
       this.association = data,
       this.picture = data.Picture,
@@ -107,6 +122,41 @@ export class PDFsComponent implements OnInit {
     this.serviceCaisse.getCaisses().subscribe(
       (data: Caisse[]) => {
         this.listCaisses = data.filter(caisse => caisse.IdAssociation === JSON.parse(localStorage.getItem("User")).IdAssociation).filter(caisse => caisse.createdAt.substring(0,10).split("-")[0] === this.Year.value )
+        for (let i=0; i<data.length ; i++){
+          if(data[i].SubCategory === "Financials"){
+          this.Financials = this.Financials + data[i].Montant
+          }
+          else if(data[i].SubCategory === "Corporals"){
+            this.Corporals = this.Corporals + data[i].Montant
+          }
+          else if(data[i].SubCategory === "Incorparalls"){
+            this.Incorparalls = this.Incorparalls + data[i].Montant
+          }
+          else if(data[i].SubCategory === "Receivables"){
+            this.Receivables = this.Receivables + data[i].Montant
+          }
+          else if(data[i].SubCategory === "Advance payments"){
+            this.Advance_payments = this.Advance_payments + data[i].Montant
+          }
+          else if(data[i].SubCategory === "Supplier-debt"){
+            this.Supplier_debt = this.Supplier_debt + data[i].Montant
+          }
+          else if(data[i].SubCategory === "Borrowing"){
+            this.Borrowing = this.Borrowing + data[i].Montant
+          }
+          else if(data[i].SubCategory === "Dispositions"){
+            this.Dispositions = this.Dispositions + data[i].Montant
+          }
+          else if(data[i].SubCategory === "Other"){
+            this.Other = this.Other + data[i].Montant
+          }
+          else if(data[i].SubCategory === "Association Project Reserve"){
+            this.Association_Project = this.Association_Project + data[i].Montant
+          }
+          else if(data[i].SubCategory === "Equity"){
+            this.Equity = this.Equity + data[i].Montant
+          }
+        }
         for(let i=0; i<this.listCaisses.length; i++){
       if( this.listCaisses[i].Type === "Income"){
         this.total = this.total + this.listCaisses[i].Montant
@@ -121,6 +171,6 @@ export class PDFsComponent implements OnInit {
     const dialogRef = this.dialog.open(template, {
       maxHeight: '600px',
       width: '100%',
-    });
+    });    
   }
 }
