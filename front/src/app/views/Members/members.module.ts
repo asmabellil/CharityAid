@@ -23,6 +23,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
   import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ListSubscribersComponent } from './list-subscribers/list-subscribers.component';
@@ -42,6 +43,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { ReportsComponent } from './reports/reports.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import { AnnuelReportComponent } from './financial-report/financial-report.component';
+import { ProfileAssociationComponent } from './profile-association/profile-association.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -74,7 +76,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatCheckboxModule,
     MatRadioModule,
     AngularEditorModule,
-    MatStepperModule
+    MatStepperModule,
+    NgxDropzoneModule
 
   ],
   declarations: [
@@ -95,7 +98,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     EventDescriptionComponent,
     PDFsComponent,
     ReportsComponent,
-    AnnuelReportComponent
+    AnnuelReportComponent,
+    ProfileAssociationComponent
   ],
   providers: [
     BsModalRef,

@@ -4,6 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Member } from 'src/app/models/Member';
 import { MembersService } from 'src/app/services/members.service';
 import {  MatSnackBar,  MatSnackBarHorizontalPosition,  MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
+import { UploadService } from 'src/app/services/upload.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,8 +18,10 @@ export class ProfileComponent implements OnInit {
   content : String = "Change picture";
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  files: File[] = [];
+  update2: Boolean = false;
 
-  constructor(private service: MembersService, private _snackBar: MatSnackBar, public bsModalRef: BsModalRef, private modalService: BsModalService) { }
+  constructor(private service: MembersService, private _snackBar: MatSnackBar, public bsModalRef: BsModalRef, private modalService: BsModalService,private service2 : UploadService) { }
 
   ngOnInit(): void {
    this.member = JSON.parse(localStorage.getItem("User"));
@@ -45,6 +48,16 @@ export class ProfileComponent implements OnInit {
   get Role_Association() {return this.registerForm.get('Role_Association')};
 
   editProfile(member){
+    const file_data = this.files[0]
+    const data = new FormData();
+    data.append('file', file_data)
+    data.append('upload_preset', 'bv24fzos')
+    data.append('cloud_name', 'dkqbdhbrp')
+    this.service2.uploadImage(data).subscribe((response)=>{
+      if(response){
+        console.log("response " + response.secure_url);
+        this.member = {...this.member, Picture: response.secure_url}
+      
     this.service.updateMember(member).subscribe((data) =>{
       console.log(data + "modified")
       console.log(data)
@@ -58,12 +71,40 @@ export class ProfileComponent implements OnInit {
       snack.afterDismissed().subscribe(() => {
         window.location.reload()
       })
-    })
+    })}
+  })
     this.member = {... member}
     this.modalRef.hide();
   }
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+      this.modalRef = this.modalService.show(template);
   }
+
+  onSelect(event) {
+    console.log(event);
+    this.files.push(...event.addedFiles); 
+    const file_data = this.files[0]
+    const data = new FormData();
+    data.append('file', file_data)
+    data.append('upload_preset', 'bv24fzos')
+    data.append('cloud_name', 'dkqbdhbrp')
+    this.service2.uploadImage(data).subscribe((response)=>{
+      if(response){
+        console.log("response " + response.secure_url);
+        this.member = {...this.member, Picture: response.secure_url}
+        this.update2 = false
+      }
+  })
+  }
+  
+  onRemove(event) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  change(){
+    console.log('iujvg')
+   this.update2 = true;
+}
 }

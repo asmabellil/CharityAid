@@ -233,18 +233,4 @@ export class RegistrationFormComponent implements OnInit {
     this.update2 = true;
   }
   
-  onUpload(){
-    const file_data = this.files[0]
-    const data = new FormData();
-    data.append('file', file_data)
-    data.append('upload_preset', 'ml_default')
-    data.append('cloud_name', 'dkqbdhbrp')
-  
-    this.service2.uploadImage(data).subscribe((response)=>{
-      if(response){
-        console.log(response);
-      }
-      
-    })
-  }
 }

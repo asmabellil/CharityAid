@@ -91,7 +91,7 @@ const routes: Routes = [
         path: 'annuel',
         component: PDFsComponent,
         data: {
-          title: 'Reports'
+          title: 'Annual'
         }
       },
       {
@@ -99,7 +99,10 @@ const routes: Routes = [
         component: ReportsComponent,
         data: {
           title: 'Reports'
-        }
+        },
+        children: [
+          
+        ]
       },
     ]
   }

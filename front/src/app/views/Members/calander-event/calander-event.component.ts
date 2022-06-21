@@ -121,10 +121,11 @@ export class CalanderEventComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result.state === true ){
-            this._snackBar.open('Your event was updated successfully!', 'close', {
+          this.list.push(result.eventToUpdate)
+            this._snackBar.open('Your event was added successfully!', 'close', {
               horizontalPosition: this.horizontalPosition,
               verticalPosition: this.verticalPosition,
-              duration : 10000,
+              duration : 1500,
               panelClass :['background']
             });
           }
@@ -153,10 +154,13 @@ export class CalanderEventComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe(result => {
       if (result.state === true ){
+        let i= this.listEvents.indexOf(this.eventToUpdate);
+          console.log("i " +i)
+          this.list.push(result.eventToUpdate)
         this._snackBar.open('Your event was updated successfully!', 'close', {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
-            duration : 10000,
+            duration : 1500,
             panelClass :['background']
           });  
       }

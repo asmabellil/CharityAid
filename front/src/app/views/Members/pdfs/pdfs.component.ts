@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef, TemplateRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, TemplateRef, AfterViewInit } from '@angular/core';
 import { jsPDF } from 'jspdf'
 import { Association } from 'src/app/models/Association';
 import { Caisse } from 'src/app/models/Caisse';
 import { Eventt } from 'src/app/models/Event';
 import { AssociationsService } from 'src/app/services/associations.service';
+import { SubscribersService } from 'src/app/services/subscribers.service';
 import { MembersService } from 'src/app/services/members.service';
 import { EventsService } from 'src/app/services/events.service';
 import { CaissesService } from '../../../services/caisses.service';
@@ -16,10 +17,11 @@ import { Member } from 'src/app/models/Member';
   templateUrl: './pdfs.component.html',
   styleUrls: ['./pdfs.component.scss']
 })
-export class PDFsComponent implements OnInit {
+export class PDFsComponent implements AfterViewInit {
   @ViewChild('content', {static: false}) el!: ElementRef
   @ViewChild('contentt', {static: false}) ell!: ElementRef
   @ViewChild('contenttt', {static: false}) elll!: ElementRef
+  @ViewChild('header', {static: false}) header!: ElementRef
   nameAssociation : string;
   idAssociation : string;
   listEvents: Eventt[];
@@ -42,18 +44,15 @@ export class PDFsComponent implements OnInit {
   presentation : string;
   pdfForm;
   isLinear = false;
+  subNumber;
+  event : Boolean = false;
 
-  constructor(private service : EventsService, private serviceMember : MembersService, private _formBuilder: FormBuilder, private serviceAssociation : AssociationsService, private serviceCaisse: CaissesService, public dialog: MatDialog) { }
-
-  ngOnInit(): void {
+  constructor(private service : EventsService, private serviceSub: SubscribersService, private serviceMember : MembersService, private _formBuilder: FormBuilder, private serviceAssociation : AssociationsService, private serviceCaisse: CaissesService, public dialog: MatDialog) 
+  {
     this.nameAssociation = JSON.parse(localStorage.getItem('User')).Association
     this.idAssociation = JSON.parse(localStorage.getItem('User')).IdAssociation
     this.association = new Association;
-    this.total = 0;
     
-    this.serviceMember.getMembers().subscribe(data =>{
-      this.listMembers = data
-    })
     this.serviceAssociation.searchAssociation(this.idAssociation).subscribe(data =>{
       this.association = data,
       this.picture = data.Picture,
@@ -65,6 +64,16 @@ export class PDFsComponent implements OnInit {
       Year: ['2022', Validators.required],
     });
     })
+   }
+
+   ngAfterViewInit(): void {
+    this.serviceSub.getSubscribers().subscribe(data =>{
+      this.subNumber = data.length;
+    })
+    
+    this.serviceMember.getMembers().subscribe(data =>{
+      this.listMembers = data.filter(member => member.IdAssociation === JSON.parse(localStorage.getItem('User')).IdAssociation)
+    })
     
   }
 
@@ -74,27 +83,9 @@ export class PDFsComponent implements OnInit {
   get Year() {return this.pdfForm.get('Year')};
 
   makePDF(){
-    let pdf = new jsPDF('p', 'pt', 'a4');
-    console.log(this.pdfForm.get('Introduction').value)
-    /* let pageHeight= pdf.internal.pageSize.height;
- 
-  // Before adding new content
-  let y = 500 // Height position of new content
-  if (y >= pageHeight)
-  {
-    pdf.addPage();
-    y = 0 // Restart height position
-  }
-  pdf.text("value", 30, y);
-  pdf.save('iklhoi') */
-
+    var pdf = new jsPDF('p', 'pt', 'a4');
+   
   let pageHeight = document.querySelector('#contentt').scrollHeight
-  /* while(pageHeight > 500){
-    pdf.addPage()
-    height = height - 500
-    console.log("1")
-  } */
-  console.log(pageHeight)
   pdf.html(this.el.nativeElement,{
     callback : (pdf) =>{
       pdf.addPage()
@@ -103,12 +94,21 @@ export class PDFsComponent implements OnInit {
           pdf.addPage()
           pdf.html(this.ell.nativeElement,{
             callback: (pdf) =>{
+              const keys = Object.keys(pdf.internal.pages);
+              for(let i=2; i<keys.length ; i++){
+                  pdf.setPage(+keys[i]);
+                  pdf.text(this.association.Name+  " - " + this.Year.value, 550,  20, { align: 'right' });
+              }
+                  keys.forEach(key => {
+                    pdf.setPage(+key);                    
+                    pdf.text(key, pdf.internal.pageSize.width - 10, pdf.internal.pageSize.height - 6, { align: 'right' });
+              });
               pdf.save(this.nameAssociation + "-" + this.Year.value)
-            }, y:1700
+            }, y:1560, margin : [40,0,30,0] // top right bottom left
           })
         }, y:900
-      })
-    }, html2canvas: {scale: 1}
+      }) 
+    }
   }) 
   }
 
@@ -116,56 +116,55 @@ export class PDFsComponent implements OnInit {
     this.service.getEvents().subscribe(
       (data) =>{
         this.listEvents = data.filter(event => event.IdAssociation === this.idAssociation).filter(event => event.Start_date.substring(0,10).split("-")[0] === this.Year.value )
+        
+        if(this.listEvents.length === 0){
+          this.event = false;
+        }
+        else{
+          this.event = true;
+        }
       }
     )
 
     this.serviceCaisse.getCaisses().subscribe(
       (data: Caisse[]) => {
         this.listCaisses = data.filter(caisse => caisse.IdAssociation === JSON.parse(localStorage.getItem("User")).IdAssociation).filter(caisse => caisse.createdAt.substring(0,10).split("-")[0] === this.Year.value )
-        for (let i=0; i<data.length ; i++){
-          if(data[i].SubCategory === "Financials"){
-          this.Financials = this.Financials + data[i].Montant
+
+        for (let i=0; i<this.listCaisses.length ; i++){
+          if(this.listCaisses[i].SubCategory === "Financials"){
+          this.Financials = this.Financials + this.listCaisses[i].Montant
           }
-          else if(data[i].SubCategory === "Corporals"){
-            this.Corporals = this.Corporals + data[i].Montant
+          else if(this.listCaisses[i].SubCategory === "Corporals"){
+            this.Corporals = this.Corporals + this.listCaisses[i].Montant
           }
-          else if(data[i].SubCategory === "Incorparalls"){
-            this.Incorparalls = this.Incorparalls + data[i].Montant
+          else if(this.listCaisses[i].SubCategory === "Incorparalls"){
+            this.Incorparalls = this.Incorparalls + this.listCaisses[i].Montant
           }
-          else if(data[i].SubCategory === "Receivables"){
-            this.Receivables = this.Receivables + data[i].Montant
+          else if(this.listCaisses[i].SubCategory === "Receivables"){
+            this.Receivables = this.Receivables + this.listCaisses[i].Montant
           }
-          else if(data[i].SubCategory === "Advance payments"){
-            this.Advance_payments = this.Advance_payments + data[i].Montant
+          else if(this.listCaisses[i].SubCategory === "Advance payments"){
+            this.Advance_payments = this.Advance_payments + this.listCaisses[i].Montant
           }
-          else if(data[i].SubCategory === "Supplier-debt"){
-            this.Supplier_debt = this.Supplier_debt + data[i].Montant
+          else if(this.listCaisses[i].SubCategory === "Supplier-debt"){
+            this.Supplier_debt = this.Supplier_debt + this.listCaisses[i].Montant
           }
-          else if(data[i].SubCategory === "Borrowing"){
-            this.Borrowing = this.Borrowing + data[i].Montant
+          else if(this.listCaisses[i].SubCategory === "Borrowing"){
+            this.Borrowing = this.Borrowing + this.listCaisses[i].Montant
           }
-          else if(data[i].SubCategory === "Dispositions"){
-            this.Dispositions = this.Dispositions + data[i].Montant
+          else if(this.listCaisses[i].SubCategory === "Dispositions"){
+            this.Dispositions = this.Dispositions + this.listCaisses[i].Montant
           }
-          else if(data[i].SubCategory === "Other"){
-            this.Other = this.Other + data[i].Montant
+          else if(this.listCaisses[i].SubCategory === "Other"){
+            this.Other = this.Other + this.listCaisses[i].Montant
           }
-          else if(data[i].SubCategory === "Association Project Reserve"){
-            this.Association_Project = this.Association_Project + data[i].Montant
+          else if(this.listCaisses[i].SubCategory === "Association Project Reserve"){
+            this.Association_Project = this.Association_Project + this.listCaisses[i].Montant
           }
-          else if(data[i].SubCategory === "Equity"){
-            this.Equity = this.Equity + data[i].Montant
+          else if(this.listCaisses[i].SubCategory === "Equity"){
+            this.Equity = this.Equity + this.listCaisses[i].Montant
           }
         }
-        for(let i=0; i<this.listCaisses.length; i++){
-      if( this.listCaisses[i].Type === "Income"){
-        this.total = this.total + this.listCaisses[i].Montant
-      }
-      else{
-        this.total = this.total - this.listCaisses[i].Montant
-      }
-      this.listCaisses[i].Montant
-    }
     })
 
     const dialogRef = this.dialog.open(template, {
