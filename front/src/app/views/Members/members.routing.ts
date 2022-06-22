@@ -12,6 +12,7 @@ import { CaisseComponent } from './caisse/caisse.component';
 import { CalanderEventComponent } from './calander-event/calander-event.component';
 import { PDFsComponent } from './pdfs/pdfs.component'
 import { ReportsComponent } from './reports/reports.component';
+import { ProfileAssociationComponent } from './profile-association/profile-association.component';
 
 const routes: Routes = [
   {
@@ -99,10 +100,14 @@ const routes: Routes = [
         component: ReportsComponent,
         data: {
           title: 'Reports'
-        },
-        children: [
-          
-        ]
+        }
+      },
+      {
+        path: 'profile-association',
+        component: ProfileAssociationComponent,
+        data: {
+          title: 'Profile'
+        }
       },
     ]
   }

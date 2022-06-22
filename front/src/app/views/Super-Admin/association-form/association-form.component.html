@@ -35,9 +35,6 @@
     <div class="mb-3">
     <ngx-dropzone (change)="onSelect($event)" [accept]="'image/png,image/jpeg,image/jpg'" >
       <ngx-dropzone-label>Drop the logo</ngx-dropzone-label>
-      <!-- <div *ngIf="update2">
-        <img class="imgSelect" [src]="associationToUpdate.Picture" [ngModelOptions]="{standalone: true}" />
-      </div>  -->
       <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"  [removable]="true" (removed)="onRemove(f)" >
         <ngx-dropzone-label>({{ f.type }})</ngx-dropzone-label>
       </ngx-dropzone-image-preview>
