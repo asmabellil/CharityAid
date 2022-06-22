@@ -46,7 +46,8 @@ router.post("/", upload, async function (req, res, next) {
       Association: obj.Association,
       Role_Association: obj.Role_Association,
       IdAssociation: obj.IdAssociation,
-      Picture: obj.Picture
+      Picture: obj.Picture,
+      Valid : obj.Valid,
     };
     var ids;
   

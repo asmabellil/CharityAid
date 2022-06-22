@@ -40,3 +40,22 @@ exports.SendResetPasswordEmail = (Email ,Firstname, id,link) => {
 
     return sendEmail(message);
 }
+
+exports.SendEmail = (Email ) => {
+    const message = {
+        from: "association369@outlook.fr",
+        to: Email,
+        subject: 'Account confirmation',
+        html: `
+      <html>
+      <body>
+      <h3> Your account has been approved you can Sign In now </h3>
+      <p><strong>http://localhost:4200/#/login</strong></p>
+      </body>
+      </html>
+      
+    `
+    }
+
+    return sendEmail(message);
+}

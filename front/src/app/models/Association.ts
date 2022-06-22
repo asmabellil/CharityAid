@@ -9,5 +9,6 @@ export class Association{
     Foundation_date: string;
     Adress: string;
     Phone: Number;
-    Email: string
+    Email: string;
+    Valid : String;
 }

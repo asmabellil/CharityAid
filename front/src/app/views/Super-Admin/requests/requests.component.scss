@@ -1,0 +1,33 @@
+.avatar-rounded-circle{
+    vertical-align: middle;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%
+  }
+
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  ::ng-deep .background{
+    background: #4BB543;
+    color: black;
+    .mat-simple-snackbar-action {
+        color: black !important;
+    }
+  }
+
+  .mat-spinner{
+    position:absolute ;
+    transform: translate(500%,100%);
+}
+
+.all{
+    position: relative;
+}

@@ -1,0 +1,97 @@
+<div class="d-flex flex-row all">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input onchange="onChangeFilter()">
+    </mat-form-field>
+  </div>
+    
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+    
+        <!-- FirstName Column -->
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let row"> {{row.Name}} </td>
+        </ng-container>
+    
+        <!-- LastName Column -->
+        <ng-container matColumnDef="Foundation_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Foundation date </th>
+          <td mat-cell *matCellDef="let row"> {{row.Foundation_date | date:'mediumDate'}} </td>
+        </ng-container>
+
+        <!-- Siret_Number Column -->
+        <ng-container matColumnDef="Siret_Number">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Siret Number </th>
+          <td mat-cell *matCellDef="let row"> {{row.Siret_Number }} </td>
+        </ng-container>
+
+        <!-- Responsible Column -->
+        <ng-container matColumnDef="Responsible">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Responsible </th>
+          <td mat-cell *matCellDef="let row"> {{row.Responsible }} </td>
+        </ng-container>
+    
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="Adress">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Adress </th>
+          <td mat-cell *matCellDef="let row"> {{row.Adress}} </td>
+        </ng-container>
+  
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="Email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+          <td mat-cell *matCellDef="let row"> {{row.Email}} </td>
+        </ng-container>
+  
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="Phone">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
+          <td mat-cell *matCellDef="let row"> {{row.Phone}} </td>
+        </ng-container>
+  
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="Association">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Association </th>
+          <td mat-cell *matCellDef="let row"> {{row.Association}} </td>
+        </ng-container>
+  
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="Role_Association">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+          <td mat-cell *matCellDef="let row"> {{row.Role_Association}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="Actions">
+          <th mat-header-cell  *matHeaderCellDef > Actions </th>
+          <td mat-cell *matCellDef="let row" >
+            <mat-button class="btn btn-success mr-3" (click)="Update(row)"><i class="icon-check"></i></mat-button> <mat-button class="btn btn-danger" (click)="openModal(template)" ><i class="icon-trash"></i></mat-button>
+            <ng-template #template>
+              <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-center">
+                <p>Do you want to confirm ?</p>
+                <button type="button" class="btn btn-primary" (click)="deletMember(row)" >Yes</button>
+                <button type="button" class="btn btn-default" (click)="modalRef.hide()" >No</button>
+              </div>
+            </ng-template> 
+          </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+        <!-- Row shown when there is no matching data. -->
+        <div *ngIf="showFilter">
+        <tr class="mat-row" *matNoDataRow >
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </div>
+      </table>
+    
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+    <mat-spinner *ngIf = "loading"></mat-spinner>

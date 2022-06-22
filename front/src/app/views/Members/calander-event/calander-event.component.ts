@@ -95,7 +95,7 @@ export class CalanderEventComponent implements OnInit {
   }
 
   handleDateDrop(eventDropInfo){
-    console.log("after drop " + eventDropInfo)
+    console.log("after drop " + eventDropInfo.relatedEvents)
   }
 
   handleEventSelect(selectionInfo) {
@@ -128,6 +128,23 @@ export class CalanderEventComponent implements OnInit {
               duration : 1500,
               panelClass :['background']
             });
+          let d1 = new Date(result.eventToUpdate.Start_date)
+          let d2 = new Date(result.eventToUpdate.End_date)
+          let d3 = new Date(d2.getFullYear(),d2.getMonth(), d2.getDate(), 1,0,0,0 )
+        if(d3 >= (this.today0) && d3 <= (this.today3)  ){
+          this.color = 'red'
+        }
+        else if (d3 > (this.today3) ){
+          this.color = 'green'
+        }
+        else{
+          this.color = 'none'
+        }  
+        if (result.eventToUpdate.IdAssociation === JSON.parse(localStorage.getItem('User')).IdAssociation){
+           this.eventToAdd = {_id : result.eventToUpdate._id, title : result.eventToUpdate.Title, start : d1, end : d3, backgroundColor : this.color}
+        this.list.push(this.eventToAdd )
+        }
+           this.ngOnInit()
           }
         console.log("Added successfully", result) 
       });
@@ -154,9 +171,7 @@ export class CalanderEventComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe(result => {
       if (result.state === true ){
-        let i= this.listEvents.indexOf(this.eventToUpdate);
-          console.log("i " +i)
-          this.list.push(result.eventToUpdate)
+        this.ngOnInit()
         this._snackBar.open('Your event was updated successfully!', 'close', {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,

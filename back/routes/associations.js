@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Association = require('../models/Association');
+var { SendEmail } = require("../mail/mailer");
 
 // Get all Associations
 router.get("/", function (req, res, next) {
@@ -50,6 +51,17 @@ router.delete('/:id',function(req, res, next) {
     Association.deleteOne({ _id: req.params.id })
     .then(() => res.status(200).json({ msg: `Association with id : ${req.params.id} has been removed` }))
     .catch(err => res.status(400).json({ error: err }))
+})
+
+router.post('/confirmRequest', function(req, res, next){
+  console.log(req.body)
+  try {
+    SendEmail(req.body.Email)
+    res.status(200).send('success') 
+  } catch (error) {
+    console.log(error)
+    res.send(error)
+  }
 })
 
 module.exports = router;

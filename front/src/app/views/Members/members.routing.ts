@@ -78,7 +78,7 @@ const routes: Routes = [
         path: 'caisses',
         component: CaisseComponent,
         data: {
-          title: 'Caisse'
+          title: 'Cash Flow'
         }
       },
       {

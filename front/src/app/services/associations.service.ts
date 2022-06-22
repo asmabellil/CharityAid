@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Association } from '../models/Association';
+import { Emitter } from '@fullcalendar/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,9 @@ export class AssociationsService {
 
   updateAssociation (a: Association){
     return this.http.put<Association>(this.url+ a._id, a);
+  }
+
+  confirmRequest (Email){
+    return this.http.post(this.url + 'confirmRequest/',Email)
   }
 }

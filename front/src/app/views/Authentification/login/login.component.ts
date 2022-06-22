@@ -39,7 +39,12 @@ export class LoginComponent {
     this.service.login(this.loginForm.value).subscribe(
       (response : any) => {
       console.log(response);
-      this.router.navigate(['/main/allusers'])
+      if(response.body.Role_Association === "Chair" || response.body.Role === "superadmin" ){
+        this.router.navigate(['/main/allusers'])
+      }
+      else{
+        this.router.navigate(['/members/allsubscribers'])
+      }
       localStorage.setItem("User", JSON.stringify(response.body))
     },
     error => {

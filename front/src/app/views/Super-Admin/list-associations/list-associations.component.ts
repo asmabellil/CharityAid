@@ -49,7 +49,7 @@ export class ListAssociationsComponent implements AfterViewInit {
 
     this.service.getAssociations().subscribe(
       (data: Association[]) => {
-        this.listAssociations = data,
+        this.listAssociations = data.filter(association => association.Valid === "1"),
         this.dataSource = new MatTableDataSource(this.listAssociations);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

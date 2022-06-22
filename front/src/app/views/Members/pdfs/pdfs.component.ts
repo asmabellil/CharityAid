@@ -43,7 +43,7 @@ export class PDFsComponent implements AfterViewInit {
   total : number;
   presentation : string;
   pdfForm;
-  isLinear = false;
+  isLinear = true;
   subNumber;
   event : Boolean = false;
 

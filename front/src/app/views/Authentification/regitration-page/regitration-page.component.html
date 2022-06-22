@@ -6,110 +6,122 @@
           <div class="card mx-4">
             <div class="card-body p-4">
               <form method="post" [formGroup]="registerForm">
-                <h1>Register</h1>
-                <p class="text-muted">Create your account</p>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="icon-user"></i></span>
-                    </div>
-                    <input class="form-control" type="text" name="firstname" placeholder="First Name" [(ngModel)]="memberToUpdate2.FirstName" formControlName="FirstName">
-                  </div>
-                  <div class="alert alert-danger" *ngIf="FirstName.errors && FirstName.touched">
-                      <div *ngIf="FirstName.errors.required">This field is required</div>
-                      <div *ngIf="FirstName.errors.minlength">Your first name should have at leaset two charcters</div>
-                  </div>
-
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="icon-user"></i></span>
-                    </div>
-                    <input class="form-control" type="text" name="lastname" placeholder="Last Name" [(ngModel)]="memberToUpdate2.LastName" formControlName="LastName">
-                  </div>
-                  <div class="alert alert-danger" *ngIf="LastName.errors && LastName.touched">
-                    <div *ngIf="LastName.errors.required">This field is required</div>
-                    <div *ngIf="LastName.errors.minlength">Your last name should have at leaset two charcters</div>
-                  </div>
-
-                  <div class="mb-3 mat-calander" >
-                    <input matInput [matDatepicker]="picker" [(ngModel)]="memberToUpdate2.DOB" formControlName="DOB">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </div>
-
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="cil-home"></i></span>
-                    </div>
-                    <input class="form-control" type="text" name="address" placeholder="Enter your address" [(ngModel)]="memberToUpdate2.Adress" formControlName="Adress">
-                  </div>
-                  <div class="alert alert-danger" *ngIf="Adress.errors && Adress.touched">
-                    <div *ngIf="Adress.errors.required">This field is required</div>
-                    <div *ngIf="Adress.errors.minlength">Your adress should have at leaset three charcters</div>
+                <h4 class="mb-3" style="color: #20247b;"> Association registration </h4>
+          
+              <div class="row mt-2">
+              <div class="input-group mb-3 col-md-6">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="icon-user"></i></span>
                 </div>
-
-                <div class="input-group mb-3">
+                <input class="form-control" type="text" name="name" placeholder="Name" [(ngModel)]="associationToUpdate.Name" formControlName="Name">
+              </div>
+                <div class="input-group mb-3 col-md-6">
                   <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="cil-phone"></i></span>
+                    <span class="input-group-text"><i class="icon-user"></i></span>
                   </div>
-                  <input class="form-control" type="number" name="phone" placeholder="Enter your phone number" [(ngModel)]="memberToUpdate2.Phone" formControlName="Phone">
+                  <input class="form-control" type="number" name="Siret_Number" placeholder="Siret_Number" [(ngModel)]="associationToUpdate.Siret_Number" formControlName="Siret_Number">
                 </div>
-                <div class="alert alert-danger" *ngIf="Phone.errors && Phone.touched">
-                  <div *ngIf="Phone.errors.required">This field is required</div>
-                  <div *ngIf="Phone.errors.pattern">Your phone number should have exactly 8 numbers</div>
               </div>
-
-              <div class="input-group ">
-                <div class="form-group role">
-                  <tr>
-                    <td><select class="form-control "
-                        name="etat"
-                        [(ngModel)]="memberToUpdate2.Role_Association"
-                        formControlName="Role_Association">
-                        <option selected disabled >Role</option>
-                        <option value="Chair">Chair</option>
-                        <option value="Vice Chair">Vice Chair</option>
-                        <option value="Treasurer">Treasurer</option>
-                        <option value="General Secretary">General Secretary</option>
-                    </select></td>
-                </tr>
-              </div> 
+              
+              <div class="row mt-2">
+                <div class="col-md-6 px-3">
+                  <div class="alert alert-danger" *ngIf="Name.errors && Name.touched">
+                    <div *ngIf="Name.errors.required">This field is required</div>
+                    <div *ngIf="Name.errors.minlength">Your name should have at leaset two charcters</div>
+                  </div>
+                </div>
+                <div class="col-md-6 px-3">
+                  <div class="alert alert-danger" *ngIf="Siret_Number.errors && Siret_Number.touched">
+                    <div *ngIf="Siret_Number.errors.required">This field is required</div>
+                    <div *ngIf="Siret_Number.errors.pattern">Your siret number should contain exactly 9 charcters</div>
+                  </div>
+                </div>
               </div>
-
+          
+              <div class="row mt-2">
+                <div class="mb-3 mat-calander col-md-6" >
+                  <div class="row mt-2">
+                    <mat-datepicker-toggle matSuffix [for]="picker" class="col-md-3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <input class="inputDatePicker form-control col-md-8" placeholder="   Foundation Date" matInput [matDatepicker]="picker" [(ngModel)]="associationToUpdate.Foundation_date" formControlName="Foundation_date">
+                  </div>
+                  </div>
+            
+                <div class="input-group col-md-6">
+                  <mat-form-field appearance="fill">
+                  <mat-label>Type</mat-label>
+                  <mat-select required
+                      name="type"
+                      [(ngModel)]="associationToUpdate.Type"
+                      formControlName="Type">
+                    <mat-option value="Educationnal"> Educationnal </mat-option>
+                    <mat-option value="Health"> Health </mat-option>
+                    <mat-option value="Environmental"> Environmental </mat-option>
+                    <mat-option value="Animal"> Animal </mat-option>
+                    <mat-option value="Art and Culture"> Art and Culture </mat-option>
+                    <mat-option value="International NGOs"> International NGOs </mat-option>
+                    <mat-option value="volvo"> Other </mat-option>
+                  </mat-select>
+                  </mat-form-field>
+                </div>   
+              </div>
+            
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text">@</span>
+                    <span class="input-group-text"><i class="cil-home"></i></span>
                 </div>
-                <input class="form-control" type="email" name="email" placeholder="Email Address" [(ngModel)]="memberToUpdate2.Email" formControlName="Email">
+                  <input class="form-control" type="text" name="address" placeholder="Enter your address" [(ngModel)]="associationToUpdate.Adress" formControlName="Adress">
+              </div>
+              <div class="alert alert-danger" *ngIf="Adress.errors && Adress.touched">
+                <div *ngIf="Adress.errors.required">This field is required</div>
+                <div *ngIf="Adress.errors.minlength">Your adress should have at leaset three charcters</div>
+              </div>
+            
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="cil-phone"></i></span>
                 </div>
-              <div class="alert alert-danger" *ngIf="Email.errors && Email.touched">
+                <input class="form-control" type="number" name="phone" placeholder="Enter your phone number" [(ngModel)]="associationToUpdate.Phone" formControlName="Phone">
+              </div>
+              <div class="alert alert-danger" *ngIf="Phone.errors && Phone.touched">
+                <div *ngIf="Phone.errors.required">This field is required</div>
+                <div *ngIf="Phone.errors.pattern">Your phone number should have exactly 8 numbers</div>
+              </div>
+          
+              <div class="row mt-2">
+                <div class="input-group mb-3 col-md-6">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">@</span>
+                  </div>
+                  <input class="form-control" type="email" name="email" placeholder="Association email" [(ngModel)]="associationToUpdate.Email" formControlName="Email">
+                </div>
+          
+                <div class="input-group mb-3 col-md-6">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-user"></i></span>
+                  </div>
+                  <input class="form-control" type="text" name="Responsible" placeholder="Responsible email" [(ngModel)]="associationToUpdate.Responsible" formControlName="Responsible">
+                </div>
+              </div>
+          
+              <div class="row mt-2">
+                <div class="col-md-6 px-3">
+                <div class="alert alert-danger" *ngIf="Email.errors && Email.touched">
                   <div *ngIf="Email.errors.required">This field is required</div>
                   <div *ngIf="Email.errors.pattern">Your email should have this form test@test.com</div>
-              </div>
-
-              <div class="input-group mb-3" *ngIf="action1">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="icon-lock"></i></span>
-                  </div>
-                  <input class="form-control" type="password" name="Password" placeholder="Password" [(ngModel)]="memberToUpdate2.Password" formControlName="Password" (change)="onPasswordChange()">
                 </div>
-                <div class="alert alert-danger" *ngIf="Password.errors && Password.touched">
-                  <div *ngIf="Password.errors.required">This field is required</div>
-                  <div *ngIf="Password.errors.pattern">Your password should have at leaset 6 charcters and must include upper and lower cases and numbers</div>
               </div>
-
-              <div class="input-group mb-4" *ngIf="action1">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="icon-lock"></i></span>
-                  </div>
-                  <input class="form-control" type="password" name="ConfirmPassword" placeholder="ConfirmPassword" [(ngModel)]="memberToUpdate2.ConfirmPassword" formControlName="ConfirmPassword" (change)="onPasswordChange()">
+          
+              <div class="col-md-6 px-3">
+                <div class="alert alert-danger" *ngIf="Responsible.errors && Responsible.touched">
+                  <div *ngIf="Responsible.errors.required">This field is required</div>
+                  <div *ngIf="Responsible.errors.pattern">This email should have this form test@test.com</div>
               </div>
-              <div class="alert alert-danger" *ngIf="ConfirmPassword.errors && ConfirmPassword.touched">
-                  <div *ngIf="ConfirmPassword.errors.required">This field is required</div>
-                  <div *ngIf="ConfirmPassword.errors.mismatch">Your ConfirmPassword password should be identical to your password</div>
               </div>
-                
-                  <button type="button" class="btn btn-block btn-success" (click)="openModal(template)">Create an account</button>
-                </form>
+              </div>
+              
+              <button type="button" class="btn btn-block btn-success" (click)="openModal(template)">Register</button>
+              </form>
               </div>
             </div>
         </div>
@@ -120,12 +132,13 @@
 
 <ng-template #template>
   <div class="modal-header">
-  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
-  </button>
+    </button>
   </div>
   <div class="modal-body text-center">
-  <p>Welcome among US!</p>
-  <button type="button" class="btn btn-primary" (click)="save()" >Go to my profile</button>
+    <p>Do you want to confirm ?</p>
+    <button type="button" class="btn btn-primary" (click)="save()" >Yes</button>
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()" >No</button>
   </div>
 </ng-template>

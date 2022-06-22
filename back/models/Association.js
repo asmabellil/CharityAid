@@ -13,7 +13,8 @@ var Association = new Schema(
     Foundation_date: String,
     Adress: String,
     Phone: Number,
-    Email: String
+    Email: String,
+    Valid: String
   },
   { timestamps: true }
 );

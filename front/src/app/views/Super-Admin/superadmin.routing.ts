@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AssociationFormComponent } from './association-form/association-form.component';
 import { ListAssociationsComponent } from './list-associations/list-associations.component';
 import { ListUsersComponent } from './list-users/list-users.component'
+import { RequestsComponent } from './requests/requests.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,13 @@ const routes: Routes = [
         component: AssociationFormComponent,
         data: {
           title: 'All associations'
+        }
+      },
+      {
+        path: 'requests',
+        component: RequestsComponent,
+        data: {
+          title: 'Requests'
         }
       },
     ]

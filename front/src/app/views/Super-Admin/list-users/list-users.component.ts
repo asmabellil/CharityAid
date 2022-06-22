@@ -59,12 +59,12 @@ export class ListUsersComponent implements AfterViewInit {
               this.listComplete[i] = {...data[i], ...data1[i+1]}
             }
             if (JSON.parse(localStorage.getItem("User")).Role === "superadmin" ){
-              this.listComplete = this.listComplete
+              this.listComplete = this.listComplete.filter(member => member.Valid === "1")
               this.dataSource = new MatTableDataSource(this.listComplete);
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
             }else{
-              this.listComplete = this.listComplete.filter(member => member.IdAssociation === JSON.parse(localStorage.getItem("User")).IdAssociation  )
+              this.listComplete = this.listComplete.filter(member => member.IdAssociation === JSON.parse(localStorage.getItem("User")).IdAssociation  ).filter(member => member.Valid === "1")
               this.dataSource = new MatTableDataSource(this.listComplete);
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;

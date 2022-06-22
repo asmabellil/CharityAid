@@ -10,4 +10,5 @@ export class Member extends User{
     Association: String;
     Role_Association: String;
     IdAssociation: String;
+    Valid: String;
 }

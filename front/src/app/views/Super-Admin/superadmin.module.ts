@@ -23,7 +23,8 @@ import { ListAssociationsComponent } from './list-associations/list-associations
 import { AuthentificationModule } from '../Authentification/authentification.module';
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { AssociationFormComponent } from './association-form/association-form.component';
-import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { RequestsComponent } from './requests/requests.component';
 
 @NgModule({
   imports: [
@@ -53,11 +54,15 @@ import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angu
     ListUsersComponent,
     ListAssociationsComponent,
     AssociationFormComponent,
+    RequestsComponent,
   ],
   providers: [
     DatePipe,
     BsModalRef,
     MatDialog
+  ],
+  exports:[
+    AssociationFormComponent
   ],
 
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

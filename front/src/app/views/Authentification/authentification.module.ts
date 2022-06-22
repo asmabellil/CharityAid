@@ -26,7 +26,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     RegistrationFormComponent,
     ResetComponent,
     ResetPasswordComponent,
-    RegitrationPageComponent,
+    RegitrationPageComponent
 
 
   ],

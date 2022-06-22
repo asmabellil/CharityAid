@@ -112,12 +112,12 @@
     </div>
     <div class="contain" id="contentt" #contentt> 
     <div class="container">
-    <h4 class="mb-3" style="color: #20a8d8;">1. Introduction</h4>
-    <div class="intro" [innerHTML]="Introduction.value"></div>
-    <h4 class="mb-3" style="color: #20a8d8;">2. Presentation</h4>
-    <div class="intro" [innerHTML]="Presentation.value"></div>
+    <h4 class="mb-3" style="color: #20a8d8;">1. Introduction:</h4>
+    <div class="intro mb-3" [innerHTML]="Introduction.value"></div>
+    <h4 class="mb-3" style="color: #20a8d8;">2. Presentation:</h4>
+    <div class="intro mb-3" [innerHTML]="Presentation.value"></div>
     <h4 class="mb-3" style="color: #20a8d8;">3. Events</h4>
-    <table class="br-3 ml-3" *ngFor="let event of listEvents">
+    <table class="br-3 ml-3 mb-3" >
         <tr>
           <th>Title</th>
           <th>Start date</th>
@@ -127,7 +127,7 @@
           <th>Description</th>
           <th>Added by</th>
         </tr>
-        <tr  >
+        <tr  *ngFor="let event of listEvents">
             <th>{{event.Title}}</th>
             <th>{{event.Start_date | date:'mediumDate'}}</th>
             <th>{{event.End_date | date:'mediumDate'}}</th>
@@ -141,7 +141,7 @@
     <h4 class="mb-3" style="color: #20a8d8;">4. Human ressources</h4>
     <p class="intro"> Our human ressources has upgraded in this year to {{subNumber}} subscribers which we are very proud of. </p>
     <p class="intro">And here you will find our responsbles and its information</p>
-    <table class="br-3 ml-3">
+    <table class="br-3 ml-3 mb-3">
         <tr>
           <th>First Name</th>
           <th>Last Name</th>

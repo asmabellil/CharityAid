@@ -22,6 +22,11 @@ export const navItems = {
     url: 'main/allassociations',
     icon: 'cil-chart'
   },
+  {
+    name: 'Requests',
+    url: 'main/requests',
+    icon: 'cil-user'
+  },
   ],
   "Chair" :
   [

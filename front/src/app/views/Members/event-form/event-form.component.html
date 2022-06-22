@@ -88,7 +88,7 @@
     </div>
   <div class="alert alert-danger" *ngIf="Description.errors && Description.touched">
       <div *ngIf="Description.errors.required">This field is required</div>
-      <div *ngIf="Description.errors.minLength">This field should contain at leaset 10 caracters</div>
+      <div *ngIf="Description.errors.minlength">This field should contain at leaset 10 caracters</div>
   </div>
     
       <button type="button" class="btn btn-block btn-success" (click)="openModal(template)">{{val1}}</button>

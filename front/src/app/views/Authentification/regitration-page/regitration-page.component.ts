@@ -6,6 +6,9 @@ import { MembersService } from '../../../services/members.service';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { UsersService } from 'src/app/services/users.service';
+import { Association } from 'src/app/models/Association';
+import { AssociationsService } from 'src/app/services/associations.service';
+import {  MatSnackBar,  MatSnackBarHorizontalPosition,  MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-regitration-page',
@@ -14,77 +17,88 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class RegitrationPageComponent implements OnInit {
   registerForm: FormGroup;
-  listMembers: Member[];
-  memberToAdd: Member;
-  member: Member;
-  @Input() val1 = "Create an account";
-  @Input() memberToUpdate2: Member;
-  @Input() action1 = true;
-  @Output() returnedMember = new EventEmitter<Member>();
-  @Output() actAdd = new EventEmitter<Member>();
+  association: Association;
+  associationToAdd: Association;
+  associationToUpdate: Association;
+  action1 = true;
+  val1;
+  returnedAssociation: Association
   modalRef: BsModalRef;
+  listAssociations: Association[];
+  PreviewSource;
+  fileVal;
+  files: File[] = [];
+  loading : Boolean;
+  update2: Boolean;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-  constructor(private service: MembersService,private serviceUser: UsersService, private datePipe: DatePipe, private router : Router, public bsModalRef: BsModalRef, private modalService: BsModalService) { }
+  constructor(private service: AssociationsService,private serviceUser: UsersService, private datePipe: DatePipe, private router : Router, public bsModalRef: BsModalRef, private modalService: BsModalService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.service.getAssociations().subscribe(
+      (data: Association[]) => {
+        this.listAssociations = data
+      }
+    )
+
     this.registerForm= new FormGroup({
-      FirstName: new FormControl('',[Validators.required,Validators.minLength(2)]),
-      LastName: new FormControl('',[Validators.required,Validators.minLength(2)]),
-      DOB: new FormControl('',Validators.required),
+      Name: new FormControl('',[Validators.required,Validators.minLength(2)]),
+      Foundation_date: new FormControl('',Validators.required),
       Adress: new FormControl('',[Validators.required,Validators.minLength(3)]),
       Phone: new FormControl('',[Validators.required,Validators.pattern('[0-9]{8}')]),
-      Role_Association: new FormControl('',Validators.required),
+      Siret_Number: new FormControl('',[Validators.required,Validators.pattern('[0-9]{9}')]),
+      Type: new FormControl('',Validators.required),
+      Picture: new FormControl('',Validators.required),
+      Responsible: new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$")]),
+      Username: new FormControl('',Validators.required),
       Email: new FormControl('',[Validators.required,Validators.pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,4}$")]),
-      Password: new FormControl('',[Validators.required,Validators.minLength(6),Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{6,50}')]),
-      ConfirmPassword: new FormControl('',Validators.required),
       });
-
-      this.service.getMembers().subscribe(
-        (data: Member[]) => this.listMembers = data
-      ); 
-      this.member = new Member;
-      !this.memberToUpdate2 ? this.memberToUpdate2 = new Member : console.log(this.memberToUpdate2)
+      !this.associationToUpdate ? this.associationToUpdate = new Association : console.log(this.associationToUpdate)
   }
 
-  get FirstName() {return this.registerForm.get('FirstName')};
-  get LastName() {return this.registerForm.get('LastName')};
-  get DOB() {return this.registerForm.get('DOB')};
+  get Name() {return this.registerForm.get('Name')};
+  get Foundation_date() {return this.registerForm.get('Foundation_date')};
   get Adress() {return this.registerForm.get('Adress')};
   get Phone() {return this.registerForm.get('Phone')};
-  get Role_Association() {return this.registerForm.get('Role_Association')};
+  get Siret_Number() {return this.registerForm.get('Siret_Number')};
+  get Type() {return this.registerForm.get('Type')};
+  get Responsible() {return this.registerForm.get('Responsible')};
+  get Username() {return this.registerForm.get('Username')};
   get Email() {return this.registerForm.get('Email')};
-  get Password() {return this.registerForm.get('Password')};
-  get ConfirmPassword() {return this.registerForm.get('ConfirmPassword')};
-
-  // to check confirm password
-    onPasswordChange() {
-      if (this.ConfirmPassword.value == this.Password.value) {
-        this.ConfirmPassword.setErrors(null);
-      } else {
-        this.ConfirmPassword.setErrors({ mismatch: true });
-      }
-    }
+  get Picture() {return this.registerForm.get('Picture')};
 
   save(){
+    this.associationToUpdate = {... this.associationToUpdate, Valid : "0"}
+    this.service.addAssociation(this.associationToUpdate).subscribe(
+      (data) => {
+        console.log("add")
+        this._snackBar.open('We sent a request to the admin!', 'close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration : 2500,
+          panelClass :['background']
+        });  
+    })
     this.router.navigate(['/login'])
-    /* this.serviceUser.login({"Email": this.Email.value, "Password": this.Password.value}).subscribe(
-      (response : any) => {
-      console.log(response);
-      this.router.navigate(['/main/allusers'])
-      localStorage.setItem("User", JSON.stringify(response.body))
-    })  */
     this.modalRef.hide();
   }
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+    this.modalRef = this.modalService.show(template); 
+  }
 
-    this.memberToAdd = {... this.memberToUpdate2,  Role: "member"}
-    this.service.addMember(this.memberToAdd).subscribe(
-      (data) => {
-        console.log("add")
-        this.actAdd.emit(data)
-    })
+  onSelect(event) {
+    console.log(event);
+    this.files.push(...event.addedFiles); 
+    this.update2 = false;
+
+  }
+
+  onRemove(event) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+    this.update2 = true;
   }
 
 }

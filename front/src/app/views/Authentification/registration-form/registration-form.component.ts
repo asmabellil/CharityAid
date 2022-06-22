@@ -124,7 +124,7 @@ export class RegistrationFormComponent implements OnInit {
       if (this.action1){
         if(JSON.parse(localStorage.getItem("User")).Role === "superadmin"){
           this.serviceAssociation.searchAssociation(this.memberToUpdate2.IdAssociation).subscribe(data =>{
-             this.memberToAdd = {... this.memberToUpdate2, Association : data.Name,  Role: "member", Picture: response.secure_url}
+             this.memberToAdd = {... this.memberToUpdate2, Association : data.Name, Valid : "1",  Role: "member", Picture: response.secure_url}
               this.service.addMember(this.memberToAdd).subscribe(
                 (data) => {
                 console.log("add");
@@ -138,7 +138,7 @@ export class RegistrationFormComponent implements OnInit {
              
         }
         else {
-            this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Association: this.association, IdAssociation: this.idAssociation, Picture : response.secure_url}
+            this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Valid : "1", Association: this.association, IdAssociation: this.idAssociation, Picture : response.secure_url}
             this.service.addMember(this.memberToAdd).subscribe(
               (data) => {
                 this.data.state = true;
@@ -172,7 +172,7 @@ export class RegistrationFormComponent implements OnInit {
     if (this.action1){
       if(JSON.parse(localStorage.getItem("User")).Role === "superadmin"){
         this.serviceAssociation.searchAssociation(this.memberToUpdate2.IdAssociation).subscribe(data =>{
-      this.memberToAdd = {... this.memberToUpdate2, Association : data.Name,  Role: "member", Picture : "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
+      this.memberToAdd = {... this.memberToUpdate2, Association : data.Name, Valid : "1",  Role: "member", Picture : "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
       this.service.addMember(this.memberToAdd).subscribe(
         (data) => {
           this.data.state = true;
@@ -185,7 +185,7 @@ export class RegistrationFormComponent implements OnInit {
   })    
       }
       else {
-          this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Association: this.association, IdAssociation: this.idAssociation, Picture : "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
+          this.memberToAdd = {... this.memberToUpdate2,  Role: "member", Valid : "1", Association: this.association, IdAssociation: this.idAssociation, Picture : "http://res.cloudinary.com/dkqbdhbrp/image/upload/v1629639337/teams/p0w14tfpxonfmbrjfnnj.jpg"}
           this.service.addMember(this.memberToAdd).subscribe(
             (data) => {
               this.data.state = true;

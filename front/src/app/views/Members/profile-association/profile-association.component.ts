@@ -40,19 +40,19 @@ export class ProfileAssociationComponent implements OnInit {
    })
 
    this.service.getMembers().subscribe(data =>{
-    this.membersNumber = data.length
+    this.membersNumber = data.filter(member => member.IdAssociation === JSON.parse(localStorage.getItem('User')).IdAssociation).length
    })
 
    this.serviceSub.getSubscribers().subscribe(data =>{
-    this.subscribersNumber = data.length
+    this.subscribersNumber = data.filter(member => member.IdAssociation === JSON.parse(localStorage.getItem('User')).IdAssociation).length
    })
 
    this.serviceEvent.getEvents().subscribe(data =>{
-    this.eventsNumber = data.length
+    this.eventsNumber = data.filter(member => member.IdAssociation === JSON.parse(localStorage.getItem('User')).IdAssociation).length
    })
 
    this.serviceContact.getcontacts().subscribe(data =>{
-    this.contactsNumber = data.length
+    this.contactsNumber = data.filter(member => member.IdAssociation === JSON.parse(localStorage.getItem('User')).IdAssociation).length
    })
 
    this.registerForm= new FormGroup({
