@@ -72,7 +72,8 @@ router.post("/login", function (req, res, next) {
       if (data.length === 0) {
         console.log(data);
         return res.send("User Not Registred");
-      } else if ((await bcrypt.compare(password, data[0].Password)) === false) {
+      }
+    else if ((await bcrypt.compare(password, data[0].Password)) === false) {
         console.log(password);
 
         console.log("WrongPassword");
@@ -149,13 +150,15 @@ User.find(
         }
         const token = jwt.sign(payload, secret, {expiresIn: '5min'})
         const link = `http://localhost:4200/#/reset-password/${data[0]._id}/${token}`
+        
         try {
           SendResetPasswordEmail(data[0].Email, data[0].Email, data[0]._id, link)
-          res.status(200).send(link) 
+          res.status(200).send('success') 
         } catch (error) {
-          console.log(error)
+          console.log("error " , error)
           res.send(error)
         }
+        
 
       }
     })

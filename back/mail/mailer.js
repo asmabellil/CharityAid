@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer');
-const xoauth2 = require('xoauth2');
 
 function sendEmail(message) {
   return new Promise((res, rej) => {
@@ -7,7 +6,7 @@ function sendEmail(message) {
           service: 'hotmail',
           auth: {
               user: "association369@outlook.fr",
-              pass: "AB123456789+"
+              pass: "AB123456789++"
           }
       })
 
@@ -41,7 +40,7 @@ exports.SendResetPasswordEmail = (Email ,Firstname, id,link) => {
     return sendEmail(message);
 }
 
-exports.SendEmail = (Email ) => {
+exports.SendEmaill = (Email ) => {
     const message = {
         from: "association369@outlook.fr",
         to: Email,

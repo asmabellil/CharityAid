@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Association = require('../models/Association');
-var { SendEmail } = require("../mail/mailer");
+var { SendEmaill } = require("../mail/mailer");
 
 // Get all Associations
 router.get("/", function (req, res, next) {
@@ -56,7 +56,7 @@ router.delete('/:id',function(req, res, next) {
 router.post('/confirmRequest', function(req, res, next){
   console.log(req.body)
   try {
-    SendEmail(req.body.Email)
+    SendEmaill(req.body.Email)
     res.status(200).send('success') 
   } catch (error) {
     console.log(error)

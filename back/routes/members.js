@@ -67,7 +67,8 @@ router.post("/", upload, async function (req, res, next) {
         _id: d._id,
         ...req.body
       }
-    );      
+    );  
+
     });
 
   });
