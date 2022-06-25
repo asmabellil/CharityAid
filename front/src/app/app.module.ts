@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { WebdatarocksPivotModule } from 'ng-webdatarocks';
+import { NgChatModule } from 'ng-chat';
 
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -69,6 +70,7 @@ import { ChartsModule } from 'ng2-charts';
     WebdatarocksPivotModule,
     MatSnackBarModule,
     IconSetModule.forRoot(),
+    NgChatModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

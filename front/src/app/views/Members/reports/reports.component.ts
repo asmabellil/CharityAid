@@ -14,7 +14,7 @@ export class ReportsComponent implements OnInit {
   }
 
   financialClick(){
-    this.router.navigate(['/members/annuel'])
+    this.router.navigate(['/members/financial'])
   }
 
   reportClick(){

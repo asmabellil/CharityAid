@@ -1,0 +1,28 @@
+table {
+    font-family: arial;
+    border-collapse: collapse;
+    width: 45%;
+    font-size: 10px;
+  }
+  
+  td, th {
+    text-align: left;
+    padding: 2px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  
+  .titleGrey{
+    background-color: #dddddd;
+  }
+  
+  .titleWhite{
+    background-color: white;
+  }
+
+  .intro{
+    max-width: 85%;
+      word-wrap:break-word;
+  }

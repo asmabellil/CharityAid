@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import { AssociationsService } from 'src/app/services/associations.service';
 import { navItems } from '../../_nav';
+import { ChatAdapter } from 'ng-chat';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,6 +10,8 @@ import { navItems } from '../../_nav';
 })
 export class DefaultLayoutComponent {
   constructor( private service : AssociationsService) { }
+  title = 'app';
+  userId = 999;
   Picture;
   Name;
   public navItems;

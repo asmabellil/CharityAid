@@ -86,11 +86,6 @@ export const navItems = {
     icon: 'icon-people'
   },
   {
-    name: 'Events',
-    url: '/members/allevents',
-    icon: 'cil-highlighter'
-  },
-  {
     name: 'Tasks',
     url: '/members/calander',
     icon: 'cil-list-rich',
@@ -103,11 +98,6 @@ export const navItems = {
     name: 'Reports',
     url: '/members/reports',
     icon: 'cil-description'
-  },
-  {
-    name: 'Cash flow',
-    url: '/members/caisses',
-    icon: 'cil-money'
   },
   {
     name: 'Contact',
@@ -124,11 +114,6 @@ export const navItems = {
     name: 'Subscribers',
     url: '/members/allsubscribers',
     icon: 'icon-people'
-  },
-  {
-    name: 'Events',
-    url: '/members/allevents',
-    icon: 'cil-highlighter'
   },
   {
     name: 'Tasks',
@@ -166,11 +151,6 @@ export const navItems = {
     icon: 'icon-people'
   },
   {
-    name: 'Events',
-    url: '/members/allevents',
-    icon: 'cil-highlighter'
-  },
-  {
     name: 'Tasks',
     url: '/members/calander',
     icon: 'cil-list-rich',
@@ -183,11 +163,6 @@ export const navItems = {
     name: 'Reports',
     url: '/members/reports',
     icon: 'cil-description'
-  },
-  {
-    name: 'Cash flow',
-    url: '/members/caisses',
-    icon: 'cil-money'
   },
   {
     name: 'Contact',

@@ -13,6 +13,7 @@ import { CalanderEventComponent } from './calander-event/calander-event.componen
 import { PDFsComponent } from './pdfs/pdfs.component'
 import { ReportsComponent } from './reports/reports.component';
 import { ProfileAssociationComponent } from './profile-association/profile-association.component';
+import { AnnuelReportComponent } from './financial-report/financial-report.component';
 
 const routes: Routes = [
   {
@@ -23,7 +24,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'allusers'
+        redirectTo: 'allusers',
+        pathMatch: 'full'
       },
       {
         path: 'profile',
@@ -91,6 +93,13 @@ const routes: Routes = [
       {
         path: 'annuel',
         component: PDFsComponent,
+        data: {
+          title: 'Annual'
+        }
+      },
+      {
+        path: 'financial',
+        component: AnnuelReportComponent,
         data: {
           title: 'Annual'
         }
