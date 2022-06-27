@@ -25,7 +25,7 @@ export class MembersService {
   }
 
   searchMember(id){
-    return this.http.get(this.url + id);
+    return this.http.get<Member>(this.url + id);
   }
 
   updateMember (m: Member){

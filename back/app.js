@@ -12,7 +12,8 @@ var eventsRouter = require('./routes/events');
 var tasksRouter = require('./routes/tasks');
 var subscribersRouter = require('./routes/subscribers');
 var contactsRouter = require('./routes/contacts');
-var caissesRouter = require('./routes/caisses')
+var caissesRouter = require('./routes/caisses');
+var chatRouter = require('./routes/chat')
 
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient
@@ -50,6 +51,7 @@ app.use('/tasks', tasksRouter);
 app.use('/subscribers', subscribersRouter);
 app.use('/contacts', contactsRouter);
 app.use('/caisses', caissesRouter);
+app.use('/chat', chatRouter);
 
 // CORS HEADERS MIDDELWARE 
 app.use(function(req, res, next) {

@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
+import { Member } from 'src/app/models/Member';
 import { AssociationsService } from 'src/app/services/associations.service';
+import { MembersService } from 'src/app/services/members.service';
 import { navItems } from '../../_nav';
-import { ChatAdapter } from 'ng-chat';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,15 +11,15 @@ import { ChatAdapter } from 'ng-chat';
   styleUrls: ['./default-layout.component.scss']
 })
 export class DefaultLayoutComponent {
-  constructor( private service : AssociationsService) { }
-  title = 'app';
-  userId = 999;
   Picture;
   Name;
   public navItems;
   state: Boolean = false;
   state2: Boolean = false;
   num : Number;
+  member : Member;
+
+  constructor( private service : AssociationsService, private serviceMember : MembersService, private router : Router) { }
   
   ngOnInit(): void {
     this.service.getAssociations().subscribe(data =>{
@@ -43,6 +45,18 @@ export class DefaultLayoutComponent {
   }
 
   clearLocalStorage(){
+    localStorage.clear();
+  }
+
+  lock(){
+    this.serviceMember.searchMember(JSON.parse(localStorage.getItem('User'))._id).subscribe(data => {
+      this.member = data
+      this.serviceMember.updateMember({...this.member, Valid: "0"}).subscribe((data) =>{
+      console.log(data)
+    }) 
+    })
+    
+    this.router.navigate(['login'])
     localStorage.clear();
   }
 }

@@ -39,13 +39,20 @@ export class LoginComponent {
     this.service.login(this.loginForm.value).subscribe(
       (response : any) => {
       console.log(response);
+      if(response.body.Valid === '0'){
+        this.router.navigate(['/'])
+        this.show = true;
+        this.message = "Your account has been locked"
+      }else{
       if(response.body.Role_Association === "Chair" || response.body.Role === "superadmin" ){
         this.router.navigate(['/main/allusers'])
       }
       else{
         this.router.navigate(['/members/allsubscribers'])
       }
-      localStorage.setItem("User", JSON.stringify(response.body))
+      localStorage.setItem("User", JSON.stringify(response.body))        
+      }
+
     },
     error => {
       console.log(error.error.text)

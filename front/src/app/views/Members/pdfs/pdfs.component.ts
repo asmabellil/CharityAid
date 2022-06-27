@@ -52,8 +52,9 @@ export class PDFsComponent implements AfterViewInit {
     this.nameAssociation = JSON.parse(localStorage.getItem('User')).Association
     this.idAssociation = JSON.parse(localStorage.getItem('User')).IdAssociation
     this.association = new Association;
-    
-    this.serviceAssociation.searchAssociation(this.idAssociation).subscribe(data =>{
+
+    setTimeout(() => {
+     this.serviceAssociation.searchAssociation(this.idAssociation).subscribe(data =>{
       this.association = data,
       this.picture = data.Picture,
       this.presentation = "This is our association " + this.association.Name + " it was founded on " + this.association.Foundation_date.substring(0,10).split("-").reverse().join("-")
@@ -63,10 +64,9 @@ export class PDFsComponent implements AfterViewInit {
       Conclusion: ['This is the conclusion to my report.', Validators.required],
       Year: ['2022', Validators.required],
     });
-    })
-   }
+    }) 
+    }, 10);
 
-   ngAfterViewInit(): void {
     this.serviceSub.getSubscribers().subscribe(data =>{
       this.subNumber = data.length;
     })
@@ -74,6 +74,11 @@ export class PDFsComponent implements AfterViewInit {
     this.serviceMember.getMembers().subscribe(data =>{
       this.listMembers = data.filter(member => member.IdAssociation === JSON.parse(localStorage.getItem('User')).IdAssociation)
     })
+   }
+
+   ngAfterViewInit(): void {
+
+    
     
   }
 
