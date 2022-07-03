@@ -17,11 +17,11 @@ export const navItems = {
     url: 'main/allassociations',
     icon: 'cil-building'
   },
-  {
+/*   {
     name: 'Statistics',
     url: 'main/allassociations',
     icon: 'cil-chart'
-  },
+  }, */
   {
     name: 'Requests',
     url: 'main/requests',
@@ -64,7 +64,7 @@ export const navItems = {
     icon: 'cil-description'
   },
   {
-    name: 'Cash flow',
+    name: 'Safe',
     url: '/members/caisses',
     icon: 'cil-money'
   },
@@ -130,7 +130,7 @@ export const navItems = {
     icon: 'cil-description'
   },
   {
-    name: 'Cash flow',
+    name: 'Safe',
     url: '/members/caisses',
     icon: 'cil-money'
   },

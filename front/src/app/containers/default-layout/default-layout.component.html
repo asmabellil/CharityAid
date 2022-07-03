@@ -11,10 +11,9 @@
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
         <label>{{Name}}</label><img [src]="Picture" class="img-avatar pic"/>
       </a>
-      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
-        <div class="dropdown-header text-center"><strong>Account</strong></div>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown"  >
+        <div class="dropdown-header text-center" *ngIf="!state"><strong>Account</strong></div>
         <!-- <a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i> Updates<span class="badge badge-info">42</span></a> -->
-        <a class="dropdown-item" href="#" *ngIf="state"><i class="fa fa-user" ></i> Messages<span class="badge badge-success">42</span></a>
         <a class="dropdown-item" href="/#/main/requests" *ngIf="!state"><i class="cil-building" ></i> Requests<span class="badge badge-success">{{num}}</span></a>
         <!-- <a class="dropdown-item" href="#"><i class="fa fa-tasks"></i> Tasks<span class="badge badge-danger">42</span></a>
         <a class="dropdown-item" href="#"><i class="fa fa-comments"></i> Comment<span class="badge badge-warning">42</span></a> -->
@@ -25,7 +24,7 @@
         <a class="dropdown-item" href="#"><i class="fa fa-usd"></i> Payments<span class="badge badge-dark">42</span></a>
         <a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="badge badge-primary">42</span></a>
         <div class="divider"></div>-->
-        <a class="dropdown-item" href="#" (click)="lock()"><i class="fa fa-shield"></i> Lock account</a> 
+        <a class="dropdown-item" href="#" (click)="lock()" *ngIf="state"><i class="fa fa-shield"></i> Lock account</a> 
         <a class="dropdown-item" href="#" (click)="clearLocalStorage()"><i class="fa fa-lock"></i> Logout</a>
       </div>
     </li>

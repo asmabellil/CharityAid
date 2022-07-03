@@ -84,7 +84,7 @@
     <div class="input-group-prepend">
         <span class="input-group-text"><i class="cil-list-rich"></i></span>
       </div>
-    <textarea class="form-control" type="text" name="Description" placeholder="Description" [(ngModel)]="eventToUpdate.Description" formControlName="Description"> </textarea>
+    <textarea class="form-control" type="text" name="Description" placeholder="Split your tasks with breaklines" [(ngModel)]="eventToUpdate.Description" formControlName="Description"> </textarea>
     </div>
   <div class="alert alert-danger" *ngIf="Description.errors && Description.touched">
       <div *ngIf="Description.errors.required">This field is required</div>
